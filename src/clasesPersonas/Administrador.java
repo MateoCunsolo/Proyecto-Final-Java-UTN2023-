@@ -19,8 +19,6 @@ public class Administrador extends Persona
     {
         boolean a = true;
         return a;
-
-        return true;
     }
 
     public void verHistorialCompra(Usuario unUsuario)
