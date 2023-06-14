@@ -1,11 +1,15 @@
-public class Usuario extends Persona {
+import Transacciones.Intercambio;
+import Transacciones.Venta;
+import clasesItem.Item;
+
+public class Usuario extends Persona
     private String email;
     private double saldo;
     private Carrito carrito;
     private ContenedorV<Carrito> historialCompras;
     private ContenedorV<Venta> historialVentas;
     private ContenedorV<Intercambio> historialIntercambio;
-    private ContenedorLHS<Item> itemsPublicados;
+    private ContenedorLHS<Item>itemsPublicados;
     private ContenedorLHS<Item> inventario;
 
     //CONSTRUCTORES
