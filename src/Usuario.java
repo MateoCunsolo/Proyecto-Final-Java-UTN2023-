@@ -1,3 +1,9 @@
+import clasesItem.Item;
+
+/**
+ *
+ */
+
 public class Usuario extends Persona {
     private String email;
     private double saldo;
@@ -36,6 +42,19 @@ public class Usuario extends Persona {
     }
 
 
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "email='" + email + '\'' +
+                ", saldo=" + saldo +
+                ", carrito=" + carrito +
+                ", historialCompras=" + historialCompras +
+                ", historialVentas=" + historialVentas +
+                ", historialIntercambio=" + historialIntercambio +
+                ", itemsPublicados=" + itemsPublicados +
+                ", inventario=" + inventario +
+                '}';
+    }
 }
 
 

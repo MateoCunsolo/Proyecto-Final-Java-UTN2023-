@@ -16,7 +16,8 @@ public class ContenedorLHS <E> implements IFuncionalidades
     }
 
     @Override
-    public void listar() {
+    public void listar()
+    {
 
     }
 
