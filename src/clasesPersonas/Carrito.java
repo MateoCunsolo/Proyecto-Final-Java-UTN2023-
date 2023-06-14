@@ -17,7 +17,7 @@ public class Carrito implements ITransaccionable {
         cantidadItems = 0;
         totalAPagar = 0;
         fecha = null;
-        productos = new ContenedorV<Item>();
+        productos = new ContenedorV<>();
     }
 
     public Carrito(int cantidadItems, double totalAPagar, LocalDateTime fecha, ContenedorV<Item> productos) {

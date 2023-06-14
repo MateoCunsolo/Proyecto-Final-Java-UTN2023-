@@ -17,6 +17,8 @@ public class Administrador extends Persona
 
     public boolean borrarUsuario(String nombre) //true si se hizo con exito, caso contrario false
     {
+        boolean a = true;
+        return a;
 
         return true;
     }
