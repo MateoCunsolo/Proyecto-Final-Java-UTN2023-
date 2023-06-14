@@ -1,6 +1,14 @@
+package clasesPersonas;
+
+import ClasesGenericas.ContenedorLHS;
+import ClasesGenericas.ContenedorV;
+import clasesItem.Item;
+import clasesPersonas.Persona;
+
 public class Usuario extends Persona {
     private String email;
     private double saldo;
+
     private Carrito carrito;
     private ContenedorV<Carrito> historialCompras;
     private ContenedorV<Venta> historialVentas;

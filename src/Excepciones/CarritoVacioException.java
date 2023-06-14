@@ -1,3 +1,5 @@
+package Excepciones;
+
 public class CarritoVacioException extends Exception
 {
     private String mensaje;

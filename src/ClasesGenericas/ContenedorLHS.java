@@ -1,12 +1,17 @@
-import java.util.Vector;
+package ClasesGenericas;
 
-public class ContenedorV <T> implements IFuncionalidades
+import Interfaces.IFuncionalidades;
+
+import java.util.LinkedHashSet;
+
+public class ContenedorLHS <E> implements IFuncionalidades
 {
-    private Vector <T> miVector; //(aplica  items, historia de compras y de ventas)
 
-    public ContenedorV()
+    private LinkedHashSet <E> miLHSet;
+
+    public ContenedorLHS()
     {
-        miVector = new Vector<>();
+        miLHSet = new LinkedHashSet<>();
     }
 
     @Override

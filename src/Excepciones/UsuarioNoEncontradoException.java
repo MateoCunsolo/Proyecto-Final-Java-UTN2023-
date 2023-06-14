@@ -1,3 +1,5 @@
+package Excepciones;
+
 public class UsuarioNoEncontradoException extends Exception
 {
     private String nombreUsuario;
