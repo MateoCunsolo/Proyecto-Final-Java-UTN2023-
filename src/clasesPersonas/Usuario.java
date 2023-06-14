@@ -1,8 +1,12 @@
+package clasesPersonas;
+import ClasesGenericas.ContenedorLHS;
+import ClasesGenericas.ContenedorV;
 import Transacciones.Intercambio;
 import Transacciones.Venta;
 import clasesItem.Item;
+import clasesPersonas.Persona;
 
-public class Usuario extends Persona
+public class Usuario extends Persona {
     private String email;
     private double saldo;
     private Carrito carrito;

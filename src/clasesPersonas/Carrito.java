@@ -1,3 +1,7 @@
+package clasesPersonas;
+
+import ClasesGenericas.ContenedorV;
+import Interfaces.ITransaccionable;
 import clasesItem.Item;
 
 import java.time.LocalDateTime;

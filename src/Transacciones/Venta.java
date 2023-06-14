@@ -1,10 +1,11 @@
 package Transacciones;
+import ClasesGenericas.ContenedorLHS;
 import clasesItem.Item;
 
 public class Venta
 {
     double totalCobrar;
-    private ContenedorLHS <Item> productos;
+    private ContenedorLHS<Item> productos;
 
     public Venta() {
     }
