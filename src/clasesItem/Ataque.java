@@ -1,5 +1,8 @@
 package clasesItem;
 
+import clasesPersonas.Administrador;
+import clasesPersonas.Carrito;
+
 import java.util.Objects;
 
 /**
@@ -11,6 +14,7 @@ public class Ataque {
     private String nombreAtaque;
     private String daño;
     private String descripcion;
+
 
     public Ataque()
     {

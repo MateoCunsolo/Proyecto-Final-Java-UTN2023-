@@ -1,3 +1,5 @@
+package Excepciones;
+
 public class ItemNoEncontradoException extends Exception
 {
     private String mensaje;

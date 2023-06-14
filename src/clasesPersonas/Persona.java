@@ -1,3 +1,5 @@
+package clasesPersonas;
+
 import java.util.Objects;
 
 public abstract class Persona

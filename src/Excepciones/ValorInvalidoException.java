@@ -1,3 +1,5 @@
+package Excepciones;
+
 public class ValorInvalidoException extends Exception
 {
     private String mensaje;
