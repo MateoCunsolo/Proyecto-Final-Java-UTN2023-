@@ -1,3 +1,8 @@
+package clasesPersonas;
+
+import clasesPersonas.Persona;
+import clasesPersonas.Usuario;
+
 public class Administrador extends Persona
 {
     public Administrador(String nombre, String contrasenia)
@@ -14,6 +19,7 @@ public class Administrador extends Persona
     {
         boolean a = true;
         return a;
+
 
     }
 

@@ -1,3 +1,7 @@
+package ClasesGenericas;
+
+import Interfaces.IFuncionalidades;
+
 import java.util.Vector;
 
 public class ContenedorV <T> implements IFuncionalidades

@@ -1,3 +1,7 @@
+package ClasesGenericas;
+
+import Interfaces.IFuncionalidades;
+
 import java.util.LinkedHashSet;
 
 public class ContenedorLHS <E> implements IFuncionalidades

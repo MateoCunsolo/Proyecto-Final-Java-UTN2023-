@@ -1,3 +1,5 @@
+package clasesPersonas;
+
 import java.util.Objects;
 
 public abstract class Persona
@@ -26,8 +28,9 @@ public abstract class Persona
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(nombre, contrasenia);
     }
+
+
 }
