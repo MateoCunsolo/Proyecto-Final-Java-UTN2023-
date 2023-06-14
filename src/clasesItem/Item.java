@@ -1,6 +1,6 @@
 package clasesItem;
 
-public abstract class Item {
+public  class Item {
 
     private double precio;
     private String nombreDuenio; //es el nombre del usuario
