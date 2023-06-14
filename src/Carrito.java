@@ -1,47 +1,43 @@
+import clasesItem.Item;
+
 import java.time.LocalDateTime;
 
-public class Carrito implements ITransaccionable
-{
+public class Carrito implements ITransaccionable {
     private int cantidadItems;
     private double totalAPagar;
     private LocalDateTime fecha;
     private ContenedorV<Item> productos;
 
 
-    public Carrito()
-    {
+    public Carrito() {
         cantidadItems = 0;
         totalAPagar = 0;
         fecha = null;
         productos = new ContenedorV<Item>();
     }
 
-    public Carrito(int cantidadItems, double totalAPagar, LocalDateTime fecha, ContenedorV<Item> productos)
-    {
+    public Carrito(int cantidadItems, double totalAPagar, LocalDateTime fecha, ContenedorV<Item> productos) {
         this.cantidadItems = cantidadItems;
         this.totalAPagar = totalAPagar;
         this.fecha = fecha;
         this.productos = productos;
     }
 
-    public boolean eliminarCarrito()
-    {
+    public boolean eliminarCarrito() {
         this.productos = null; //eliminar todos los items del contenedor
-        return
+        return false;
     }
 
-    public boolean eliminarUnItem(Item item)
-    {
-        return
+    public boolean eliminarUnItem(Item item) {
+        return false;
     }
 
     public void verCarrito()
     {
-        return
     }
     public boolean agregarAlCarrito(Item item)
     {
-        return
+        return false;
     }
 
     @Override
