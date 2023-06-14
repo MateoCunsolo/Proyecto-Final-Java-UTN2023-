@@ -18,7 +18,7 @@ public class Administrador extends Persona
     public boolean borrarUsuario(String nombre) //true si se hizo con exito, caso contrario false
     {
 
-
+        return true;
     }
 
     public void verHistorialCompra(Usuario unUsuario)

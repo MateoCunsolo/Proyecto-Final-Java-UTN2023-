@@ -74,7 +74,7 @@ public class Carta extends Item {
 
     @Override
     public String toString() {
-        return "Carta{" +
+        return super.toString() + "Carta{" +
                 "numero=" + numero +
                 ", pokemon=" + pokemon +
                 ", rareza='" + rareza + '\'' +
