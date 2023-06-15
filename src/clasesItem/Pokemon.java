@@ -6,33 +6,33 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
-public class Pokemon implements Serializable
-{
+public class Pokemon implements Serializable {
 
-    private String nombre;
-    private int ps; //puntos de salud
-    private String evolucion;
-    private Energia tipo;
-    private List<Energia> arregloDebilidades;
-    private HashSet<Ataque> hsAtaques;
+    private String nombre; //chek
+    private int ps; //puntos de salud //chek
+    private String evolucionA; //evolvesTo //chek
+    private String evolucionaDe; //chek
+    private Energia tipo; //chek
+    private Energia debilidad; //chek
+    private HashSet<Ataque> hsAtaques; //chek
 
-    public Pokemon()
-    {
+    public Pokemon() {
         nombre = "";
         ps = 0;
-        evolucion = "";
+        evolucionA = "";
+        evolucionaDe = "";
         tipo = Energia.EMPTY;
-        arregloDebilidades = new ArrayList<>();
+        debilidad = Energia.EMPTY;
         hsAtaques = new HashSet<>();
     }
 
-    public Pokemon(String nombre, int ps, String evolucion)
-    {
+    public Pokemon(String nombre, int ps, String evolucionA, String evolucionaDe) {
         this.nombre = nombre;
         this.ps = ps;
-        this.evolucion = evolucion;
+        this.evolucionA = evolucionA;
+        this.evolucionaDe = evolucionaDe;
         tipo = Energia.EMPTY;
-        arregloDebilidades = new ArrayList<>();
+        debilidad= Energia.EMPTY;
         hsAtaques = new HashSet<>();
     }
 
@@ -52,29 +52,51 @@ public class Pokemon implements Serializable
         this.ps = ps;
     }
 
-    public String getEvolucion() {
-        return evolucion;
+    public String getEvolucionA() {
+        return evolucionA;
     }
 
-    public void setEvolucion(String evolucion) {
-        this.evolucion = evolucion;
+    public void setEvolucionA(String evolucion) {
+        this.evolucionA = evolucion;
+    }
+
+    public void setDebilidad(Energia debilidad) {
+        this.debilidad = debilidad;
     }
 
     public Energia getTipo() {
         return tipo;
     }
 
+    public void setTipo(Energia tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getEvolucionaDe() {
+        return evolucionaDe;
+    }
+
+    public void setEvolucionaDe(String evolucionaDe) {
+        this.evolucionaDe = evolucionaDe;
+    }
+
+    public Energia getDebilidad() {
+        return debilidad;
+    }
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pokemon pokemon = (Pokemon) o;
-        return ps == pokemon.ps && nombre.equals(pokemon.nombre) && evolucion.equals(pokemon.evolucion) && tipo == pokemon.tipo && arregloDebilidades.equals(pokemon.arregloDebilidades) && hsAtaques.equals(pokemon.hsAtaques);
+        return ps == pokemon.ps && nombre.equals(pokemon.nombre) && evolucionA.equals(pokemon.evolucionA) && evolucionaDe.equals(pokemon.evolucionaDe) && tipo == pokemon.tipo && debilidad == pokemon.debilidad && hsAtaques.equals(pokemon.hsAtaques);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nombre, ps, evolucion, tipo, arregloDebilidades, hsAtaques);
+        return Objects.hash(nombre, ps, evolucionA, evolucionaDe, tipo, debilidad, hsAtaques);
     }
 
     @Override
@@ -82,10 +104,26 @@ public class Pokemon implements Serializable
         return "Pokemon{" +
                 "nombre='" + nombre + '\'' +
                 ", ps=" + ps +
-                ", evolucion='" + evolucion + '\'' +
+                ", evolucionA='" + evolucionA + '\'' +
+                ", evolucionaDe='" + evolucionaDe + '\'' +
                 ", tipo=" + tipo +
-                ", arregloDebilidades=" + arregloDebilidades +
+                ", debilidad=" + debilidad +
                 ", hsAtaques=" + hsAtaques +
                 '}';
     }
+
+    public void agregarAtaque (Ataque a)
+    {
+        hsAtaques.add(a);
+    }
+
+    public String listarAtaques()
+    {
+        return hsAtaques.toString();
+    }
 }
+
+
+
+
+
