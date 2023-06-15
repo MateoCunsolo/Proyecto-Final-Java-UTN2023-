@@ -10,22 +10,22 @@ import java.util.Objects;
 public class Ataque implements Serializable
 {
 
-    private String nombreAtaque;
-    private String daño;
-    private String descripcion;
+    private String nombreAtaque; //chek
+    private String danio; //chek
+    private String descripcion; //chek
 
 
     public Ataque()
     {
         nombreAtaque = "";
-        daño = "";
+        danio = "";
         descripcion = "";
     }
 
-    public Ataque(String nombreAtaque, String daño, String descripcion)
+    public Ataque(String nombreAtaque, String danio, String descripcion)
     {
         this.nombreAtaque = nombreAtaque;
-        this.daño = daño;
+        this.danio = danio;
         this.descripcion = descripcion;
     }
 
@@ -37,12 +37,12 @@ public class Ataque implements Serializable
         this.nombreAtaque = nombreAtaque;
     }
 
-    public String getDaño() {
-        return daño;
+    public String getDanio() {
+        return danio;
     }
 
-    public void setDaño(String daño) {
-        this.daño = daño;
+    public void setDanio(String danio) {
+        this.danio = danio;
     }
 
     public String getDescripcion() {
@@ -58,19 +58,19 @@ public class Ataque implements Serializable
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ataque ataque = (Ataque) o;
-        return nombreAtaque.equals(ataque.nombreAtaque) && daño.equals(ataque.daño) && descripcion.equals(ataque.descripcion);
+        return nombreAtaque.equals(ataque.nombreAtaque) && danio.equals(ataque.danio) && descripcion.equals(ataque.descripcion);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nombreAtaque, daño, descripcion);
+        return Objects.hash(nombreAtaque, danio, descripcion);
     }
 
     @Override
     public String toString() {
         return "Ataque{" +
                 "nombreAtaque='" + nombreAtaque + '\'' +
-                ", daño='" + daño + '\'' +
+                ", danio='" + danio + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 '}';
     }

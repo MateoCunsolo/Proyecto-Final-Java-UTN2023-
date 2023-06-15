@@ -6,21 +6,21 @@ import java.util.Objects;
 public class Carta extends Item implements Serializable
 {
 
-    private int numero;
-    private Pokemon pokemon;
-    private String rareza;
-    private String artista;
+    private String numero; //chek
+    private Pokemon pokemon; //chek
+    private String rareza; //chek
+    private String artista; //chek
 
 
     public Carta()
     {
-        numero = 0;
+        numero = "";
         pokemon = new Pokemon();
         rareza = "";
         artista = "";
     }
 
-    public Carta(int numero, Pokemon pokemon, String rareza, String artista )
+    public Carta(String numero, Pokemon pokemon, String rareza, String artista )
     {
         this.numero = numero;
         this.pokemon = pokemon;
@@ -28,11 +28,11 @@ public class Carta extends Item implements Serializable
         this.artista = artista;
     }
 
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
