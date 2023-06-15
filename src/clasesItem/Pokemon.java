@@ -1,11 +1,13 @@
 package clasesItem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
-public class Pokemon {
+public class Pokemon implements Serializable
+{
 
     private String nombre;
     private int ps; //puntos de salud

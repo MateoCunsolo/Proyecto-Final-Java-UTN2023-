@@ -2,9 +2,10 @@ package ClasesGenericas;
 
 import Interfaces.IFuncionalidades;
 
+import java.io.Serializable;
 import java.util.LinkedHashSet;
 
-public class ContenedorLHS <E> implements IFuncionalidades
+public class ContenedorLHS <E> implements IFuncionalidades, Serializable
 {
 
     private LinkedHashSet <E> miLHSet;
@@ -33,5 +34,12 @@ public class ContenedorLHS <E> implements IFuncionalidades
     @Override
     public boolean agregar(Object o) {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "ContenedorLHS{" +
+                "miLHSet=" + miLHSet +
+                '}';
     }
 }

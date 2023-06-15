@@ -1,15 +1,14 @@
 package clasesItem;
 
-import clasesPersonas.Administrador;
-import clasesPersonas.Carrito;
-
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  *
  */
-public class Ataque {
+public class Ataque implements Serializable
+{
 
     private String nombreAtaque;
     private String daño;

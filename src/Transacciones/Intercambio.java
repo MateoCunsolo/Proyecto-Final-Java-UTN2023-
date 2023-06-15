@@ -2,9 +2,10 @@ package Transacciones;
 
 import clasesItem.Item;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Intercambio
+public class Intercambio implements Serializable
 {
     Item entrada;
     Item salida;

@@ -1,11 +1,13 @@
 package claseEnvoltorio;
 
+import Archivos.ControladoraArchivosObjetos;
 import clasesPersonas.Administrador;
 import clasesPersonas.Usuario;
 
+import java.io.Serializable;
 import java.util.TreeMap;
 
-public class PokeMarket
+public class PokeMarket implements Serializable
 {
     private Administrador administrador;
     private TreeMap<String, Usuario> mapaUsuarios;
@@ -30,6 +32,27 @@ public class PokeMarket
     public String toString() {
         return "PokeMarket{" + ", mapaUsuarios=" + mapaUsuarios +
                 '}';
+    }
+
+    public boolean agregarUsuario(Usuario usuario)
+    {
+        boolean rta = false; //por defecto no se pudo guardar
+        if(usuario!=null)
+        {
+            mapaUsuarios.put(usuario.getNombre(),usuario);
+            rta = true;
+        }
+        return rta;
+    }
+
+    public void guardarUsuariosArchivo()
+    {
+        ControladoraArchivosObjetos.grabarUsuarios(mapaUsuarios);
+    }
+
+    public void leerUsuariosArchivo()
+    {
+        ControladoraArchivosObjetos.leerUsuarios();
     }
 
 }
