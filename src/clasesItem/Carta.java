@@ -6,10 +6,10 @@ import java.util.Objects;
 public class Carta extends Item implements Serializable
 {
 
-    private int numero; //chek
-    private Pokemon pokemon; //chek
-    private String rareza; //chek
-    private String artista; //chek
+    private int numero;
+    private Pokemon pokemon;
+    private String rareza;
+    private String artista;
 
 
     public Carta()
