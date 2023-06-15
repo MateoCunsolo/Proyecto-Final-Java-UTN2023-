@@ -2,28 +2,28 @@ package clasesItem;
 import java.io.Serializable;
 import java.util.Objects;
 
-public  class Item implements Serializable
+public class Item implements Serializable
 {
 
-    private double precio;
+    private double precio; //chek
     private String nombreDuenio; //es el nombre del usuario
-    private String descrip;
-    private int id;
+    private String descrip; //chek
+    private String id; //chek
 
     public Item()
     {
         precio = 0;
         nombreDuenio = "";
         descrip = "";
-        id = 0;
+        id = "";
     }
 
-    public Item (double precio, String nombreDuenio, String descrip, int id)
+    public Item (double precio, String nombreDuenio, String descrip, String id)
     {
         this.precio = 0;
         this.nombreDuenio = nombreDuenio;
         this.descrip = descrip;
-        this.id = 0;
+        this.id = id;
     }
 
     public double getPrecio() {
@@ -50,11 +50,11 @@ public  class Item implements Serializable
         this.descrip = descrip;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -63,7 +63,7 @@ public  class Item implements Serializable
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return Double.compare(item.precio, precio) == 0 && id == item.id && nombreDuenio.equals(item.nombreDuenio) && descrip.equals(item.descrip);
+        return Double.compare(item.precio, precio) == 0 && id.equals(item.id) && nombreDuenio.equals(item.nombreDuenio) && descrip.equals(item.descrip);
     }
 
     @Override
