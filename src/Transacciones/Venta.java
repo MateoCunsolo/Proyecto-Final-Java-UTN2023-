@@ -3,9 +3,10 @@ import ClasesGenericas.ContenedorLHS;
 import Interfaces.ITransaccionable;
 import clasesItem.Item;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Venta implements ITransaccionable
+public class Venta implements ITransaccionable, Serializable
 {
     double totalCobrar;
     private ContenedorLHS<Item> productos;

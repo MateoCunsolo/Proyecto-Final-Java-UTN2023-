@@ -1,7 +1,9 @@
 package clasesItem;
+import java.io.Serializable;
 import java.util.Objects;
 
-public  class Item {
+public  class Item implements Serializable
+{
 
     private double precio;
     private String nombreDuenio; //es el nombre del usuario

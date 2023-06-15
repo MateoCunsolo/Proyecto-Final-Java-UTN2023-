@@ -3,7 +3,9 @@ package clasesPersonas;
 import clasesPersonas.Persona;
 import clasesPersonas.Usuario;
 
-public class Administrador extends Persona
+import java.io.Serializable;
+
+public class Administrador extends Persona implements Serializable
 {
     public Administrador(String nombre, String contrasenia)
     {

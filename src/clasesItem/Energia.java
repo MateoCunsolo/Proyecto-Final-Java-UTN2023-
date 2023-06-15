@@ -1,6 +1,9 @@
 package clasesItem;
 
-public enum Energia {
+import java.io.Serializable;
+
+public enum Energia implements Serializable
+{
 
     EMPTY(" "), LIGHTNING("Trueno"), COLORLESS("Incolora"), GRASS("Planta"),
     WATER("Agua"), PSYCHIC("Psiquico"), DARKNESS("Oscuro"), FIRE("Fuego"),

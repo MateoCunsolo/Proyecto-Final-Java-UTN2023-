@@ -2,9 +2,10 @@ package ClasesGenericas;
 
 import Interfaces.IFuncionalidades;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class ContenedorV <T> implements IFuncionalidades
+public class ContenedorV <T> implements IFuncionalidades, Serializable
 {
     private Vector <T> miVector; //(aplica  items, historia de compras y de ventas)
 
@@ -31,5 +32,12 @@ public class ContenedorV <T> implements IFuncionalidades
     @Override
     public boolean agregar(Object o) {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "ContenedorV{" +
+                "miVector=" + miVector +
+                '}';
     }
 }

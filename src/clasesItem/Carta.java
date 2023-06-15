@@ -1,8 +1,10 @@
 package clasesItem;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Carta extends Item {
+public class Carta extends Item implements Serializable
+{
 
     private int numero;
     private Pokemon pokemon;
