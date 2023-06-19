@@ -213,7 +213,7 @@ public class Main {
 
 
         //-----------------------------------------------PASAJE DE EL ARCHIVO JSON (MOCK DATA) A ARCHIVO JAVA DE USUARIOS-------------------------
-        /*try
+        try
         {
             String archivoJsonUsu = JsonUtiles.leer("MOCK_DATA (11)");
             JSONArray jsonArray = new JSONArray(archivoJsonUsu);
@@ -240,7 +240,7 @@ public class Main {
         }catch (JSONException ex)
         {
             System.out.println("JSON mal formado");
-        }*/
+        }
 
 
     }
