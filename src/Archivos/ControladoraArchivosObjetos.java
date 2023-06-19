@@ -50,6 +50,7 @@ public class ControladoraArchivosObjetos
 
     public static TreeMap<String,Usuario> leerUsuarios()
     {
+
         TreeMap<String,Usuario>mapaUsuarios = new TreeMap<>();
 
         FileInputStream fileInputStream = null;
@@ -60,15 +61,16 @@ public class ControladoraArchivosObjetos
             fileInputStream = new FileInputStream("Usuarios.dat");
             objectInputStream = new ObjectInputStream(fileInputStream);
 
-
+            while (true)
+            {
                 Usuario aux = (Usuario) objectInputStream.readObject();
                 mapaUsuarios.put(aux.getNombre(), aux);
-
+            }
 
         }
         catch (EOFException ex)
         {
-            System.out.println("FIN de ARCHIVO");
+            System.out.println("\nFIN de ARCHIVO");
         }
         catch (ClassNotFoundException ex)
         {

@@ -11,19 +11,16 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class PokeMarket implements Serializable
-{
+public class PokeMarket implements Serializable {
     private Administrador administrador;
     private TreeMap<String, Usuario> mapaUsuarios;
 
-    public PokeMarket()
-    {
+    public PokeMarket() {
         administrador = new Administrador();
         mapaUsuarios = new TreeMap<>();
     }
 
-    public PokeMarket(Administrador administrador)
-    {
+    public PokeMarket(Administrador administrador) {
         this.administrador = administrador;
         this.mapaUsuarios = new TreeMap<>();
     }
@@ -38,26 +35,23 @@ public class PokeMarket implements Serializable
                 '}';
     }
 
-    public boolean agregarUsuario(Usuario usuario)
-    {
+    public boolean agregarUsuario(Usuario usuario) {
         boolean rta = false; //por defecto no se pudo guardar
-        if(usuario!=null)
-        {
-            mapaUsuarios.put(usuario.getNombre(),usuario);
+        if (usuario != null) {
+            mapaUsuarios.put(usuario.getNombre(), usuario);
             rta = true;
         }
         return rta;
     }
 
-    public void guardarUsuariosArchivo()
-    {
+    public void guardarUsuariosArchivo() {
         ControladoraArchivosObjetos.grabarUsuarios(mapaUsuarios);
     }
 
-    public void leerUsuariosArchivo()
-    {
+    public void leerUsuariosArchivo() {
         this.mapaUsuarios = ControladoraArchivosObjetos.leerUsuarios();
     }
+
 
     public String mostrarMapaUsuarios()
     {
@@ -73,27 +67,31 @@ public class PokeMarket implements Serializable
         return mensaje;
     }
 
-    public void repartirCartas(ArrayList cartas) {
-
-        Iterator<Map.Entry<String, Usuario>> i = mapaUsuarios.entrySet().iterator();
+    public void repartirCartas(ArrayList<Item> cartas) {
+        Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
 
         int k = 0;
-        while (k < cartas.size())//hasta que se terminen las cartas
-        {
-            while (i.hasNext())  //mientras haya usuarios
-            {
-                Map.Entry<String, Usuario> entrada = (Map.Entry) i.next();
 
-                    for (int j = 0; j < 5; j++) //hasta 5 cartas
-                    {
-                        Item itemsito = (Item) cartas.get(k);
-                        entrada.getValue().agregarCarta(itemsito);
-                        System.out.println("\nUN INVENTARIO CARGADO DE: " +entrada.getKey());
-                        System.out.println(entrada.getValue().mostrarInventario());
-                    }
-                    k = k + 5;
+        while(iterator.hasNext()) {
+            while (k < cartas.size()) {
+
+                Map.Entry<String, Usuario> entrada = iterator.next();
+
+                for (int j = 0; j < 5 && k < cartas.size(); j++) {
+                    Item item = cartas.get(k);
+                    entrada.getValue().agregarCarta(item);
+                    k++;
+                }
+                System.out.println("\nINVENTARIO CARGADO DE: " + entrada.getKey());
+                System.out.println(entrada.getValue().mostrarInventario());
             }
         }
     }
 
+    /*public String mostrarMapa() {
+        return this.mapaUsuarios.toString();
+
+    }*/
+
 }
+

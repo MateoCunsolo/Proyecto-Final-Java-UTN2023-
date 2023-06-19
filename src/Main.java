@@ -18,6 +18,8 @@ public class Main {
         PokeMarket pokeMarket = new PokeMarket();
         ArrayList<Item> cartasDeApi = new ArrayList<>(); //aca estan nuestras cartas
 
+        Item item = new Item();
+
         try {
 
             String archivoJsonCar = JsonUtiles.leer("cartas");
@@ -49,7 +51,7 @@ public class Main {
                     JSONArray arregloDeEvolucionaA = cartaJson.getJSONArray("evolvesTo");
                     poke.setEvolucionA(arregloDeEvolucionaA.getString(0));
                 } catch (JSONException e) {
-                    System.out.println(" ");
+                    System.out.println("");
                 }
 
                 // ( 2.4 ) Tipo de energia
@@ -144,11 +146,17 @@ public class Main {
                     card.setNumero(cartaJson.getString("number"));
 
                     // ( 4 ) Creacion del item
-                    Item item = card;
+                    item = card;
 
                     item.setId(cartaJson.getString("id"));
 
-                    item.setDescrip(cartaJson.getString("flavorText"));
+                    try{
+                        item.setDescrip(cartaJson.getString("flavorText"));
+
+                    }catch(JSONException a)
+                    {
+                        System.out.printf("");
+                    }
 
                     if (card.getRareza().equals("Rare Holo")) //5
                     {
@@ -187,13 +195,13 @@ public class Main {
                         item.setPrecio(5000);
                     }
 
-                    System.out.println(item.toString() + "\n");
-                    cartasDeApi.add(item);
+                    //cartasDeApi.add(item);
 
                 } catch (JSONException e3) {
                     System.out.printf("");
                 }
 
+                cartasDeApi.add(item);
                 contador = contador + 1;
             }
         } catch (JSONException e) {
@@ -204,8 +212,13 @@ public class Main {
         System.out.printf("\n\tITEMS CARGADOS = " + contador);
         System.out.printf("\n********************************");
 
+       // pokeMarket.leerUsuariosArchivo();
+        //System.out.printf(pokeMarket.mostrarMapa());
 
-        //-------------------cargando cartas de api (de tipo item) a usuarios-------------------
+
+
+
+    //-------------------cargando cartas de api (de tipo item) a usuarios-------------------
 
         pokeMarket.leerUsuariosArchivo(); //pasamos usuarios al treeMap de la clase Evoltorio
 
@@ -213,7 +226,7 @@ public class Main {
        System.out.println(pokeMarket.mostrarMapaUsuarios());
 
         //-------------- REPARTIENDO CARTAS----------------
-      //  pokeMarket.repartirCartas(cartasDeApi);
+       pokeMarket.repartirCartas(cartasDeApi);
 
 
 
@@ -248,6 +261,7 @@ public class Main {
         {
             System.out.println("JSON mal formado");
         }*/
+
 
     }
 }
