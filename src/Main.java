@@ -15,6 +15,7 @@ public class Main {
             PASAJE DE API-CARTAS POKEMON A UN ARRAY LIST DE CARTAS, PARA QUE LUEGO SE LAS
             ASIGNEMOS A CADA USUARIO Y DE AHI A GUARADAR EL MAP DE USUARIOS EN UN ARCHIVO
         */
+
         int contador = 0;
         PokeMarket pokeMarket = new PokeMarket();
         ArrayList<Item> cartasDeApi = new ArrayList<>();
