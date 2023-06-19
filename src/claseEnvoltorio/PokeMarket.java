@@ -58,7 +58,6 @@ public class PokeMarket implements Serializable
     public String mostrarMapa()
     {
         return this.mapaUsuarios.toString();
-
     }
 
 }

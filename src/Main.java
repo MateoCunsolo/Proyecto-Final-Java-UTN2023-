@@ -16,8 +16,10 @@ public class Main {
             ASIGNEMOS A CADA USUARIO Y DE AHI A GUARADAR EL MAP DE USUARIOS EN UN ARCHIVO
         */
         int contador = 0;
+        int contadorErrores = 0;
         PokeMarket pokeMarket = new PokeMarket();
         ArrayList<Item> cartasDeApi = new ArrayList<>();
+        Item item = new Item();
 
         try {
 
@@ -51,6 +53,7 @@ public class Main {
                     poke.setEvolucionA(arregloDeEvolucionaA.getString(0));
                 } catch (JSONException e) {
                     System.out.println("");
+                    contadorErrores = contadorErrores + 1;
                 }
 
                 // ( 2.4 ) Tipo de energia
@@ -110,6 +113,7 @@ public class Main {
                     }
                 } catch (JSONException e) {
                     System.out.printf("");
+                    contadorErrores = contadorErrores + 1;
                 }
 
                 // ( 2.6 ) Ataques
@@ -125,6 +129,7 @@ public class Main {
                     }
                 } catch (JSONException e1) {
                     System.out.printf("");
+                    contadorErrores = contadorErrores + 1;
                 }
 
 
@@ -145,7 +150,7 @@ public class Main {
                     card.setNumero(cartaJson.getString("number"));
 
                     // ( 4 ) Creacion del item
-                    Item item = card;
+                    item = card;
 
                     item.setId(cartaJson.getString("id"));
 
@@ -188,12 +193,14 @@ public class Main {
                         item.setPrecio(5000);
                     }
 
-                    cartasDeApi.add(item);
+
 
                 } catch (JSONException e3) {
                     System.out.printf("");
+                    contadorErrores = contadorErrores + 1;
                 }
 
+                cartasDeApi.add(item);
                 contador = contador + 1;
             }
         } catch (JSONException e) {
@@ -202,13 +209,14 @@ public class Main {
 
         System.out.printf("\n\n\n\n********************************");
         System.out.printf("\n\tITEMS CARGADOS = " + contador);
+        System.out.printf("\n\tERRORES= " + contadorErrores);
         System.out.printf("\n********************************");
 
+
+
+
         pokeMarket.leerUsuariosArchivo();
-
         System.out.printf(pokeMarket.mostrarMapa());
-
-
 
 
         //-----------------------------------------------PASAJE DE EL ARCHIVO JSON (MOCK DATA) A ARCHIVO JAVA DE USUARIOS-------------------------
