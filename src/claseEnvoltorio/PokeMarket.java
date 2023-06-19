@@ -52,7 +52,13 @@ public class PokeMarket implements Serializable
 
     public void leerUsuariosArchivo()
     {
-        ControladoraArchivosObjetos.leerUsuarios();
+        this.mapaUsuarios = ControladoraArchivosObjetos.leerUsuarios();
+    }
+
+    public String mostrarMapa()
+    {
+        return this.mapaUsuarios.toString();
+
     }
 
 }
