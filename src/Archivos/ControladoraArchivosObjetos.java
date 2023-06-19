@@ -64,8 +64,7 @@ public class ControladoraArchivosObjetos
             while (true)
             {
                 Usuario aux = (Usuario) objectInputStream.readObject();
-                mapaUsuarios.put(aux.getNombre(),aux);
-
+                mapaUsuarios.put(aux.getNombre(), aux);
             }
 
         }
