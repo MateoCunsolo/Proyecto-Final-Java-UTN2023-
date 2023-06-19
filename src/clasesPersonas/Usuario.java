@@ -8,6 +8,8 @@ import clasesItem.Item;
 
 import java.io.Serializable;
 
+
+
 public class Usuario extends Persona implements Serializable
 {
     private String email;
@@ -86,9 +88,19 @@ public class Usuario extends Persona implements Serializable
                 '}';
     }
 
+    public void agregarCarta(Item item)
+    {
+        this.inventario.agregar(item);
+    }
+
+    public String mostrarInventario()
+    {
+        String msj = inventario.listar();
+        return msj;
+    }
 
 
-
+    private static final long serialVersionUID = -2105958263903413399L;
 }
 
 

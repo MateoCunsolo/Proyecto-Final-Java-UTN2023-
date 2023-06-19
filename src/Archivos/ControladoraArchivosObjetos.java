@@ -50,9 +50,6 @@ public class ControladoraArchivosObjetos
 
     public static TreeMap<String,Usuario> leerUsuarios()
     {
-        String mensaje1 = " ";
-        String mensaje2 = " ";
-
         TreeMap<String,Usuario>mapaUsuarios = new TreeMap<>();
 
         FileInputStream fileInputStream = null;
@@ -63,12 +60,10 @@ public class ControladoraArchivosObjetos
             fileInputStream = new FileInputStream("Usuarios.dat");
             objectInputStream = new ObjectInputStream(fileInputStream);
 
-            while (true)
-            {
-                Usuario aux = (Usuario) objectInputStream.readObject();
-                mapaUsuarios.put(aux.getNombre(),aux);
 
-            }
+                Usuario aux = (Usuario) objectInputStream.readObject();
+                mapaUsuarios.put(aux.getNombre(), aux);
+
 
         }
         catch (EOFException ex)
@@ -89,7 +84,6 @@ public class ControladoraArchivosObjetos
             while(it.hasNext())
             {
                 Map.Entry miMapa = (Map.Entry) it.next();
-                System.out.println(miMapa.getValue());
             }
             try
             {

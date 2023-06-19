@@ -5,8 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,7 +16,7 @@ public class Main {
         */
         int contador = 0;
         PokeMarket pokeMarket = new PokeMarket();
-        ArrayList<Item> cartasDeApi = new ArrayList<>();
+        ArrayList<Item> cartasDeApi = new ArrayList<>(); //aca estan nuestras cartas
 
         try {
 
@@ -204,6 +203,20 @@ public class Main {
         System.out.printf("\n\n\n\n********************************");
         System.out.printf("\n\tITEMS CARGADOS = " + contador);
         System.out.printf("\n********************************");
+
+
+        //-------------------cargando cartas de api (de tipo item) a usuarios-------------------
+
+        pokeMarket.leerUsuariosArchivo(); //pasamos usuarios al treeMap de la clase Evoltorio
+
+       System.out.println("\n\nUSUARIOS EN TREEMAP PASADOS DE ARCHIVO \n");
+       System.out.println(pokeMarket.mostrarMapaUsuarios());
+
+        //-------------- REPARTIENDO CARTAS----------------
+      //  pokeMarket.repartirCartas(cartasDeApi);
+
+
+
 
 
         //-----------------------------------------------PASAJE DE EL ARCHIVO JSON (MOCK DATA) A ARCHIVO JAVA DE USUARIOS-------------------------
