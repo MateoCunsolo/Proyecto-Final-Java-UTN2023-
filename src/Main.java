@@ -51,7 +51,7 @@ public class Main {
                     JSONArray arregloDeEvolucionaA = cartaJson.getJSONArray("evolvesTo");
                     poke.setEvolucionA(arregloDeEvolucionaA.getString(0));
                 } catch (JSONException e) {
-                    System.out.println(" ");
+                    System.out.println("");
                 }
 
                 // ( 2.4 ) Tipo de energia
@@ -189,7 +189,6 @@ public class Main {
                         item.setPrecio(5000);
                     }
 
-                    System.out.println(item.toString() + "\n");
                     cartasDeApi.add(item);
 
                 } catch (JSONException e3) {
@@ -205,6 +204,12 @@ public class Main {
         System.out.printf("\n\n\n\n********************************");
         System.out.printf("\n\tITEMS CARGADOS = " + contador);
         System.out.printf("\n********************************");
+
+        pokeMarket.leerUsuariosArchivo();
+
+        System.out.printf(pokeMarket.mostrarMapa());
+
+
 
 
         //-----------------------------------------------PASAJE DE EL ARCHIVO JSON (MOCK DATA) A ARCHIVO JAVA DE USUARIOS-------------------------
@@ -236,6 +241,7 @@ public class Main {
         {
             System.out.println("JSON mal formado");
         }*/
+
 
     }
 }

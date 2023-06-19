@@ -50,8 +50,6 @@ public class ControladoraArchivosObjetos
 
     public static TreeMap<String,Usuario> leerUsuarios()
     {
-        String mensaje1 = " ";
-        String mensaje2 = " ";
 
         TreeMap<String,Usuario>mapaUsuarios = new TreeMap<>();
 
@@ -72,7 +70,7 @@ public class ControladoraArchivosObjetos
         }
         catch (EOFException ex)
         {
-            System.out.println("FIN de ARCHIVO");
+            System.out.println("\nFIN de ARCHIVO");
         }
         catch (ClassNotFoundException ex)
         {
@@ -88,7 +86,6 @@ public class ControladoraArchivosObjetos
             while(it.hasNext())
             {
                 Map.Entry miMapa = (Map.Entry) it.next();
-                System.out.println(miMapa.getValue());
             }
             try
             {
