@@ -10,14 +10,14 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
 
-        /*
+        PokeMarket pokeMarket = new PokeMarket();
+        pokeMarket.leerUsuariosArchivo(); //pasamos archivo usuarios al treeMap de la clase Evoltorio
+
+         /*
             PASAJE DE API-CARTAS POKEMON A UN ARRAY LIST DE CARTAS, PARA QUE LUEGO SE LAS
             ASIGNEMOS A CADA USUARIO Y DE AHI A GUARADAR EL MAP DE USUARIOS EN UN ARCHIVO
-        */
-        int contador = 0;
-        int contadorErrores = 0;
-        PokeMarket pokeMarket = new PokeMarket();
 
+        int contador = 0;
         ArrayList<Item> cartasDeApi = new ArrayList<>(); //aca estan nuestras cartas
 
         Item item = new Item();
@@ -54,7 +54,6 @@ public class Main {
                     poke.setEvolucionA(arregloDeEvolucionaA.getString(0));
                 } catch (JSONException e) {
                     System.out.println("");
-                    contadorErrores = contadorErrores + 1;
                 }
 
                 // ( 2.4 ) Tipo de energia
@@ -114,7 +113,6 @@ public class Main {
                     }
                 } catch (JSONException e) {
                     System.out.printf("");
-                    contadorErrores = contadorErrores + 1;
                 }
 
                 // ( 2.6 ) Ataques
@@ -130,7 +128,6 @@ public class Main {
                     }
                 } catch (JSONException e1) {
                     System.out.printf("");
-                    contadorErrores = contadorErrores + 1;
                 }
 
 
@@ -200,9 +197,10 @@ public class Main {
                         item.setPrecio(5000);
                     }
 
+                    //cartasDeApi.add(item);
+
                 } catch (JSONException e3) {
                     System.out.printf("");
-                    contadorErrores = contadorErrores + 1;
                 }
 
                 cartasDeApi.add(item);
@@ -214,18 +212,29 @@ public class Main {
 
         System.out.printf("\n\n\n\n********************************");
         System.out.printf("\n\tITEMS CARGADOS = " + contador);
-        System.out.printf("\n\tERRORES= " + contadorErrores);
         System.out.printf("\n********************************");
+         */
 
-        pokeMarket.leerUsuariosArchivo();
-        pokeMarket.repartirCartas(cartasDeApi);
-        //System.out.printf(pokeMarket.mostrarMapa());
+
+    /*
+    //-------------------cargando cartas de api (de tipo item) a usuarios-------------------
+
+       pokeMarket.leerUsuariosArchivo(); //pasamos usuarios al treeMap de la clase Evoltorio
+
+       System.out.println("\n\nUSUARIOS EN TREEMAP PASADOS DE ARCHIVO \n");
+       System.out.println(pokeMarket.mostrarMapaUsuarios());
+
+       //--------------------------------REPARTIENDO CARTAS------------------------------------
+       //pokeMarket.repartirCartas(cartasDeApi);
+       */
+
 
         /*//-----------------------------------------------PASAJE DE EL ARCHIVO JSON (MOCK DATA) A ARCHIVO JAVA DE USUARIOS-------------------------
         try
         {
             String archivoJsonUsu = JsonUtiles.leer("MOCK_DATA (11)");
             JSONArray jsonArray = new JSONArray(archivoJsonUsu);
+
             for (int i=0;i<jsonArray.length();i++)
             {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -234,7 +243,7 @@ public class Main {
                 boolean rta = pokeMarket.agregarUsuario(aux);
                 if(rta)
                 {
-                    System.out.printf("\n Usuario creado con exito "+aux.getNombre());
+                    System.out.printf("\n Usuario creado con exito" + aux.getNombre());
                 }
                 else
                 {
@@ -243,9 +252,15 @@ public class Main {
             }
             pokeMarket.guardarUsuariosArchivo();
             pokeMarket.leerUsuariosArchivo();
+
+
         }catch (JSONException ex)
         {
             System.out.println("JSON mal formado");
-        }*/
+        }
+        */
+
+
+
     }
 }

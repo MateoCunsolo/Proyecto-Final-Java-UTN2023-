@@ -52,30 +52,46 @@ public class PokeMarket implements Serializable {
         this.mapaUsuarios = ControladoraArchivosObjetos.leerUsuarios();
     }
 
-    public String mostrarMapa()
+
+    public String mostrarMapaUsuarios()
     {
-        return this.mapaUsuarios.toString();
+        String mensaje = "";
+        Iterator<Map.Entry<String,Usuario>> i = mapaUsuarios.entrySet().iterator();
+
+        while(i.hasNext())
+        {
+            Map.Entry<String,Usuario> entrada = (Map.Entry) i.next();
+            mensaje = mensaje + entrada.toString();
+        }
+
+        return mensaje;
     }
 
     public void repartirCartas(ArrayList<Item> cartas) {
 
-        System.out.printf("CANTIDAD DE USUARIOS: "+mapaUsuarios.size());
-        System.out.printf("CANTIDAD DE CARTAS: "+cartas.size());
         Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
-        int k = 1;
 
-            while (k < cartas.size() && iterator.hasNext()) {
+        int k = 0;
+
+        while(iterator.hasNext()) { //mientras haya usuarios
+            while (k < cartas.size()) {
+
                 Map.Entry<String, Usuario> entrada = iterator.next();
-                for (int j = 0; j < 5 && k < cartas.size(); j++) {
+
+                for (int j = 0; j < 5; j++) {
                     Item item = cartas.get(k);
+                    item.setNombreDuenio(entrada.getKey());
                     entrada.getValue().agregarCarta(item);
                     k++;
                 }
+                System.out.println(k);
                 System.out.println("\nINVENTARIO CARGADO DE: " + entrada.getKey());
                 System.out.println(entrada.getValue().mostrarInventario());
             }
+        }
+        ControladoraArchivosObjetos.grabarUsuarios(mapaUsuarios);
+    }
 
-     }
+
 
 }
-
