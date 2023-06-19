@@ -1,6 +1,7 @@
 package ClasesGenericas;
 
 import Interfaces.IFuncionalidades;
+import clasesPersonas.Usuario;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -29,7 +30,9 @@ public class ContenedorLHS <T> implements IFuncionalidades<T>, Serializable
         Iterator it = miLHSet.iterator();
         while(it.hasNext())
         {
-            msj = msj + it.next().toString();
+            T dato = (T) it.next();
+            msj = msj + dato.toString();
+
         }
         return msj;
     }
@@ -50,14 +53,7 @@ public class ContenedorLHS <T> implements IFuncionalidades<T>, Serializable
     @Override
     public boolean agregar(T o) {
 
-        boolean rta = false;
-        if(o != null)
-        {
-            miLHSet.add(o);
-            rta = true;
-        }
-
-        return rta;
+        return miLHSet.add(o);
     }
 
     @Override

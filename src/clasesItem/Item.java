@@ -63,7 +63,7 @@ public class Item implements Serializable
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return Double.compare(item.precio, precio) == 0 && id.equals(item.id) && nombreDuenio.equals(item.nombreDuenio) && descrip.equals(item.descrip);
+        return Double.compare(item.precio, precio) == 0 && nombreDuenio.equals(item.nombreDuenio) && Objects.equals(descrip, item.descrip) && id.equals(item.id);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class Item implements Serializable
 
     @Override
     public String toString() {
-        return "Item{" +
+        return "\nItem{" +
                 "precio=" + precio +
                 ", nombreDuenio='" + nombreDuenio + '\'' +
                 ", descrip='" + descrip + '\'' +
