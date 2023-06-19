@@ -5,8 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,7 +17,9 @@ public class Main {
         int contador = 0;
         int contadorErrores = 0;
         PokeMarket pokeMarket = new PokeMarket();
-        ArrayList<Item> cartasDeApi = new ArrayList<>();
+
+        ArrayList<Item> cartasDeApi = new ArrayList<>(); //aca estan nuestras cartas
+
         Item item = new Item();
 
         try {
@@ -154,7 +155,13 @@ public class Main {
 
                     item.setId(cartaJson.getString("id"));
 
-                    item.setDescrip(cartaJson.getString("flavorText"));
+                    try{
+                        item.setDescrip(cartaJson.getString("flavorText"));
+
+                    }catch(JSONException a)
+                    {
+                        System.out.printf("");
+                    }
 
                     if (card.getRareza().equals("Rare Holo")) //5
                     {
@@ -193,8 +200,6 @@ public class Main {
                         item.setPrecio(5000);
                     }
 
-
-
                 } catch (JSONException e3) {
                     System.out.printf("");
                     contadorErrores = contadorErrores + 1;
@@ -212,19 +217,15 @@ public class Main {
         System.out.printf("\n\tERRORES= " + contadorErrores);
         System.out.printf("\n********************************");
 
-
-
-
         pokeMarket.leerUsuariosArchivo();
-        System.out.printf(pokeMarket.mostrarMapa());
+        pokeMarket.repartirCartas(cartasDeApi);
+        //System.out.printf(pokeMarket.mostrarMapa());
 
-
-        //-----------------------------------------------PASAJE DE EL ARCHIVO JSON (MOCK DATA) A ARCHIVO JAVA DE USUARIOS-------------------------
-        /*try
+        /*//-----------------------------------------------PASAJE DE EL ARCHIVO JSON (MOCK DATA) A ARCHIVO JAVA DE USUARIOS-------------------------
+        try
         {
             String archivoJsonUsu = JsonUtiles.leer("MOCK_DATA (11)");
             JSONArray jsonArray = new JSONArray(archivoJsonUsu);
-
             for (int i=0;i<jsonArray.length();i++)
             {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -233,7 +234,7 @@ public class Main {
                 boolean rta = pokeMarket.agregarUsuario(aux);
                 if(rta)
                 {
-                    System.out.printf("\n Usuario creado con exito" + aux.getNombre());
+                    System.out.printf("\n Usuario creado con exito "+aux.getNombre());
                 }
                 else
                 {
@@ -242,13 +243,9 @@ public class Main {
             }
             pokeMarket.guardarUsuariosArchivo();
             pokeMarket.leerUsuariosArchivo();
-
-
         }catch (JSONException ex)
         {
             System.out.println("JSON mal formado");
         }*/
-
-
     }
 }

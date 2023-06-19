@@ -1,10 +1,11 @@
 package Interfaces;
 
-public interface IFuncionalidades
+public interface IFuncionalidades<T>
 {
     int contar();
-    void listar();
-    boolean eliminar();
+    String listar();
+    boolean eliminar(T o);
+
     //boolean buscar();
-    boolean agregar(Object o);
+    boolean agregar(T o);
 }

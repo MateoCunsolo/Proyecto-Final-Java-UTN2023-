@@ -64,8 +64,7 @@ public class ControladoraArchivosObjetos
             while (true)
             {
                 Usuario aux = (Usuario) objectInputStream.readObject();
-                mapaUsuarios.put(aux.getNombre(),aux);
-
+                mapaUsuarios.put(aux.getNombre(), aux);
             }
 
         }
@@ -87,7 +86,7 @@ public class ControladoraArchivosObjetos
             while(it.hasNext())
             {
                 Map.Entry miMapa = (Map.Entry) it.next();
-                System.out.println(miMapa.getValue());
+                //System.out.println(miMapa.getValue());
             }
             try
             {
