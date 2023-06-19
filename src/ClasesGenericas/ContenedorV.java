@@ -5,7 +5,7 @@ import Interfaces.IFuncionalidades;
 import java.io.Serializable;
 import java.util.Vector;
 
-public class ContenedorV <T> implements IFuncionalidades, Serializable
+public class ContenedorV <T> implements IFuncionalidades<T>, Serializable
 {
     private Vector <T> miVector; //(aplica  items, historia de compras y de ventas)
 
@@ -20,17 +20,19 @@ public class ContenedorV <T> implements IFuncionalidades, Serializable
     }
 
     @Override
-    public void listar() {
+    public String  listar() {
+
+        return "";
 
     }
 
     @Override
-    public boolean eliminar() {
+    public boolean eliminar(T o) {
         return false;
     }
 
     @Override
-    public boolean agregar(Object o) {
+    public boolean agregar(T o) {
         return false;
     }
 
@@ -40,4 +42,5 @@ public class ContenedorV <T> implements IFuncionalidades, Serializable
                 "miVector=" + miVector +
                 '}';
     }
+
 }

@@ -40,7 +40,8 @@ public class ControladoraArchivosObjetos
 
                 if (objectOutputStream != null)
                     objectOutputStream.close();
-            } catch (IOException ex) {
+            } catch (IOException ex)
+            {
                 return mensaje2 = "Se produjo un error al cerrar el archivo";
             }
         }
@@ -65,6 +66,7 @@ public class ControladoraArchivosObjetos
             {
                 Usuario aux = (Usuario) objectInputStream.readObject();
                 mapaUsuarios.put(aux.getNombre(),aux);
+
             }
 
         }

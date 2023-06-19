@@ -5,20 +5,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
 
-        /*
+        PokeMarket pokeMarket = new PokeMarket();
+
+
+        pokeMarket.leerUsuariosArchivo(); //pasamos archivo usuarios al treeMap de la clase Evoltorio
+
+         /*
             PASAJE DE API-CARTAS POKEMON A UN ARRAY LIST DE CARTAS, PARA QUE LUEGO SE LAS
             ASIGNEMOS A CADA USUARIO Y DE AHI A GUARADAR EL MAP DE USUARIOS EN UN ARCHIVO
-        */
 
         int contador = 0;
-        PokeMarket pokeMarket = new PokeMarket();
-        ArrayList<Item> cartasDeApi = new ArrayList<>();
+        ArrayList<Item> cartasDeApi = new ArrayList<>(); //aca estan nuestras cartas
+
+        Item item = new Item();
 
         try {
 
@@ -146,11 +150,17 @@ public class Main {
                     card.setNumero(cartaJson.getString("number"));
 
                     // ( 4 ) Creacion del item
-                    Item item = card;
+                    item = card;
 
                     item.setId(cartaJson.getString("id"));
 
-                    item.setDescrip(cartaJson.getString("flavorText"));
+                    try{
+                        item.setDescrip(cartaJson.getString("flavorText"));
+
+                    }catch(JSONException a)
+                    {
+                        System.out.printf("");
+                    }
 
                     if (card.getRareza().equals("Rare Holo")) //5
                     {
@@ -189,12 +199,13 @@ public class Main {
                         item.setPrecio(5000);
                     }
 
-                    cartasDeApi.add(item);
+                    //cartasDeApi.add(item);
 
                 } catch (JSONException e3) {
                     System.out.printf("");
                 }
 
+                cartasDeApi.add(item);
                 contador = contador + 1;
             }
         } catch (JSONException e) {
@@ -204,15 +215,23 @@ public class Main {
         System.out.printf("\n\n\n\n********************************");
         System.out.printf("\n\tITEMS CARGADOS = " + contador);
         System.out.printf("\n********************************");
-
-        pokeMarket.leerUsuariosArchivo();
-
-        System.out.printf(pokeMarket.mostrarMapa());
+         */
 
 
+    /*
+    //-------------------cargando cartas de api (de tipo item) a usuarios-------------------
+
+       pokeMarket.leerUsuariosArchivo(); //pasamos usuarios al treeMap de la clase Evoltorio
+
+       System.out.println("\n\nUSUARIOS EN TREEMAP PASADOS DE ARCHIVO \n");
+       System.out.println(pokeMarket.mostrarMapaUsuarios());
+
+       //--------------------------------REPARTIENDO CARTAS------------------------------------
+       //pokeMarket.repartirCartas(cartasDeApi);
+       */
 
 
-        //-----------------------------------------------PASAJE DE EL ARCHIVO JSON (MOCK DATA) A ARCHIVO JAVA DE USUARIOS-------------------------
+        /*//-----------------------------------------------PASAJE DE EL ARCHIVO JSON (MOCK DATA) A ARCHIVO JAVA DE USUARIOS-------------------------
         try
         {
             String archivoJsonUsu = JsonUtiles.leer("MOCK_DATA (11)");
@@ -241,6 +260,8 @@ public class Main {
         {
             System.out.println("JSON mal formado");
         }
+        */
+
 
 
     }
