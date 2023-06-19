@@ -88,9 +88,9 @@ public class Usuario extends Persona implements Serializable
                 '}';
     }
 
-    public void agregarCarta(Item item)
+    public boolean agregarCarta(Item item)
     {
-        this.inventario.agregar(item);
+        return this.inventario.agregar(item);
     }
 
     public String mostrarInventario()
@@ -98,6 +98,8 @@ public class Usuario extends Persona implements Serializable
         String msj = inventario.listar();
         return msj;
     }
+
+
 
 
     private static final long serialVersionUID = -2105958263903413399L;

@@ -10,12 +10,21 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
 
-        /*
+        PokeMarket pokeMarket = new PokeMarket();
+
+
+        pokeMarket.leerUsuariosArchivo(); //pasamos archivo usuarios al treeMap de la clase Evoltorio
+
+
+
+
+
+
+         /*
             PASAJE DE API-CARTAS POKEMON A UN ARRAY LIST DE CARTAS, PARA QUE LUEGO SE LAS
             ASIGNEMOS A CADA USUARIO Y DE AHI A GUARADAR EL MAP DE USUARIOS EN UN ARCHIVO
-        */
+
         int contador = 0;
-        PokeMarket pokeMarket = new PokeMarket();
         ArrayList<Item> cartasDeApi = new ArrayList<>(); //aca estan nuestras cartas
 
         Item item = new Item();
@@ -211,29 +220,24 @@ public class Main {
         System.out.printf("\n\n\n\n********************************");
         System.out.printf("\n\tITEMS CARGADOS = " + contador);
         System.out.printf("\n********************************");
-
-       // pokeMarket.leerUsuariosArchivo();
-        //System.out.printf(pokeMarket.mostrarMapa());
+         */
 
 
-
-
+    /*
     //-------------------cargando cartas de api (de tipo item) a usuarios-------------------
 
-        pokeMarket.leerUsuariosArchivo(); //pasamos usuarios al treeMap de la clase Evoltorio
+       pokeMarket.leerUsuariosArchivo(); //pasamos usuarios al treeMap de la clase Evoltorio
 
        System.out.println("\n\nUSUARIOS EN TREEMAP PASADOS DE ARCHIVO \n");
        System.out.println(pokeMarket.mostrarMapaUsuarios());
 
-        //-------------- REPARTIENDO CARTAS----------------
-       pokeMarket.repartirCartas(cartasDeApi);
+       //--------------------------------REPARTIENDO CARTAS------------------------------------
+       //pokeMarket.repartirCartas(cartasDeApi);
+       */
 
 
-
-
-
-        //-----------------------------------------------PASAJE DE EL ARCHIVO JSON (MOCK DATA) A ARCHIVO JAVA DE USUARIOS-------------------------
-        /*try
+        /*//-----------------------------------------------PASAJE DE EL ARCHIVO JSON (MOCK DATA) A ARCHIVO JAVA DE USUARIOS-------------------------
+        try
         {
             String archivoJsonUsu = JsonUtiles.leer("MOCK_DATA (11)");
             JSONArray jsonArray = new JSONArray(archivoJsonUsu);
@@ -260,7 +264,9 @@ public class Main {
         }catch (JSONException ex)
         {
             System.out.println("JSON mal formado");
-        }*/
+        }
+        */
+
 
 
     }
