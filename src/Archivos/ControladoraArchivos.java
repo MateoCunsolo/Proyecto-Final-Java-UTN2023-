@@ -160,7 +160,7 @@ public class ControladoraArchivos
         }
         catch (EOFException ex)
         {
-            System.out.println("FIN de ARCHIVO");
+            //System.out.println("FIN de ARCHIVO");
         }
         catch (ClassNotFoundException ex)
         {

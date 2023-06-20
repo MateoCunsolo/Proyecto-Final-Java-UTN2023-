@@ -1,16 +1,15 @@
 package claseEnvoltorio;
 
+
 import Archivos.ControladoraArchivos;
+import Excepciones.UsuarioContraseniaInvalidoException;
 import clasesItem.Item;
 import clasesPersonas.Administrador;
 import clasesPersonas.Usuario;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class PokeMarket implements Serializable {
     private Administrador administrador;
@@ -63,9 +62,11 @@ public class PokeMarket implements Serializable {
         this.mapaUsuarios = ControladoraArchivos.leerUsuarios();
     }
 
+    public int cantidadUser() {
+        return this.mapaUsuarios.size();
+    }
 
-    public String mostrarMapaUsuarios()
-    {
+    public String mostrarMapaUsuarios() {
         String mensaje = "";
         Iterator<Map.Entry<String,Usuario>> i = mapaUsuarios.entrySet().iterator();
 
@@ -74,7 +75,6 @@ public class PokeMarket implements Serializable {
             Map.Entry<String,Usuario> entrada = (Map.Entry) i.next();
             mensaje = mensaje + entrada.getValue().toString();
         }
-
         return mensaje;
     }
 
@@ -84,35 +84,18 @@ public class PokeMarket implements Serializable {
      * @param cartas: ArrayList de tipo Item que contenga la informacion de las cartas.
      */
     public void repartirCartas(ArrayList<Item> cartas) {
-
-        leerUsuariosArchivo();
-        System.out.println(mapaUsuarios.toString());
-        Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
-
-        System.out.println("entro a la funcion ");
-        int k = 0;
-
-
-       // System.out.println(mapaUsuarios.toString());
-        while(iterator.hasNext()) { //mientras haya usuarios
-            System.out.println(" hay usuarios");
-
-            while (k < cartas.size()) { //mientras haya cartas
-                System.out.println(" hay cartas todavia");
+            Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
+            while (iterator.hasNext()) {
                 Map.Entry<String, Usuario> entrada = iterator.next();
+                Usuario usuario = entrada.getValue();
                 for (int j = 0; j < 5; j++) {
-                    Item item = cartas.get(k);
+                    Item item = cartas.remove(0);
                     item.setNombreDuenio(entrada.getKey());
-                    entrada.getValue().agregarCarta(item);
-                    k++;
+                    usuario.agregarCarta(item);
                 }
-                System.out.println(k);
-                System.out.println("\nINVENTARIO CARGADO DE: " + entrada.getKey());
-                System.out.println(entrada.getValue().mostrarInventario());
             }
+            ControladoraArchivos.grabarUsuarios(mapaUsuarios);
         }
-        ControladoraArchivos.grabarUsuarios(mapaUsuarios);
-    }
 
     public boolean compararAdmin(Administrador o)
     {
@@ -134,5 +117,47 @@ public class PokeMarket implements Serializable {
         System.out.println(mapaUsuarios.toString());
     }
 
-}
+    public void verItemsPublicados() {
+        Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, Usuario> entrada = iterator.next();
+            Usuario usuario = entrada.getValue();
+            System.out.println(usuario.mostrarItemsPublicados());
+        }
+    }
 
+    public Usuario iniciarSesion(String nombre, String password) throws UsuarioContraseniaInvalidoException {
+        Usuario rta = new Usuario();
+        if (mapaUsuarios.containsKey(nombre)) {
+            Usuario actual = mapaUsuarios.get(nombre);
+            if (actual.compararContrasenias(password)) {
+                rta = actual;
+            } else {
+                throw new UsuarioContraseniaInvalidoException();
+            }
+        } else {
+            throw new UsuarioContraseniaInvalidoException();
+        }
+        return rta;
+    }
+
+
+    public Item buscarItemPublicadoXid(String id) {
+        int flag = 1;
+        Item buscado = new Item();
+
+        Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
+
+        while (iterator.hasNext() && flag != 0) {
+            Map.Entry<String, Usuario> entrada = iterator.next();
+            Usuario usuario = entrada.getValue();
+            buscado = usuario.buscarEnItemsPublicadosPropios(id);
+            if (buscado.getId().equals(id)) {
+                flag = 0;
+            }
+        }
+        return buscado;
+    }
+
+
+}

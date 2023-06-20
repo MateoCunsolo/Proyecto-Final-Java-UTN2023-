@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 
 public class Carrito implements ITransaccionable, Serializable
 {
+    private static final long serialVersionUID = -7604144828635493406L;
+
     private int cantidadItems;
     private double totalAPagar;
     private LocalDateTime fecha;
@@ -53,21 +55,42 @@ public class Carrito implements ITransaccionable, Serializable
         this.fecha = fecha;
     }
 
-    public boolean eliminarCarrito() {
-        this.productos = null; //eliminar todos los items del contenedor
-        return false;
+    public void eliminarCarrito() {
+         productos.eliminarCompleto();
     }
 
     public boolean eliminarUnItem(Item item) {
-        return false;
+       return  productos.eliminar(item);
     }
 
     public void verCarrito()
     {
     }
-    public boolean agregarAlCarrito(Item item)
+    public void agregarAlCarrito(Item item)
     {
-        return false;
+        if(productos.vacio())
+        {
+            fecha = LocalDateTime.now();
+        }
+        if(productos.agregar(item))
+        {
+            setCantidadItems(getCantidadItems()+1);
+            setTotalAPagar(getTotalAPagar()+item.getPrecio());
+        }
+    }
+
+    public Item buscarItemEnCarritoXid(String id)
+    {
+        Item respuesta = new Item();
+        for(int i =0; i<productos.contar(); i++)
+        {
+            Item aux = productos.get(i);
+            if(aux.getId().equals(id))
+            {
+                respuesta = aux;
+            }
+        }
+        return  respuesta;
     }
 
     @Override
@@ -75,6 +98,12 @@ public class Carrito implements ITransaccionable, Serializable
     {
         return 0;
     }
+
+    public Item ultimo()
+    {
+        return productos.get(productos.contar()-1);
+    }
+
 
     @Override
     public String toString() {
