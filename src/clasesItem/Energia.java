@@ -7,7 +7,7 @@ public enum Energia implements Serializable
 
     EMPTY(" "), LIGHTNING("Trueno"), COLORLESS("Incolora"), GRASS("Planta"),
     WATER("Agua"), PSYCHIC("Psiquico"), DARKNESS("Oscuro"), FIRE("Fuego"),
-    METAL("Metal"), FIGHTING("Lucha"), DRAGON("Dragon"), FAIRY("Hada");
+    METAL("Metal"), FIGHTING("Lucha"), DRAGON("Dragon"), FAIRY("Hada"), INEXISTENTE("Inexistente");
 
     private String nombre;
 
@@ -22,8 +22,6 @@ public enum Energia implements Serializable
 
     @Override
     public String toString() {
-        return "Energia{" +
-                "nombre='" + nombre + '\'' +
-                '}';
+        return nombre;
     }
 }

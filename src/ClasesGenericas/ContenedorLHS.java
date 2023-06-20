@@ -1,14 +1,15 @@
 package ClasesGenericas;
 
 import Interfaces.IFuncionalidades;
-import clasesPersonas.Usuario;
+import clasesItem.Item;
 
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
-public class ContenedorLHS <T> implements IFuncionalidades<T>, Serializable
+public class ContenedorLHS <T extends Item> implements IFuncionalidades<T>, Serializable
 {
+    private static final long serialVersionUID = -6160032998174358819L;
 
     private LinkedHashSet <T> miLHSet;
 
@@ -25,16 +26,11 @@ public class ContenedorLHS <T> implements IFuncionalidades<T>, Serializable
     @Override
     public String listar()
     {
-        String msj = "";
-
-        Iterator it = miLHSet.iterator();
-        while(it.hasNext())
-        {
-            T dato = (T) it.next();
-            msj = msj + dato.toString();
-
+        StringBuilder msj = new StringBuilder();
+        for (T dato : miLHSet) {
+            msj.append(dato.toString());
         }
-        return msj;
+        return msj.toString();
     }
 
     @Override
@@ -58,10 +54,10 @@ public class ContenedorLHS <T> implements IFuncionalidades<T>, Serializable
 
     @Override
     public String toString() {
-        return "ContenedorLHS{" +
-                "miLHSet=" + miLHSet +
-                '}';
+        return "\n\n"+miLHSet;
     }
 
-
+    public LinkedHashSet<T> getMiLHSet() {
+        return miLHSet;
+    }
 }
