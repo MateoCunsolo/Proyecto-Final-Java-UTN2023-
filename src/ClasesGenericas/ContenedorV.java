@@ -21,9 +21,7 @@ public class ContenedorV <T> implements IFuncionalidades<T>, Serializable {
 
     @Override
     public String listar() {
-
         return "";
-
     }
 
     public boolean vacio() {
@@ -52,6 +50,11 @@ public class ContenedorV <T> implements IFuncionalidades<T>, Serializable {
                 '}';
     }
 
+    public int tamanio()
+    {
+        return miVector.size();
+    }
+
     public T borrarUltimo()
     {
         return (T) miVector.lastElement();
@@ -64,7 +67,7 @@ public class ContenedorV <T> implements IFuncionalidades<T>, Serializable {
             throw new IndexOutOfBoundsException("Índice fuera de rango");
         }
     }
-
     private static final long serialVersionUID = -2561961538353586188L;
+
 
 }

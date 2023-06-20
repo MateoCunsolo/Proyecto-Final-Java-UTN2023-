@@ -8,22 +8,19 @@ import java.util.Objects;
 
 public class Item implements Serializable, I_toJSON
 {
-
     private double precio; //chek
     private String nombreDuenio; //es el nombre del usuario
     private String descrip; //chek
     private String id; //chek
 
-    public Item()
-    {
+    public Item() {
         precio = 0;
         nombreDuenio = "";
         descrip = "";
         id = "";
     }
 
-    public Item (double precio, String nombreDuenio, String descrip, String id)
-    {
+    public Item(double precio, String nombreDuenio, String descrip, String id) {
         this.precio = 0;
         this.nombreDuenio = nombreDuenio;
         this.descrip = descrip;

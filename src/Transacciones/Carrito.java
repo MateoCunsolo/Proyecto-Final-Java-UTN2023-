@@ -114,4 +114,24 @@ public class Carrito implements ITransaccionable, Serializable
                 ", productos=" + productos +
                 '}';
     }
+
+    public String listar()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Fecha: ").append(getFecha()).append("\n")
+                .append("Total pagado: ").append(getTotalAPagar()).append("\n")
+                .append("Productos:\n");
+
+        // Iterar sobre los productos y agregar información relevante
+        for (int i = 0; i < productos.tamanio(); i++) { //recorre los productos comprados
+
+            Item item = productos.get(i);
+
+            sb.append(item.toString())
+                    .append("\n");
+        }
+
+        return sb.toString();
+    }
 }

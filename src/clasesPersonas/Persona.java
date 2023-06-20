@@ -44,12 +44,9 @@ public abstract class Persona implements Serializable
     }
 
     @Override
-    public String toString()
-    {
-        return "Persona{" +
-                "nombre='" + nombre + '\'' +
-                ", contrasenia='" + contrasenia + '\'' +
-                '}';
+    public String toString() {
+        return "\t\t| Nombre: " + nombre +              " \n";
+
     }
 
     public boolean compararContrasenias(String passoword)
@@ -61,4 +58,5 @@ public abstract class Persona implements Serializable
         }
         return rta;
     }
+
 }
