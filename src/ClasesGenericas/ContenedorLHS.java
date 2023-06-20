@@ -7,14 +7,12 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
-public class ContenedorLHS <T extends Item> implements IFuncionalidades<T>, Serializable
-{
+public class ContenedorLHS <T extends Item> implements IFuncionalidades<T>, Serializable {
     private static final long serialVersionUID = -6160032998174358819L;
 
-    private LinkedHashSet <T> miLHSet;
+    private LinkedHashSet<T> miLHSet;
 
-    public ContenedorLHS()
-    {
+    public ContenedorLHS() {
         miLHSet = new LinkedHashSet<>();
     }
 
@@ -23,9 +21,16 @@ public class ContenedorLHS <T extends Item> implements IFuncionalidades<T>, Seri
         return 0;
     }
 
+    /**
+     * AAAAAAAAAAAAAAAA
+     */
+    public LinkedHashSet<T> getMiLHSet() {
+        return miLHSet;
+    }
+
+
     @Override
-    public String listar()
-    {
+    public String listar() {
         StringBuilder msj = new StringBuilder();
         for (T dato : miLHSet) {
             msj.append(dato.toString());
@@ -37,8 +42,7 @@ public class ContenedorLHS <T extends Item> implements IFuncionalidades<T>, Seri
     public boolean eliminar(T o) {
 
         boolean rta = false;
-        if(o != null)
-        {
+        if (o != null) {
             miLHSet.remove(o);
             rta = true;
         }
@@ -54,10 +58,6 @@ public class ContenedorLHS <T extends Item> implements IFuncionalidades<T>, Seri
 
     @Override
     public String toString() {
-        return "\n\n"+miLHSet;
-    }
-
-    public LinkedHashSet<T> getMiLHSet() {
-        return miLHSet;
+        return "\n\n" + miLHSet;
     }
 }

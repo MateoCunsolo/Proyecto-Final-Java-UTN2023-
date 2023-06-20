@@ -1,6 +1,6 @@
 package clasesPersonas;
 
-import Archivos.ControladoraArchivosObjetos;
+import Archivos.ControladoraArchivos;
 import ClasesGenericas.ContenedorLHS;
 import ClasesGenericas.ContenedorV;
 import Transacciones.Carrito;
@@ -8,7 +8,7 @@ import Transacciones.Intercambio;
 import Transacciones.Venta;
 import clasesItem.Carta;
 import clasesItem.Item;
-
+import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -54,6 +54,21 @@ public class Usuario extends Persona implements Serializable {
         inventario = new ContenedorLHS<>();
     }
 
+    /**
+     * aaaaaaaaaaaaaaaaaaaa
+     */
+    public ContenedorV<Venta> getHistorialVentas() ///!!!!???
+    {
+        return historialVentas;
+    }
+
+    /**
+     * aaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+     */
+    public ContenedorV<Intercambio> getHistorialIntercambio() {
+        return historialIntercambio;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -89,7 +104,47 @@ public class Usuario extends Persona implements Serializable {
                 ", historialIntercambio=" + historialIntercambio +
                 ", itemsPublicados=" + itemsPublicados +
                 ", inventario=" + inventario +
+                ", ctteSaldo=" + ctteSaldo +
                 '}';
+    }
+
+
+    public String mostrarHistorialVentas() {
+
+        StringBuilder sb = new StringBuilder();
+        int contV = 1;
+
+        sb.append("------------HISTORIAL DE VENTAS-------------\n");
+
+        for (int i = 0; i < historialVentas.tamanio(); i++) {
+
+            Venta venta = historialVentas.get(i);
+            sb.append("Venta N°" + contV + ":").append("\n")
+                    .append(venta.listar())
+                    .append("\n");
+            contV++;
+        }
+        return sb.toString();
+    }
+
+    public String mostrarHistorialCompras()
+    {
+
+        StringBuilder sb = new StringBuilder();
+        int contV = 1;
+
+        sb.append("------------HISTORIAL DE COMPRAS-------------\n");
+
+        for (int i = 0; i < historialCompras.tamanio(); i++) {
+
+            Carrito carro = historialCompras.get(i);
+            sb.append("Compra N°" + contV + ":").append("\n")
+                    .append(carro.listar())
+                    .append("\n");
+            contV++;
+        }
+        return sb.toString();
+
     }
 
     public boolean agregarCarta(Item item) {
@@ -161,6 +216,7 @@ public class Usuario extends Persona implements Serializable {
         carrito.setFecha(null);
 
     }
+
 }
 
 
