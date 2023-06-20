@@ -1,9 +1,10 @@
 package claseEnvoltorio;
 
-import Archivos.ControladoraArchivosObjetos;
+import Archivos.ControladoraArchivos;
 import clasesItem.Item;
 import clasesPersonas.Administrador;
 import clasesPersonas.Usuario;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,6 +30,16 @@ public class PokeMarket implements Serializable {
         return administrador;
     }
 
+    /** AAAAAAAAAAAAAAAAAA*/
+    public void setAdministrador(Administrador administrador) { //!!!!
+        this.administrador = administrador;
+    }
+
+    /** OJOOO AL PIOJOOO !!!! */
+    public TreeMap<String, Usuario> getMapaUsuarios() { //!!!!
+        return mapaUsuarios;
+    }
+
     @Override
     public String toString() {
         return "PokeMarket{" + ", mapaUsuarios=" + mapaUsuarios +
@@ -45,11 +56,11 @@ public class PokeMarket implements Serializable {
     }
 
     public void guardarUsuariosArchivo() {
-        ControladoraArchivosObjetos.grabarUsuarios(mapaUsuarios);
+        ControladoraArchivos.grabarUsuarios(mapaUsuarios);
     }
 
     public void leerUsuariosArchivo() {
-        this.mapaUsuarios = ControladoraArchivosObjetos.leerUsuarios();
+        this.mapaUsuarios = ControladoraArchivos.leerUsuarios();
     }
 
 
@@ -61,23 +72,34 @@ public class PokeMarket implements Serializable {
         while(i.hasNext())
         {
             Map.Entry<String,Usuario> entrada = (Map.Entry) i.next();
-            mensaje = mensaje + entrada.toString();
+            mensaje = mensaje + entrada.getValue().toString();
         }
 
         return mensaje;
     }
 
+
+    /**
+     * Reparte cartas entre los usuarios existentes en el TreeMap y las graba en el archivo "Usuarios.dat"
+     * @param cartas: ArrayList de tipo Item que contenga la informacion de las cartas.
+     */
     public void repartirCartas(ArrayList<Item> cartas) {
 
+        leerUsuariosArchivo();
+        System.out.println(mapaUsuarios.toString());
         Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
 
+        System.out.println("entro a la funcion ");
         int k = 0;
 
+
+       // System.out.println(mapaUsuarios.toString());
         while(iterator.hasNext()) { //mientras haya usuarios
-            while (k < cartas.size()) {
+            System.out.println(" hay usuarios");
 
+            while (k < cartas.size()) { //mientras haya cartas
+                System.out.println(" hay cartas todavia");
                 Map.Entry<String, Usuario> entrada = iterator.next();
-
                 for (int j = 0; j < 5; j++) {
                     Item item = cartas.get(k);
                     item.setNombreDuenio(entrada.getKey());
@@ -89,13 +111,28 @@ public class PokeMarket implements Serializable {
                 System.out.println(entrada.getValue().mostrarInventario());
             }
         }
-        ControladoraArchivosObjetos.grabarUsuarios(mapaUsuarios);
+        ControladoraArchivos.grabarUsuarios(mapaUsuarios);
     }
 
-    /*public String mostrarMapa() {
-        return this.mapaUsuarios.toString();
+    public boolean compararAdmin(Administrador o)
+    {
+        return this.administrador.equals(o);
+    }
 
-    }*/
+    public boolean contieneUsuario(String nombreUsuario)
+    {
+        boolean rta = false;
+        if(mapaUsuarios.containsKey(nombreUsuario))
+        {
+            rta = true;
+        }
+        return rta;
+    }
+
+    public void mostrarusu()
+    {
+        System.out.println(mapaUsuarios.toString());
+    }
 
 }
 

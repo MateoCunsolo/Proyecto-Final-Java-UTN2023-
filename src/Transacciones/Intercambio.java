@@ -3,9 +3,10 @@ package Transacciones;
 import clasesItem.Item;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Intercambio implements Serializable
+public class Intercambio extends Transaccion implements Serializable
 {
     Item entrada;
     Item salida;
@@ -43,8 +44,13 @@ public class Intercambio implements Serializable
     }
 
     @Override
+    public LocalDateTime getFecha() {
+        return super.getFecha();
+    }
+
+    @Override
     public String toString() {
-        return "Intercambio{" +
+        return super.toString() +"Intercambio{" +
                 "entrada=" + entrada +
                 ", salida=" + salida +
                 '}';

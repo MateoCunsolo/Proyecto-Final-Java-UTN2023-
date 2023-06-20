@@ -76,8 +76,8 @@ public class Carta extends Item implements Serializable
 
     @Override
     public String toString() {
-        return super.toString() + "Carta{" +
-                "numero=" + numero +
+        return "Carta{" +
+                "numero='" + numero + '\'' +
                 ", pokemon=" + pokemon +
                 ", rareza='" + rareza + '\'' +
                 ", artista='" + artista + '\'' +

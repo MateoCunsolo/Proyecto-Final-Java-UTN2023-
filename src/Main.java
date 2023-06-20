@@ -1,5 +1,8 @@
+import Archivos.ControladoraArchivos;
+import Excepciones.UsuarioNoEncontradoException;
 import claseEnvoltorio.PokeMarket;
 import clasesItem.*;
+import clasesPersonas.Administrador;
 import clasesPersonas.Usuario;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,21 +14,264 @@ public class Main {
     public static void main(String[] args) {
 
         PokeMarket pokeMarket = new PokeMarket();
+       crearArchivoConUsuarios(pokeMarket);
+       cargaArchivoConCartas(pokeMarket);
+
+        pokeMarket.leerUsuariosArchivo(); //pasamos usuarios al treeMap de la clase Evoltorio
+
+        System.out.println("\n\nUSUARIOS EN TREEMAP PASADOS DE ARCHIVO \n");
+        System.out.println(pokeMarket.mostrarMapaUsuarios());
+        //pokeMarket.mostrarusu();
+
+        Scanner teclado = new Scanner(System.in);
+
+        menuPrincipal();
+        int opcion = teclado.nextInt();
+
+        //pokeMarket.leerUsuariosArchivo(); //pasamos archivo usuarios al treeMap de la clase Evoltorio
+        //System.out.println(pokeMarket.mostrarMapaUsuarios());
+
+        char continuar = 's';
+
+        do {
+
+        switch (opcion) {
+
+            case 1: //REGISTRARSE
+            {
+                System.out.println("¡Hola!");
+                break;
+            }
+            case 2: //INICIAR SESION
+            {
+                // ControladoraArchivos.grabarAdministrador("pokeMarket2023","charizard150");
+                pokeMarket.setAdministrador(ControladoraArchivos.leerAdministrador()); //aaaaaaaa
+
+                System.out.println("Ingrese nombre: ");
+                teclado.nextLine();
+                String nombre = teclado.nextLine();
+
+                System.out.println("Ingrese contraseña: ");
+                String contra = teclado.nextLine();
+
+                Administrador admin = new Administrador(nombre, contra);
+                if (pokeMarket.compararAdmin(admin)) //si el nombre y dato ingresado coinciden, se ACCEDE MODO ADMINISTRADOR
+                {
+                    String mensaje = "Accediendo a funciones de administrador ...";
+                    for (int i = 0; i < mensaje.length(); i++) {
+                        System.out.print(mensaje.charAt(i));
+                        try {
+                            Thread.sleep(100); // Pausa de 100 milisegundos
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    System.out.println();
+
+                    menuAdministrador();
+                    int op = teclado.nextInt();
+
+                    switch (op) {
+                        case 1: //BORRAR USUARIO probarrrr
+                        {
+                            System.out.println("Ingrese nombre de usuario a borrar: ");
+                            String nom = teclado.nextLine();
+
+                            try {
+                                boolean rta = admin.borrarUsuario(nom, pokeMarket);
+                                if(rta)
+                                {
+                                    System.out.println("Usuario eliminado exitosamente");
+                                }else
+                                {
+                                    System.out.println("No se pudo eliminar el usuario solicitado");
+                                }
+
+                            }catch (UsuarioNoEncontradoException e)
+                            {
+                                System.out.println(e.getMessage());
+                            }
+                            break;
+                        }
+                        case 2: //VER USUARIOS ok
+                        {
+                            System.out.println(admin.verUsuarios(pokeMarket.getMapaUsuarios()));
+
+                            break;
+                        }
+                        case 3: //VER TODAS LAS VENTAS probarrrr
+                        {
+                            System.out.println(admin.verTodosHistorialVentas(pokeMarket.getMapaUsuarios()));
+                            break;
+                        }
+                        case 4: //VER TODOS LOS INTERCAMBIOS probarrrr
+                        {
+                            System.out.println(admin.verTodosHistorialIntercambios(pokeMarket.getMapaUsuarios()));
+                            break;
+                        }
+                        case 5: //VER MOVIMIENTOS DE UN USUARIO
+
+                            System.out.println("Ingrese nombre de usuario: ");
+                            teclado.nextLine();
+                            String nom = teclado.nextLine();
+
+                            boolean rta = pokeMarket.contieneUsuario(nom);
+                            if(rta) //si se encuentra el nombre ingresado
+                            {
+                                Usuario usu = pokeMarket.getMapaUsuarios().get(nom);
+
+                                String m = "Buscando datos del usuario" +nom + "...";
+                                for (int i = 0; i < m.length(); i++) {
+                                    System.out.print(m.charAt(i));
+                                    try {
+                                        Thread.sleep(100); // Pausa de 100 milisegundos
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                System.out.println();
+
+                                menuAdminMovimientosUsuario();
+                                int o = teclado.nextInt();
+
+                                switch (o)
+                                {
+                                    case 1: //VER VENTAS
+                                    {
+                                        System.out.println(usu.mostrarHistorialVentas());
+                                        break;
+                                    }
+                                    case 2: //VER COMPRAS
+                                    {
+                                        System.out.println(usu.mostrarHistorialCompras());
+                                        break;
+                                    }
+                                    case 3: //VER INTERCAMBIOS
+                                    {
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        System.out.println("Opción inválida");
+                                        break;
+                                    }
+                                }
 
 
-        pokeMarket.leerUsuariosArchivo(); //pasamos archivo usuarios al treeMap de la clase Evoltorio
+                            }else //si no se encuentra el nombre ingresado
+                            {
+                                System.out.println("El nombre ingresado no existe en el sistema, intente con otro nombre");
+                            }
+
+                            break;
+
+                        default:
+                            System.out.println("Opción inválida");
+                            break;
+                    }
+
+                }
+
+                else //verificar si se accede a las FUNCIONES del USUARIO
+                {
+
+                }
 
 
+                break;
+            }
+            default:
+                System.out.println("Opción inválida");
+                break;
+        }
+
+        System.out.println("\nDesea seguir navegando? (s/n) \n");
+        String rta = teclado.nextLine();
+        continuar = rta.charAt(0);
+
+    } while(continuar == 's');
+
+        teclado.close();
+
+    }
+
+    public static void menuPrincipal()
+    {
+        System.out.println(" _________________________________________");
+        System.out.println("|                 <<MENU>>                |");
+        System.out.println("| 1. REGISTRARSE                          |");
+        System.out.println("| 2. INICIAR SESION                       |");
+        System.out.println("|_________________________________________|");
+        System.out.println("\nIngrese el numero de la opcion que desea abrir: ");
+    }
+
+    public static void menuAdministrador()
+    {
+        System.out.println(" _________________________________________");
+        System.out.println("|           <<MENU ADMINISTRADOR>>        |");
+        System.out.println("| 1. BORRAR USUARIO                       |");
+        System.out.println("| 2. VER USUARIOS                         |");
+        System.out.println("| 3. VER TODAS LAS VENTAS                 |");
+        System.out.println("| 4. VER TODOS LOS INTERCAMBIOS           |");
+        System.out.println("| 5. VER MOVIMIENTOS DE UN USUARIO        |");
+        System.out.println("|_________________________________________|");
+        System.out.println("\nIngrese el numero de la opcion que desea abrir: ");
+
+    }
+
+    public static void menuAdminMovimientosUsuario()
+    {
+        System.out.println(" _________________________________________");
+        System.out.println("|     <<VER MOVIMIENTOS DE UN USUARIO>>   |");
+        System.out.println("| 1. VER VENTAS                           |");
+        System.out.println("| 2. VER COMPRAS                          |");
+        System.out.println("| 3. VER INTERCAMBIOS                     |");
+        System.out.println("|_________________________________________|");
+        System.out.println("\nIngrese el numero de la opcion que desea abrir: ");
+
+    }
+
+    public static void crearArchivoConUsuarios(PokeMarket pokeMarket)
+    {
+        //-----------------------------------------------PASAJE DE EL ARCHIVO JSON (MOCK DATA) A ARCHIVO JAVA DE USUARIOS-------------------------
+        try
+        {
+            String archivoJsonUsu = JsonUtiles.leer("MOCK_DATA (11)");
+            JSONArray jsonArray = new JSONArray(archivoJsonUsu);
+
+            for (int i=0;i<jsonArray.length();i++)
+            {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Usuario aux = new Usuario(jsonObject.getString("first_name"),jsonObject.getString("password"),jsonObject.getString("email"));
+
+                boolean rta = pokeMarket.agregarUsuario(aux);
+                if(rta)
+                {
+                    System.out.printf("\n Usuario creado con exito" + aux.getNombre());
+                }
+                else
+                {
+                    System.out.printf("No fue posible crear el usuario :(");
+                }
+            }
+            pokeMarket.guardarUsuariosArchivo();
+            //pokeMarket.leerUsuariosArchivo();
 
 
+        }catch (JSONException ex)
+        {
+            System.out.println("JSON mal formado");
+        }
+    }
 
-
+    public static void cargaArchivoConCartas (PokeMarket pokeMarket)
+    {
          /*
             PASAJE DE API-CARTAS POKEMON A UN ARRAY LIST DE CARTAS, PARA QUE LUEGO SE LAS
-            ASIGNEMOS A CADA USUARIO Y DE AHI A GUARADAR EL MAP DE USUARIOS EN UN ARCHIVO
+            ASIGNEMOS A CADA USUARIO Y DE AHI A GUARADAR EL MAP DE USUARIOS EN UN ARCHIVO*/
 
         int contador = 0;
-        ArrayList<Item> cartasDeApi = new ArrayList<>(); //aca estan nuestras cartas
+        ArrayList<Item> cartasDeApi = new ArrayList<>(); //aca van a estar nuestras cartas
 
         Item item = new Item();
 
@@ -204,8 +450,6 @@ public class Main {
                         item.setPrecio(5000);
                     }
 
-                    //cartasDeApi.add(item);
-
                 } catch (JSONException e3) {
                     System.out.printf("");
                 }
@@ -217,57 +461,14 @@ public class Main {
             System.out.printf("ERROR FATAL UNA CREACION DE LA CLASE QUE NO ESTA CAPTURADA CON SU PROPIO TRY CATCH HA LANZADO UNA EXCEPCION");
         }
 
+        //System.out.println(cartasDeApi.toString());
         System.out.printf("\n\n\n\n********************************");
         System.out.printf("\n\tITEMS CARGADOS = " + contador);
         System.out.printf("\n********************************");
-         */
 
-
-    /*
-    //-------------------cargando cartas de api (de tipo item) a usuarios-------------------
-
-       pokeMarket.leerUsuariosArchivo(); //pasamos usuarios al treeMap de la clase Evoltorio
-
-       System.out.println("\n\nUSUARIOS EN TREEMAP PASADOS DE ARCHIVO \n");
-       System.out.println(pokeMarket.mostrarMapaUsuarios());
-
-       //--------------------------------REPARTIENDO CARTAS------------------------------------
-       //pokeMarket.repartirCartas(cartasDeApi);
-       */
-
-
-        /*//-----------------------------------------------PASAJE DE EL ARCHIVO JSON (MOCK DATA) A ARCHIVO JAVA DE USUARIOS-------------------------
-        try
-        {
-            String archivoJsonUsu = JsonUtiles.leer("MOCK_DATA (11)");
-            JSONArray jsonArray = new JSONArray(archivoJsonUsu);
-
-            for (int i=0;i<jsonArray.length();i++)
-            {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Usuario aux = new Usuario(jsonObject.getString("first_name"),jsonObject.getString("password"),jsonObject.getString("email"));
-
-                boolean rta = pokeMarket.agregarUsuario(aux);
-                if(rta)
-                {
-                    System.out.printf("\n Usuario creado con exito" + aux.getNombre());
-                }
-                else
-                {
-                    System.out.printf("No fue posible crear el usuario :(");
-                }
-            }
-            pokeMarket.guardarUsuariosArchivo();
-            pokeMarket.leerUsuariosArchivo();
-
-
-        }catch (JSONException ex)
-        {
-            System.out.println("JSON mal formado");
-        }
-        */
-
-
+        //--------------------------------REPARTIENDO CARTAS------------------------------------
+         pokeMarket.repartirCartas(cartasDeApi);
 
     }
 }
+

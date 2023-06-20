@@ -5,29 +5,29 @@ import Transacciones.Carrito;
 import Transacciones.Intercambio;
 import Transacciones.Venta;
 import clasesItem.Item;
+import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.Map;
 
 
-
-public class Usuario extends Persona implements Serializable
-{
+public class Usuario extends Persona implements Serializable {
+    private static final long serialVersionUID = 7394283964424643481L;
     private String email;
     private double saldo;
     private Carrito carrito;
     private ContenedorV<Carrito> historialCompras;
     private ContenedorV<Venta> historialVentas;
     private ContenedorV<Intercambio> historialIntercambio;
-    private ContenedorLHS<Item>itemsPublicados;
+    private ContenedorLHS<Item> itemsPublicados;
     private ContenedorLHS<Item> inventario;
 
     private final double ctteSaldo = 5000;
 
     //CONSTRUCTORES
-    public Usuario()
-    {
+    public Usuario() {
         super();
-        email =  " ";
+        email = " ";
         saldo = ctteSaldo;
         carrito = null;
         historialCompras = new ContenedorV<>();
@@ -37,8 +37,7 @@ public class Usuario extends Persona implements Serializable
         inventario = new ContenedorLHS<>();
     }
 
-    public Usuario(String nombre, String contrasenia, String email)
-    {
+    public Usuario(String nombre, String contrasenia, String email) {
         super(nombre, contrasenia);
         this.email = email;
         this.saldo = ctteSaldo;
@@ -48,6 +47,21 @@ public class Usuario extends Persona implements Serializable
         historialIntercambio = new ContenedorV<>();
         itemsPublicados = new ContenedorLHS<>();
         inventario = new ContenedorLHS<>();
+    }
+
+    /**
+     * aaaaaaaaaaaaaaaaaaaa
+     */
+    public ContenedorV<Venta> getHistorialVentas() ///!!!!???
+    {
+        return historialVentas;
+    }
+
+    /**
+     * aaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+     */
+    public ContenedorV<Intercambio> getHistorialIntercambio() {
+        return historialIntercambio;
     }
 
     public String getEmail() {
@@ -85,8 +99,48 @@ public class Usuario extends Persona implements Serializable
                 ", historialIntercambio=" + historialIntercambio +
                 ", itemsPublicados=" + itemsPublicados +
                 ", inventario=" + inventario +
+                ", ctteSaldo=" + ctteSaldo +
                 '}';
     }
+
+    public String mostrarHistorialVentas() {
+
+        StringBuilder sb = new StringBuilder();
+        int contV = 1;
+
+        sb.append("------------HISTORIAL DE VENTAS-------------\n");
+
+        for (int i = 0; i < historialVentas.tamanio(); i++) {
+
+            Venta venta = historialVentas.get(i);
+            sb.append("Venta N°" + contV + ":").append("\n")
+                    .append(venta.listar())
+                    .append("\n");
+            contV++;
+        }
+        return sb.toString();
+    }
+
+    public String mostrarHistorialCompras()
+    {
+
+        StringBuilder sb = new StringBuilder();
+        int contV = 1;
+
+        sb.append("------------HISTORIAL DE COMPRAS-------------\n");
+
+        for (int i = 0; i < historialCompras.tamanio(); i++) {
+
+            Carrito carro = historialCompras.get(i);
+            sb.append("Compra N°" + contV + ":").append("\n")
+                    .append(carro.listar())
+                    .append("\n");
+            contV++;
+        }
+        return sb.toString();
+
+    }
+
 
     public boolean agregarCarta(Item item)
     {
@@ -100,9 +154,6 @@ public class Usuario extends Persona implements Serializable
     }
 
 
-
-
-    private static final long serialVersionUID = -2105958263903413399L;
 }
 
 

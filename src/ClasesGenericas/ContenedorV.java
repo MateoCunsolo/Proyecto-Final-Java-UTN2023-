@@ -20,11 +20,10 @@ public class ContenedorV <T> implements IFuncionalidades<T>, Serializable
     }
 
     @Override
-    public String  listar() {
-
-        return "";
-
+    public String listar() {
+        return null;
     }
+
 
     @Override
     public boolean eliminar(T o) {
@@ -43,6 +42,16 @@ public class ContenedorV <T> implements IFuncionalidades<T>, Serializable
                 '}';
     }
 
-    private static final long serialVersionUID = -2561961538353586188L;
+    public int tamanio()
+    {
+        return miVector.size();
+    }
+    public T get(int indice) {
+        if (indice >= 0 && indice < miVector.size()) {
+            return miVector.get(indice);
+        } else {
+            throw new IndexOutOfBoundsException("Índice fuera de rango");
+        }
+    }
 
 }

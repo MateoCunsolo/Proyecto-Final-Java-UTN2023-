@@ -22,6 +22,13 @@ public class ContenedorLHS <T> implements IFuncionalidades<T>, Serializable
         return 0;
     }
 
+
+    /** AAAAAAAAAAAAAAAA*/
+    public LinkedHashSet<T> getMiLHSet() {
+        return miLHSet;
+    }
+
+
     @Override
     public String listar()
     {
@@ -63,6 +70,5 @@ public class ContenedorLHS <T> implements IFuncionalidades<T>, Serializable
                 '}';
     }
 
-    private static final long serialVersionUID = -4787901688912755069L;
 
 }
