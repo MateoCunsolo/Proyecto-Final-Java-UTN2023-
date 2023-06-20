@@ -70,7 +70,7 @@ public class ControladoraArchivosObjetos
         }
         catch (EOFException ex)
         {
-            System.out.println("\nFIN de ARCHIVO");
+            //System.out.println("FIN de ARCHIVO");
         }
         catch (ClassNotFoundException ex)
         {
@@ -86,6 +86,7 @@ public class ControladoraArchivosObjetos
             while(it.hasNext())
             {
                 Map.Entry miMapa = (Map.Entry) it.next();
+                //System.out.println(miMapa.getValue());
             }
             try
             {

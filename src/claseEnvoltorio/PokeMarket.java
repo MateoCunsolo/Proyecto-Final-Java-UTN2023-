@@ -1,15 +1,14 @@
 package claseEnvoltorio;
 
 import Archivos.ControladoraArchivosObjetos;
+import ClasesGenericas.ContenedorLHS;
+import Excepciones.UsuarioContraseniaInvalidoException;
 import clasesItem.Item;
 import clasesPersonas.Administrador;
 import clasesPersonas.Usuario;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class PokeMarket implements Serializable {
     private Administrador administrador;
@@ -52,50 +51,77 @@ public class PokeMarket implements Serializable {
         this.mapaUsuarios = ControladoraArchivosObjetos.leerUsuarios();
     }
 
+    public int cantidadUser() {
+        return this.mapaUsuarios.size();
+    }
 
-    public String mostrarMapaUsuarios()
-    {
+    public String mostrarMapaUsuarios() {
         String mensaje = "";
-        Iterator<Map.Entry<String,Usuario>> i = mapaUsuarios.entrySet().iterator();
-
-        while(i.hasNext())
-        {
-            Map.Entry<String,Usuario> entrada = (Map.Entry) i.next();
+        Iterator<Map.Entry<String, Usuario>> i = mapaUsuarios.entrySet().iterator();
+        while (i.hasNext()) {
+            Map.Entry<String, Usuario> entrada = (Map.Entry) i.next();
             mensaje = mensaje + entrada.toString();
         }
-
         return mensaje;
     }
 
     public void repartirCartas(ArrayList<Item> cartas) {
-
         Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
-
-        int k = 0;
-
-        while(iterator.hasNext()) { //mientras haya usuarios
-            while (k < cartas.size()) {
-
-                Map.Entry<String, Usuario> entrada = iterator.next();
-
-                for (int j = 0; j < 5; j++) {
-                    Item item = cartas.get(k);
-                    item.setNombreDuenio(entrada.getKey());
-                    entrada.getValue().agregarCarta(item);
-                    k++;
-                }
-                System.out.println(k);
-                System.out.println("\nINVENTARIO CARGADO DE: " + entrada.getKey());
-                System.out.println(entrada.getValue().mostrarInventario());
+        while (iterator.hasNext()) {
+            Map.Entry<String, Usuario> entrada = iterator.next();
+            Usuario usuario = entrada.getValue();
+            for (int j = 0; j < 5; j++) {
+                Item item = cartas.remove(0);
+                item.setNombreDuenio(entrada.getKey());
+                usuario.agregarCarta(item);
             }
         }
         ControladoraArchivosObjetos.grabarUsuarios(mapaUsuarios);
     }
 
-    /*public String mostrarMapa() {
-        return this.mapaUsuarios.toString();
+    public void verItemsPublicados() {
+        Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, Usuario> entrada = iterator.next();
+            Usuario usuario = entrada.getValue();
+            System.out.println(usuario.mostrarItemsPublicados());
+        }
+    }
 
-    }*/
+
+    public Usuario iniciarSesion(String nombre, String password) throws UsuarioContraseniaInvalidoException {
+        Usuario rta = new Usuario();
+        if (mapaUsuarios.containsKey(nombre)) {
+            Usuario actual = mapaUsuarios.get(nombre);
+            if (actual.compararContrasenias(password)) {
+                rta = actual;
+            } else {
+                throw new UsuarioContraseniaInvalidoException();
+            }
+        } else {
+            throw new UsuarioContraseniaInvalidoException();
+        }
+        return rta;
+    }
+
+
+    public Item buscarItemPublicadoXid(String id) {
+        int flag = 1;
+        Item buscado = new Item();
+
+        Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
+
+        while (iterator.hasNext() && flag != 0) {
+            Map.Entry<String, Usuario> entrada = iterator.next();
+            Usuario usuario = entrada.getValue();
+            buscado = usuario.buscarEnItemsPublicadosPropios(id);
+            if (buscado.getId().equals(id)) {
+                flag = 0;
+            }
+        }
+
+        return buscado;
+    }
+
 
 }
-

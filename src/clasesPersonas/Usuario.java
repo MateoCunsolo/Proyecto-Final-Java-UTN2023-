@@ -1,33 +1,38 @@
 package clasesPersonas;
+
+import Archivos.ControladoraArchivosObjetos;
 import ClasesGenericas.ContenedorLHS;
 import ClasesGenericas.ContenedorV;
 import Transacciones.Carrito;
 import Transacciones.Intercambio;
 import Transacciones.Venta;
+import clasesItem.Carta;
 import clasesItem.Item;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.TreeMap;
 
 
-
-public class Usuario extends Persona implements Serializable
-{
+public class Usuario extends Persona implements Serializable {
+    private static final long serialVersionUID = 7394283964424643481L;
     private String email;
     private double saldo;
     private Carrito carrito;
     private ContenedorV<Carrito> historialCompras;
     private ContenedorV<Venta> historialVentas;
     private ContenedorV<Intercambio> historialIntercambio;
-    private ContenedorLHS<Item>itemsPublicados;
+    private ContenedorLHS<Item> itemsPublicados;
     private ContenedorLHS<Item> inventario;
 
     private final double ctteSaldo = 5000;
 
     //CONSTRUCTORES
-    public Usuario()
-    {
+    public Usuario() {
         super();
-        email =  " ";
+        email = " ";
         saldo = ctteSaldo;
         carrito = null;
         historialCompras = new ContenedorV<>();
@@ -37,8 +42,7 @@ public class Usuario extends Persona implements Serializable
         inventario = new ContenedorLHS<>();
     }
 
-    public Usuario(String nombre, String contrasenia, String email)
-    {
+    public Usuario(String nombre, String contrasenia, String email) {
         super(nombre, contrasenia);
         this.email = email;
         this.saldo = ctteSaldo;
@@ -88,21 +92,77 @@ public class Usuario extends Persona implements Serializable
                 '}';
     }
 
-    public boolean agregarCarta(Item item)
-    {
+    public boolean agregarCarta(Item item) {
         return this.inventario.agregar(item);
     }
 
-    public String mostrarInventario()
-    {
+    public String mostrarInventario() {
         String msj = inventario.listar();
         return msj;
     }
 
+    public String mostrarItemsPublicados() {
+        return itemsPublicados.toString();
+    }
 
+    public void agregarItemAlCarrito(Item item) {
+        this.carrito.agregarAlCarrito(item);
+    }
 
+    public Item buscarEnItemsPublicadosPropios(String id) {
+        LinkedHashSet<Item> LHSaux = itemsPublicados.getMiLHSet();
+        Item buscado = new Carta();
+        int flag = 1;
 
-    private static final long serialVersionUID = -2105958263903413399L;
+        Iterator iterator = LHSaux.iterator();
+        while (iterator.hasNext() && flag != 0) {
+            buscado = (Item) iterator.next();
+            if(buscado.getId().equals(id))
+            {
+                flag = 0;
+            }
+        }
+        return buscado;
+    }
+
+    public void eliminarItemDelCarrito(String id) {
+        Item item = carrito.buscarItemEnCarritoXid(id);
+        carrito.eliminarUnItem(item);
+    }
+
+    public void publicarItem(Item item) {
+        itemsPublicados.agregar(item);
+    }
+
+    public void eliminarCarritoTotal() {
+        carrito.eliminarCarrito();
+    }
+
+    public String mostrarCarrito() {
+        return carrito.toString();
+    }
+
+    public void confirmarCarrito()
+    {
+        // agrego carrito al historial de compra ( 1 )
+        historialCompras.agregar(carrito);
+
+        // !!!!! comprobar saldo mayor a lo que se quiere gastar ( 2 )
+        setSaldo(getSaldo() - getCarrito().getTotalAPagar());
+
+        for(int i = 0; i < carrito.getCantidadItems(); i++)
+        {
+            inventario.agregar(carrito.ultimo());
+            carrito.eliminarUnItem(carrito.ultimo());
+        }
+
+        carrito.setCantidadItems(0);
+        carrito.setTotalAPagar(0);
+        carrito.setFecha(null);
+
+    }
 }
+
+
 
 
