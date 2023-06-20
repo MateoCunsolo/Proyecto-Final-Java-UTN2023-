@@ -354,6 +354,10 @@ public class Main {
                 cartasDeApi.add(item);
             }
 
+            ///--------------------------------REPARTIENDO CARTAS------------------------------------
+            pokeMarket.repartirCartas(cartasDeApi);
+            System.out.printf(pokeMarket.mostrarMapaUsuarios());
+
         } catch (JSONException e) {
             System.out.printf("ERROR FATAL UNA CREACION CLASE NO ESTA CAPTURADA CON SU PROPIO TRY CATCH");
         }
