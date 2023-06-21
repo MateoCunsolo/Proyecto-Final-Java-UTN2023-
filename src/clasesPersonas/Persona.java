@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public abstract class Persona implements Serializable
 {
+    private static final long serialVersionUID = -8259035436897036695L;
+
     private String nombre;
     private String contrasenia;
 
@@ -42,11 +44,19 @@ public abstract class Persona implements Serializable
     }
 
     @Override
-    public String toString()
-    {
-        return "Persona{" +
-                "nombre='" + nombre + '\'' +
-                ", contrasenia='" + contrasenia + '\'' +
-                '}';
+    public String toString() {
+        return "\t\t| Nombre: " + nombre +              " \n";
+
     }
+
+    public boolean compararContrasenias(String passoword)
+    {
+        boolean rta = false;
+        if(this.contrasenia.equals(passoword))
+        {
+            rta = true;
+        }
+        return rta;
+    }
+
 }

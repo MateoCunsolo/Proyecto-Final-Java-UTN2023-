@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 
 public class Carrito implements ITransaccionable, Serializable
 {
+    private static final long serialVersionUID = -7604144828635493406L;
+
     private int cantidadItems;
     private double totalAPagar;
     private LocalDateTime fecha;
@@ -29,21 +31,66 @@ public class Carrito implements ITransaccionable, Serializable
         this.productos = productos;
     }
 
-    public boolean eliminarCarrito() {
-        this.productos = null; //eliminar todos los items del contenedor
-        return false;
+    public int getCantidadItems() {
+        return cantidadItems;
+    }
+
+    public void setCantidadItems(int cantidadItems) {
+        this.cantidadItems = cantidadItems;
+    }
+
+    public double getTotalAPagar() {
+        return totalAPagar;
+    }
+
+    public void setTotalAPagar(double totalAPagar) {
+        this.totalAPagar = totalAPagar;
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
+
+    public void eliminarCarrito() {
+         productos.eliminarCompleto();
     }
 
     public boolean eliminarUnItem(Item item) {
-        return false;
+       return  productos.eliminar(item);
     }
 
     public void verCarrito()
     {
     }
-    public boolean agregarAlCarrito(Item item)
+    public void agregarAlCarrito(Item item)
     {
-        return false;
+        if(productos.vacio())
+        {
+            fecha = LocalDateTime.now();
+        }
+        if(productos.agregar(item))
+        {
+            setCantidadItems(getCantidadItems()+1);
+            setTotalAPagar(getTotalAPagar()+item.getPrecio());
+        }
+    }
+
+    public Item buscarItemEnCarritoXid(String id)
+    {
+        Item respuesta = new Item();
+        for(int i =0; i<productos.contar(); i++)
+        {
+            Item aux = productos.get(i);
+            if(aux.getId().equals(id))
+            {
+                respuesta = aux;
+            }
+        }
+        return  respuesta;
     }
 
     @Override
@@ -51,6 +98,12 @@ public class Carrito implements ITransaccionable, Serializable
     {
         return 0;
     }
+
+    public Item ultimo()
+    {
+        return productos.get(productos.contar()-1);
+    }
+
 
     @Override
     public String toString() {
@@ -60,5 +113,25 @@ public class Carrito implements ITransaccionable, Serializable
                 ", fecha=" + fecha +
                 ", productos=" + productos +
                 '}';
+    }
+
+    public String listar()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Fecha: ").append(getFecha()).append("\n")
+                .append("Total pagado: ").append(getTotalAPagar()).append("\n")
+                .append("Productos:\n");
+
+        // Iterar sobre los productos y agregar información relevante
+        for (int i = 0; i < productos.tamanio(); i++) { //recorre los productos comprados
+
+            Item item = productos.get(i);
+
+            sb.append(item.toString())
+                    .append("\n");
+        }
+
+        return sb.toString();
     }
 }

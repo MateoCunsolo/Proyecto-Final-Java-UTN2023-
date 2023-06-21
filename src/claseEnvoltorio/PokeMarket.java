@@ -1,15 +1,15 @@
 package claseEnvoltorio;
 
-import Archivos.ControladoraArchivosObjetos;
+
+import Archivos.ControladoraArchivos;
+import Excepciones.UsuarioContraseniaInvalidoException;
 import clasesItem.Item;
 import clasesPersonas.Administrador;
 import clasesPersonas.Usuario;
+import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class PokeMarket implements Serializable {
     private Administrador administrador;
@@ -29,6 +29,16 @@ public class PokeMarket implements Serializable {
         return administrador;
     }
 
+    /** AAAAAAAAAAAAAAAAAA*/
+    public void setAdministrador(Administrador administrador) { //!!!!
+        this.administrador = administrador;
+    }
+
+    /** OJOOO AL PIOJOOO !!!! */
+    public TreeMap<String, Usuario> getMapaUsuarios() { //!!!!
+        return mapaUsuarios;
+    }
+
     @Override
     public String toString() {
         return "PokeMarket{" + ", mapaUsuarios=" + mapaUsuarios +
@@ -45,57 +55,109 @@ public class PokeMarket implements Serializable {
     }
 
     public void guardarUsuariosArchivo() {
-        ControladoraArchivosObjetos.grabarUsuarios(mapaUsuarios);
+        ControladoraArchivos.grabarUsuarios(mapaUsuarios);
     }
 
     public void leerUsuariosArchivo() {
-        this.mapaUsuarios = ControladoraArchivosObjetos.leerUsuarios();
+        this.mapaUsuarios = ControladoraArchivos.leerUsuarios();
     }
 
+    public int cantidadUser() {
+        return this.mapaUsuarios.size();
+    }
 
-    public String mostrarMapaUsuarios()
-    {
+    public String mostrarMapaUsuarios() {
         String mensaje = "";
         Iterator<Map.Entry<String,Usuario>> i = mapaUsuarios.entrySet().iterator();
 
         while(i.hasNext())
         {
             Map.Entry<String,Usuario> entrada = (Map.Entry) i.next();
-            mensaje = mensaje + entrada.toString();
+            mensaje = mensaje + entrada.getValue().toString();
         }
-
         return mensaje;
     }
 
+
+    /**
+     * Reparte cartas entre los usuarios existentes en el TreeMap y las graba en el archivo "Usuarios.dat"
+     * @param cartas: ArrayList de tipo Item que contenga la informacion de las cartas.
+     */
     public void repartirCartas(ArrayList<Item> cartas) {
+            Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, Usuario> entrada = iterator.next();
+                Usuario usuario = entrada.getValue();
+                for (int j = 0; j < 5; j++) {
+                    Item item = cartas.remove(0);
+                    item.setNombreDuenio(entrada.getKey());
+                    usuario.agregarCarta(item);
+                }
+            }
+            ControladoraArchivos.grabarUsuarios(mapaUsuarios);
+        }
+
+    public boolean compararAdmin(Administrador o)
+    {
+        return this.administrador.equals(o);
+    }
+
+    public boolean contieneUsuario(String nombreUsuario)
+    {
+        boolean rta = false;
+        if(mapaUsuarios.containsKey(nombreUsuario))
+        {
+            rta = true;
+        }
+        return rta;
+    }
+
+    public void mostrarusu()
+    {
+        System.out.println(mapaUsuarios.toString());
+    }
+
+    public void verItemsPublicados() {
+        Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, Usuario> entrada = iterator.next();
+            Usuario usuario = entrada.getValue();
+            System.out.println(usuario.mostrarItemsPublicados());
+        }
+    }
+
+    public Usuario iniciarSesion(String nombre, String password) throws UsuarioContraseniaInvalidoException {
+        Usuario rta = new Usuario();
+        if (mapaUsuarios.containsKey(nombre)) {
+            Usuario actual = mapaUsuarios.get(nombre);
+            if (actual.compararContrasenias(password)) {
+                rta = actual;
+            } else {
+                throw new UsuarioContraseniaInvalidoException();
+            }
+        } else {
+            throw new UsuarioContraseniaInvalidoException();
+        }
+        return rta;
+    }
+
+
+    public Item buscarItemPublicadoXid(String id) {
+        int flag = 1;
+        Item buscado = new Item();
 
         Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
 
-        int k = 0;
-
-        while(iterator.hasNext()) { //mientras haya usuarios
-            while (k < cartas.size()) {
-
-                Map.Entry<String, Usuario> entrada = iterator.next();
-
-                for (int j = 0; j < 5; j++) {
-                    Item item = cartas.get(k);
-                    item.setNombreDuenio(entrada.getKey());
-                    entrada.getValue().agregarCarta(item);
-                    k++;
-                }
-                System.out.println(k);
-                System.out.println("\nINVENTARIO CARGADO DE: " + entrada.getKey());
-                System.out.println(entrada.getValue().mostrarInventario());
+        while (iterator.hasNext() && flag != 0) {
+            Map.Entry<String, Usuario> entrada = iterator.next();
+            Usuario usuario = entrada.getValue();
+            buscado = usuario.buscarEnItemsPublicadosPropios(id);
+            if (buscado.getId().equals(id)) {
+                flag = 0;
             }
         }
-        ControladoraArchivosObjetos.grabarUsuarios(mapaUsuarios);
+        return buscado;
     }
 
-    /*public String mostrarMapa() {
-        return this.mapaUsuarios.toString();
-
-    }*/
 
 }
-
