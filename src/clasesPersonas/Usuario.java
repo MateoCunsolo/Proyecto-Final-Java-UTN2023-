@@ -95,17 +95,15 @@ public class Usuario extends Persona implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString() + "Usuario{" +
-                "email='" + email + '\'' +
-                ", saldo=" + saldo +
-                ", carrito=" + carrito +
-                ", historialCompras=" + historialCompras +
-                ", historialVentas=" + historialVentas +
-                ", historialIntercambio=" + historialIntercambio +
-                ", itemsPublicados=" + itemsPublicados +
-                ", inventario=" + inventario +
-                ", ctteSaldo=" + ctteSaldo +
-                '}';
+        return super.toString() +
+                "| Email = " + email +"\n"+
+                "| Saldo = " + saldo +"\n"+
+                "| Carrito = " + carrito +"\n"+
+                "| Historial de Compras = " + historialCompras +"\n"+
+                "| Historial de Ventas = " + historialVentas +"\n"+
+                "| Historial de Intercambio = " + historialIntercambio +"\n"+
+                "| Items publicados = " + itemsPublicados +"\n"+
+                "| Inventario = " + inventario +"\n\n";
     }
 
 
@@ -147,13 +145,54 @@ public class Usuario extends Persona implements Serializable {
 
     }
 
+    public String mostrarHistorialIntercambios()
+    {
+        StringBuilder sb = new StringBuilder();
+        int contV = 1;
+
+        sb.append("------------HISTORIAL DE INTERCAMBIOS-------------\n");
+
+        for (int i = 0; i < historialIntercambio.tamanio(); i++) {
+
+            Intercambio intercambio = historialIntercambio.get(i);
+            sb.append("\n| ******************** INTERCAMBIO N°"+ contV + " ********************\n").append("\n")
+                    .append(intercambio.toString())
+                    .append("\n");
+            contV++;
+        }
+        return sb.toString();
+
+    }
+
     public boolean agregarCarta(Item item) {
         return this.inventario.agregar(item);
     }
 
     public String mostrarInventario() {
-        String msj = inventario.listar();
-        return msj;
+        StringBuilder sb = new StringBuilder();
+        int cont = 1;
+
+        sb.append("--------------INVENTARIO----------------\n");
+
+        // Iterar sobre los elementos del inventario
+        for (Item item : inventario.getMiLHSet()) {
+            // Verificar si el Item es una Carta
+            if (item instanceof Carta) {
+                Carta carta = (Carta) item;
+                sb.append(carta.toString()).append("\n");
+            }else
+            {sb.append("Item N°").append(cont).append(":\n")
+                        .append("Precio: ").append(item.getPrecio()).append("\n")
+                        .append("Nombre del dueño: ").append(item.getNombreDuenio()).append("\n")
+                        .append("Descripción: ").append(item.getDescrip()).append("\n")
+                        .append("ID: ").append(item.getId()).append("\n");
+            }
+
+            sb.append("\n");
+            cont++;
+        }
+
+        return sb.toString();
     }
 
     public String mostrarItemsPublicados() {

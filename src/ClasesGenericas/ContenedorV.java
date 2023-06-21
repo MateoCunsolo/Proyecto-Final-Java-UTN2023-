@@ -67,7 +67,7 @@ public class ContenedorV <T> implements IFuncionalidades<T>, Serializable {
             throw new IndexOutOfBoundsException("Índice fuera de rango");
         }
     }
-    private static final long serialVersionUID = -2561961538353586188L;
+    private static final long serialVersionUID = 2011856774189248907L;
 
 
 }

@@ -80,7 +80,7 @@ public class PokeMarket implements Serializable {
 
 
     /**
-     * Reparte cartas entre los usuarios existentes en el TreeMap y las graba en el archivo "Usuarios.dat"
+     * Reparte cartas en los diferentes inventarios de los usuarios existentes en el TreeMap y las graba en el archivo "Usuarios.dat"
      * @param cartas: ArrayList de tipo Item que contenga la informacion de las cartas.
      */
     public void repartirCartas(ArrayList<Item> cartas) {

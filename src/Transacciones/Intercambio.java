@@ -50,10 +50,9 @@ public class Intercambio extends Transaccion implements Serializable
 
     @Override
     public String toString() {
-        return super.toString() +"Intercambio{" +
-                "entrada=" + entrada +
-                ", salida=" + salida +
-                '}';
+        return super.toString() +
+                "| Item entrado: = " + entrada +"\n"+
+                "| Item intercambiado por:  " + salida + "\n";
     }
 
     @Override
