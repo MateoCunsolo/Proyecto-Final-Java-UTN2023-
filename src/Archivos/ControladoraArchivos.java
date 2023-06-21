@@ -69,7 +69,7 @@ public class ControladoraArchivos
         }
         catch (EOFException ex)
         {
-            System.out.println("FIN del archivo");
+            //System.out.println("FIN del archivo");
         }
         catch (IOException ex)
         {

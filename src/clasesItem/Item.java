@@ -8,8 +8,6 @@ import java.util.Objects;
 
 public class Item implements Serializable, I_toJSON
 {
-    private static final long serialVersionUID = -5284393591033893144L;
-
     private double precio; //chek
     private String nombreDuenio; //es el nombre del usuario
     private String descrip; //chek
@@ -75,11 +73,11 @@ public class Item implements Serializable, I_toJSON
 
     @Override
     public String toString() {
-        return "\n ******************** Item ********************\n"+
-                "| precio = " + precio +"\n"+
-                "| nombreDuenio = " + nombreDuenio +"\n"+
-                "| descrip = " + descrip +"\n"+
-                "| id = " + id +"\n";
+        return  "\n\n\t\t| ******************** Item ********************\n"+
+                "\t\t| precio = " + precio +"\n"+
+                "\t\t| nombreDuenio = " + nombreDuenio +"\n"+
+                "\t\t| descrip = " + descrip +"\n"+
+                "\t\t| id = " + id +"\n";
     }
 
     @Override
