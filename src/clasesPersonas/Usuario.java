@@ -199,6 +199,23 @@ public class Usuario extends Persona implements Serializable {
         return inventario.toString();
     }
 
+    public String mostrarHistorialIntercambios()
+    {
+        StringBuilder sb = new StringBuilder();
+        int contV = 1;
+
+        sb.append("------------HISTORIAL DE INTERCAMBIOS-------------\n");
+
+        for (int i = 0; i < historialIntercambio.tamanio(); i++) {
+
+            Intercambio intercambio = historialIntercambio.get(i);
+            sb.append("\n| ** INTERCAMBIO N°"+ contV + " **\n").append("\n")
+                    .append(intercambio.toString())
+                    .append("\n");
+            contV++;
+        }
+        return sb.toString();
+    }
 
     public void eliminarItemDelCarrito(String id) {
         Item item = carrito.buscarItemEnCarritoXid(id);

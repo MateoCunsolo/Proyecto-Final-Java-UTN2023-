@@ -43,18 +43,7 @@ public abstract class Persona implements Serializable
         return Objects.hash(nombre, contrasenia);
     }
 
-<<<<<<< HEAD
-  public boolean compararContrasenias(String passoword)
-=======
-    @Override
-    public String toString() {
-        return "\n| Nombre: " + nombre +              " \n"
-                + "\n| contraseña: " + contrasenia +              " \n";
-
-    }
-
     public boolean compararContrasenias(String passoword)
->>>>>>> 67a036161e046acd035c7ceabd1523fa52fab1c5
     {
         boolean rta = false;
         if(this.contrasenia.equals(passoword))
@@ -69,7 +58,6 @@ public abstract class Persona implements Serializable
         return  "\n\n\n\n\n\n==================================================================================================================================================================================================================================================================================="+
                 "\n\n\n\n\n\n*****************************************\n"+
                 "\t\tNombre de usuario: " + nombre +" \n"+
-                "\t\tContrasenia      : " + contrasenia +" \n"+
                 "*****************************************\n";
     }
 
