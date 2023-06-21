@@ -46,7 +46,6 @@ public class ContenedorLHS <T extends Item> implements IFuncionalidades<T>, Seri
             miLHSet.remove(o);
             rta = true;
         }
-
         return rta;
     }
 
@@ -58,6 +57,6 @@ public class ContenedorLHS <T extends Item> implements IFuncionalidades<T>, Seri
 
     @Override
     public String toString() {
-        return "\n\n" + miLHSet;
+        return ""+miLHSet;
     }
 }

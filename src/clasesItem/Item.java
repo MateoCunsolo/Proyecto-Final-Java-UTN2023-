@@ -73,11 +73,11 @@ public class Item implements Serializable, I_toJSON
 
     @Override
     public String toString() {
-        return "\n\n\n| ******************** Item ********************\n"+
-                "| precio = " + precio +"\n"+
-                "| nombreDuenio = " + nombreDuenio +"\n"+
-                "| descrip = " + descrip +"\n"+
-                "| id = " + id +"\n";
+        return  "\n\n\t\t| ******************** Item ********************\n"+
+                "\t\t| precio = " + precio +"\n"+
+                "\t\t| nombreDuenio = " + nombreDuenio +"\n"+
+                "\t\t| descrip = " + descrip +"\n"+
+                "\t\t| id = " + id +"\n";
     }
 
     @Override

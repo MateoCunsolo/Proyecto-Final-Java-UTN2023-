@@ -106,12 +106,12 @@ public class Pokemon implements Serializable, I_toJSON {
     @Override
     public String toString() {
         return nombre + "\n" +
-                "\t\t|\t\t\tsalud = " + ps + "\n" +
-                "\t\t|\t\t\tevolucionA = " + evolucionA + "\n" +
-                "\t\t|\t\t\tevolucionaDe = " + evolucionaDe + "\n" +
-                "\t\t|\t\t\tenergia = " + tipo + "\n" +
-                "\t\t|\t\t\tdebilidad = " + debilidad + "\n" +
-                "\t\t|\t\t\tataques =" + hsAtaques;
+                "\t\t\t\t|\t\t\tsalud = " + ps + "\n" +
+                "\t\t\t\t|\t\t\tevolucionA = " + evolucionA + "\n" +
+                "\t\t\t\t|\t\t\tevolucionaDe = " + evolucionaDe + "\n" +
+                "\t\t\t\t|\t\t\tenergia = " + tipo + "\n" +
+                "\t\t\t\t|\t\t\tdebilidad = " + debilidad + "\n" +
+                "\t\t\t\t|\t\t\tataques =" + hsAtaques;
     }
 
     public void agregarAtaque(Ataque a) {
