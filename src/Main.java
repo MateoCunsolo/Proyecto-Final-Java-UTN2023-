@@ -179,8 +179,115 @@ public class Main {
                                 opcion = teclado.nextInt();
                                 switch (opcion) {
                                     case 1:
-                                        //giuli
-                                        System.out.printf("HOLa");
+                                        pokeMarket.verPerfil(actual); //para ver info de perfil
+                                        opcion = 0;
+                                        while (opcion!=6)
+                                            {
+                                                System.out.println("1-EDITAR DATOS DE PERFIL");
+                                                System.out.println("2-ELIMINAR CUENTA");
+                                                System.out.println("3-VER INVENTARIO");
+                                                System.out.println("4-VER CARRITO");
+                                                System.out.println("5-VER HISTORIAL DE COMPRA / VENTA O INTERCAMBIO");
+                                                System.out.println("6-VOLVER AL PERFIL");
+                                                System.out.printf("Ingrese opcion: ");
+                                                opcion = teclado.nextInt();
+                                                switch (opcion){
+                                                    case 1:
+                                                        boolean op =true;
+                                                        while(op)
+                                                        {
+                                                            String nombreNuevo=" ";
+                                                            String emailNuevo= " ";
+                                                            String mensaje = " ";
+                                                            int op2 = 0;
+                                                            System.out.println("1-Modificar nombre");
+                                                            System.out.println("2-Modificar email");
+                                                            System.out.println("3-Modificar nombre y email");
+                                                            System.out.println("4-Volver al menu anterior");
+                                                            op2 = teclado.nextInt();
+                                                            if(op2==1)
+                                                            {
+                                                                System.out.println("Indique el nuevo nombre");
+                                                                nombreNuevo = teclado.nextLine();
+                                                                mensaje = pokeMarket.editarNombre(actual,nombreNuevo);
+                                                                System.out.println(mensaje);
+                                                                op=false;
+                                                            }
+                                                            else if (op2 ==2)
+                                                            {
+                                                                System.out.println("Indique el nuevo email");
+                                                                emailNuevo = teclado.nextLine();
+                                                                mensaje = pokeMarket.editarEmail(actual,emailNuevo);
+                                                                System.out.println(mensaje);
+                                                                op=false;
+                                                            }
+
+                                                            else if(op2==3)
+                                                            {
+                                                                System.out.println("Indique el nuevo nombre");
+                                                                nombreNuevo = teclado.nextLine();
+                                                                System.out.println("Indique el nuevo email");
+                                                                emailNuevo = teclado.nextLine();
+                                                                System.out.println();
+                                                                mensaje = pokeMarket.editarDatosCompletos(actual,emailNuevo,nombreNuevo);
+                                                                System.out.println(mensaje);
+                                                                op=false;
+                                                            }
+                                                            else
+                                                            {
+                                                                op=false;
+                                                            }
+                                                        }
+                                                        break;
+                                                    case 2:
+                                                        String mensaje2 = " ";
+                                                        mensaje2 =pokeMarket.eliminarCuenta(actual);
+                                                        System.out.println(mensaje2);
+                                                        break;
+                                                    case 3:
+                                                        String mensaje3 = " ";
+                                                        mensaje3 = pokeMarket.verInventario(actual);
+                                                        System.out.println(mensaje3);
+                                                        break;
+                                                    case 4:
+                                                        String mensaje4 = " ";
+                                                        mensaje4 = actual.mostrarCarrito();
+                                                        System.out.println(mensaje4);
+                                                    case 5:
+                                                        boolean opc = true;
+                                                        while(opc)
+                                                        {
+                                                            int opc2 = 0;
+                                                            System.out.println("1-Ver historial de compra");
+                                                            System.out.println("2-Ver historial de venta");
+                                                            System.out.println("3-Ver historial de intercambio");
+                                                            System.out.println("4-Volver al menu anterior");
+                                                            opc2 = teclado.nextInt();
+                                                            if(opc2==1)
+                                                            {
+                                                                String msj = " ";
+                                                                msj= actual.mostrarHistorialCompras();
+                                                                System.out.println(msj);
+                                                                opc=false;
+                                                            }
+                                                            else if(opc2==2)
+                                                            {
+                                                                String msj2= " ";
+                                                                msj2=actual.mostrarHistorialVentas();
+                                                                System.out.println(msj2);
+                                                                opc=false;
+                                                            }
+                                                            else if (opc2==3)
+                                                            {
+                                                                String msj3= " ";
+                                                                msj3= pokeMarket.mostrarHistorialIntercambio(actual);
+                                                                System.out.println(msj3);
+                                                                opc=false;
+                                                            }
+                                                        }
+                                                        break;
+                                                }
+                                            }
                                         break;
                                     case 2:
                                         pokeMarket.verItemsPublicados();

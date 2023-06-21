@@ -3,6 +3,7 @@ package claseEnvoltorio;
 
 import Archivos.ControladoraArchivos;
 import Excepciones.UsuarioContraseniaInvalidoException;
+import clasesItem.Carta;
 import clasesItem.Item;
 import clasesPersonas.Administrador;
 import clasesPersonas.Usuario;
@@ -158,6 +159,108 @@ public class PokeMarket implements Serializable {
         }
         return buscado;
     }
+
+    public String verPerfil(Usuario usuario) //muestra solo el usuario, el meil y el saldo disponible que tiene
+    {
+        String mensaje = " ";
+        if(usuario!=null) {
+            if (mapaUsuarios.containsKey(usuario.getNombre())) //si esta el usuario
+            {
+                mensaje= "Información de perfil :" + "\nNombre Usuario : " + usuario.getNombre() + "\nEmail :" + usuario.getEmail() + "\nSaldo disponible :" + usuario.getSaldo();
+            } else {
+                mensaje = "El fue posible encontrar el usuario indicado";
+            }
+        }
+        return mensaje;
+    }
+
+    public String editarDatosCompletos(Usuario usuario,String nuevoCorreo, String nuevoNombre) //los pido al momento que quiere cambiar los datos
+    {
+        String mensaje = " ";
+       if(nuevoCorreo!= null && nuevoNombre!=null && usuario!=null) {
+           usuario.setEmail(nuevoCorreo);
+           usuario.setNombre(nuevoNombre);
+           mensaje = "Datos actualizados correctamente.";
+       }
+       else {
+           mensaje = "No fue posible realizar los cambios indicados";
+       }
+        return mensaje;
+    }
+
+    public String editarNombre(Usuario usuario, String nuevoNombre) //los pido al momento que quiere cambiar los datos
+    {
+        String mensaje = " ";
+        if(nuevoNombre!=null && usuario!=null) {
+            usuario.setNombre(nuevoNombre);
+            mensaje = "Nombre actualizado correctamente.";
+        }
+        else {
+            mensaje = "No fue posible realizar los cambios indicados";
+        }
+        return mensaje;
+    }
+
+    public String editarEmail(Usuario usuario, String nuevoEmail) //los pido al momento que quiere cambiar los datos
+    {
+        String mensaje = " ";
+        if(nuevoEmail!=null && usuario!=null) {
+            usuario.setEmail(nuevoEmail);
+            mensaje = "Email actualizado correctamente.";
+        }
+        else {
+            mensaje = "No fue posible realizar los cambios indicados";
+        }
+        return mensaje;
+    }
+
+    public String eliminarCuenta(Usuario usuario)
+    {
+        String mensaje = " ";
+        if(usuario!=null)
+        {
+            usuario.setNombre(" ");
+            usuario.setSaldo(0);
+            usuario.setCarrito(null);
+            usuario.setEmail(" ");
+            mensaje= "Cuenta eliminada correctamente";
+        }
+        else
+        {
+            mensaje = "No fue posible realizar la operacion";
+        }
+        return mensaje;
+    }
+
+    public String verInventario(Usuario usuario)
+    {
+        String mensaje = " ";
+
+        if(usuario!=null)
+        {
+            mensaje = usuario.mostrarInventario();
+        }
+        else
+        {
+            mensaje = "No fue posible realizar la accion";
+        }
+        return mensaje;
+    }
+
+    public String mostrarHistorialIntercambio(Usuario usuario)
+    {
+        String mensaje = " ";
+        if(usuario!=null)
+        {
+            mensaje = usuario.getHistorialIntercambio().toString();
+        }
+        else
+        {
+            mensaje = "No fue posible realizar la accion";
+        }
+        return mensaje;
+    }
+
 
 
 }
