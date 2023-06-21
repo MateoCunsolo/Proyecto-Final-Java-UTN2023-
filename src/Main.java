@@ -20,16 +20,10 @@ public class Main {
         //cargaArchivoConCartas(pokeMarket);
 
         pokeMarket.leerUsuariosArchivo(); //pasamos usuarios al treeMap de la clase Evoltorio
-
-        System.out.println("\n\nUSUARIOS EN TREEMAP PASADOS DE ARCHIVO \n");
-        System.out.println(pokeMarket.mostrarMapaUsuarios());
-
         Scanner teclado = new Scanner(System.in);
-
         char continuar = 's';
 
         do {
-
             menuPrincipal();
             int opcion = teclado.nextInt();
 
@@ -63,14 +57,14 @@ public class Main {
                     //ControladoraArchivos.grabarAdministrador("pokeMarket2023","charizard150");
                     pokeMarket.setAdministrador(ControladoraArchivos.leerAdministrador()); //aaaaaaaa
 
-                    System.out.println("Ingrese nombre: ");
+                    System.out.printf("Ingrese nombre: ");
                     teclado.nextLine();
                     String nombre = teclado.nextLine();
 
-                    System.out.println("Ingrese contraseña: ");
+                    System.out.printf("Ingrese contraseña: ");
                     String contra = teclado.nextLine();
 
-                    Administrador admin = new Administrador("pokeMarket2023", "charizard150");
+                    Administrador admin = new Administrador(nombre,contra);
                     if (pokeMarket.compararAdmin(admin)) //si el nombre y dato ingresado coinciden, se ACCEDE MODO ADMINISTRADOR
                     {
                         String mensaje = "Accediendo a funciones de administrador ...";
