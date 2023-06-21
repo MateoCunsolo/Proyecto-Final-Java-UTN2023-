@@ -149,7 +149,8 @@ public class Usuario extends Persona implements Serializable {
         return this.inventario.agregar(item);
     }
 
-    public String mostrarInventario() {
+    public String mostrarInventario()
+    {
         String msj = inventario.listar();
         return msj;
     }
@@ -254,6 +255,8 @@ public class Usuario extends Persona implements Serializable {
         carrito.setFecha(null);
 
     }
+
+
 
 }
 

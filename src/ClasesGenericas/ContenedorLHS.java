@@ -30,11 +30,14 @@ public class ContenedorLHS <T extends Item> implements IFuncionalidades<T>, Seri
 
 
     @Override
-    public String listar() {
+    public String listar()
+    {
         StringBuilder msj = new StringBuilder();
-        for (T dato : miLHSet) {
+        for (T dato : miLHSet)
+        {
             msj.append(dato.toString());
         }
+
         return msj.toString();
     }
 
@@ -59,4 +62,5 @@ public class ContenedorLHS <T extends Item> implements IFuncionalidades<T>, Seri
     public String toString() {
         return ""+miLHSet;
     }
+
 }
