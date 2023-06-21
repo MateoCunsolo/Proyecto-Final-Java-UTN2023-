@@ -7,7 +7,7 @@ import clasesItem.Item;
 import clasesPersonas.Administrador;
 import clasesPersonas.Usuario;
 import org.json.JSONObject;
-
+import java.util.Scanner;
 import java.io.Serializable;
 import java.util.*;
 
@@ -67,6 +67,7 @@ public class PokeMarket implements Serializable {
     }
 
     public String mostrarMapaUsuarios() {
+
         String mensaje = "";
         Iterator<Map.Entry<String,Usuario>> i = mapaUsuarios.entrySet().iterator();
 
@@ -84,6 +85,7 @@ public class PokeMarket implements Serializable {
      * @param cartas: ArrayList de tipo Item que contenga la informacion de las cartas.
      */
     public void repartirCartas(ArrayList<Item> cartas) {
+
             Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry<String, Usuario> entrada = iterator.next();
@@ -118,11 +120,15 @@ public class PokeMarket implements Serializable {
     }
 
     public void verItemsPublicados() {
+        Scanner teclado = new Scanner(System.in);
+        String siguiente = "s";
         Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
-        while (iterator.hasNext()) {
+        while (iterator.hasNext() && siguiente.equals("s")) {
             Map.Entry<String, Usuario> entrada = iterator.next();
             Usuario usuario = entrada.getValue();
             System.out.println(usuario.mostrarItemsPublicados());
+            System.out.println("Moverse a la siguiente pagina ? (s/n): ");
+            siguiente = teclado.nextLine();
         }
     }
 
@@ -133,10 +139,12 @@ public class PokeMarket implements Serializable {
             if (actual.compararContrasenias(password)) {
                 rta = actual;
             } else {
-                throw new UsuarioContraseniaInvalidoException();
+                System.out.println("1");
+                throw new UsuarioContraseniaInvalidoException("Usuario y/o contrasenia invalida");
             }
         } else {
-            throw new UsuarioContraseniaInvalidoException();
+            System.out.println("2");
+            throw new UsuarioContraseniaInvalidoException("Usuario y/o contrasenia invalida");
         }
         return rta;
     }

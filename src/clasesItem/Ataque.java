@@ -68,8 +68,8 @@ public class Ataque implements Serializable
 
     @Override
     public String toString() {
-        return  "\n\t\t|\t\t\t\t( * )" + nombreAtaque +"\n"+
-                "\t\t|\t\t\t\t danio = " + danio + "\n"+
-                "\t\t|\t\t\t\t descripcion = " + descripcion+" ";
+        return  "\n\t\t\t\t|\t\t\t\t( * )" + nombreAtaque +"\n"+
+                "\t\t\t\t|\t\t\t\t danio = " + danio + "\n"+
+                "\t\t\t\t|\t\t\t\t descripcion = " + descripcion+" ";
     }
 }
