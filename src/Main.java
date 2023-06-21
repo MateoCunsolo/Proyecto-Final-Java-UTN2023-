@@ -15,40 +15,64 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        Scanner teclado = new Scanner(System.in);
-
         PokeMarket pokeMarket = new PokeMarket();
         //crearArchivoConUsuarios(pokeMarket);
         //cargaArchivoConCartas(pokeMarket);
-        pokeMarket.leerUsuariosArchivo();
+
+        pokeMarket.leerUsuariosArchivo(); //pasamos usuarios al treeMap de la clase Evoltorio
+
+        System.out.println("\n\nUSUARIOS EN TREEMAP PASADOS DE ARCHIVO \n");
+        System.out.println(pokeMarket.mostrarMapaUsuarios());
+
+        Scanner teclado = new Scanner(System.in);
 
         char continuar = 's';
+
         do {
+
             menuPrincipal();
             int opcion = teclado.nextInt();
+
             switch (opcion) {
 
-                case 1:
-                    //REGISTRARSE
+                case 1: //REGISTRARSE
+                {
+                    Usuario nuevoUsuario = new Usuario();
+                    boolean valido = true;
+
+                    do {
+
+                        System.out.println("Ingrese un nombre de usuario: ");
+                        teclado.nextLine();
+                        String nombre = teclado.nextLine();
+
+                        valido = pokeMarket.contieneUsuario(nombre);
+                        if (valido) {
+                            System.out.println("El nombre ingresado ya existe, intente con otro!");
+                        }
+
+                    } while (valido);
+
+                    System.out.println("Ingrese una contraseña: ");
+
+
                     break;
-                case 2:
-                    //INICIAR SESION
+                }
+                case 2: //INICIAR SESION
+                {
+                    //ControladoraArchivos.grabarAdministrador("pokeMarket2023","charizard150");
+                    pokeMarket.setAdministrador(ControladoraArchivos.leerAdministrador()); //aaaaaaaa
 
-                    // Leer Datos Adminiistrador -> [ Nombre = "pokeMarket2023" ]  &  [ Password = "charizard150" ]
-                    pokeMarket.setAdministrador(ControladoraArchivos.leerAdministrador());
-
-                    System.out.printf("Ingrese nombre: ");
+                    System.out.println("Ingrese nombre: ");
                     teclado.nextLine();
                     String nombre = teclado.nextLine();
 
-                    System.out.printf("Ingrese contraseña: ");
+                    System.out.println("Ingrese contraseña: ");
                     String contra = teclado.nextLine();
 
-                    Administrador admin = new Administrador(nombre, contra);
-
-                    //Si el nombre y contrasenia coincide con los datos del administrador se accede en MODO-ADMIN.
-                    if (pokeMarket.compararAdmin(admin)) {
-                        // For para simular que el texto carga de a un caracter
+                    Administrador admin = new Administrador("pokeMarket2023", "charizard150");
+                    if (pokeMarket.compararAdmin(admin)) //si el nombre y dato ingresado coinciden, se ACCEDE MODO ADMINISTRADOR
+                    {
                         String mensaje = "Accediendo a funciones de administrador ...";
                         for (int i = 0; i < mensaje.length(); i++) {
                             System.out.print(mensaje.charAt(i));
@@ -60,88 +84,122 @@ public class Main {
                         }
                         System.out.println();
 
-                        // Llamado a las funciones del administrador.
-                        menuAdministrador();
-                        opcion = teclado.nextInt();
+                        char s = 's';
 
-                        switch (opcion) {
-                            case 1: //BORRAR USUARIO probarrrr
-                                System.out.println("Ingrese nombre de usuario a borrar: ");
-                                nombre = teclado.nextLine();
-                                try {
-                                    boolean rta = admin.borrarUsuario(nombre, pokeMarket);
-                                    if (rta) {
-                                        System.out.println("Usuario eliminado exitosamente");
-                                    } else {
-                                        System.out.println("No se pudo eliminar el usuario solicitado");
-                                    }
-                                } catch (UsuarioNoEncontradoException e) {
-                                    System.out.println(e.getMessage());
-                                }
-                                break;
+                        do {
 
-                            case 2: //VER USUARIOS ok
-                                System.out.println(admin.verUsuarios(pokeMarket.getMapaUsuarios()));
-                                break;
+                            menuAdministrador();
+                            int op = teclado.nextInt();
 
-                            case 3: //VER TODAS LAS VENTAS probarrrr
-                                System.out.println(admin.verTodosHistorialVentas(pokeMarket.getMapaUsuarios()));
-                                break;
-
-                            case 4: //VER TODOS LOS INTERCAMBIOS probarrrr
-                                System.out.println(admin.verTodosHistorialIntercambios(pokeMarket.getMapaUsuarios()));
-                                break;
-
-                            case 5: //VER MOVIMIENTOS DE UN USUARIO
-                                System.out.printf("Ingrese nombre de usuario: ");
-                                nombre = teclado.nextLine();
-                                boolean rta = pokeMarket.contieneUsuario(nombre);
-                                if (rta) //si se encuentra el nombre ingresado
+                            switch (op) {
+                                case 1: //BORRAR USUARIO probarrrr
                                 {
-                                    Usuario usu = pokeMarket.getMapaUsuarios().get(nombre);
-                                    String m = "Buscando datos del usuario" + nombre + "...";
-                                    for (int i = 0; i < m.length(); i++) {
-                                        System.out.print(m.charAt(i));
-                                        try {
-                                            Thread.sleep(100); // Pausa de 100 milisegundos
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                    System.out.println();
-                                    menuAdminMovimientosUsuario();
-                                    opcion = teclado.nextInt();
-                                    switch (opcion) {
-                                        case 1: //VER VENTAS
-                                        {
-                                            System.out.println(usu.mostrarHistorialVentas());
-                                            break;
-                                        }
-                                        case 2: //VER COMPRAS
-                                        {
-                                            System.out.println(usu.mostrarHistorialCompras());
-                                            break;
-                                        }
-                                        case 3: //VER INTERCAMBIOS
-                                        {
-                                            break;
-                                        }
-                                        default: {
-                                            System.out.println("Opción inválida");
-                                            break;
-                                        }
-                                    }
+                                    System.out.println("Ingrese nombre de usuario a borrar: ");
+                                    String nom = teclado.nextLine();
 
+                                    try {
+                                        boolean rta = admin.borrarUsuario(nom, pokeMarket);
+                                        if (rta) {
+                                            System.out.println("Usuario eliminado exitosamente");
+                                        } else {
+                                            System.out.println("No se pudo eliminar el usuario solicitado");
+                                        }
 
-                                } else //si no se encuentra el nombre ingresado
-                                {
-                                    System.out.println("El nombre ingresado no existe en el sistema, intente con otro nombre");
+                                    } catch (UsuarioNoEncontradoException e) {
+                                        System.out.println(e.getMessage());
+                                    }
+                                    break;
                                 }
-                                break;
-                            default:
-                                System.out.println("Opción inválida");
-                                break;
-                        }
+                                case 2: //VER USUARIOS ok
+                                {
+                                    System.out.println(admin.verUsuarios(pokeMarket.getMapaUsuarios()));
+
+                                    break;
+                                }
+                                case 3: //VER TODAS LAS VENTAS probarrrr
+                                {
+                                    System.out.println(admin.verTodosHistorialVentas(pokeMarket.getMapaUsuarios()));
+                                    break;
+                                }
+                                case 4: //VER TODOS LOS INTERCAMBIOS probarrrr
+                                {
+                                    System.out.println(admin.verTodosHistorialIntercambios(pokeMarket.getMapaUsuarios()));
+                                    break;
+                                }
+                                case 5: //VER MOVIMIENTOS DE UN USUARIO probarr
+                                {
+                                    System.out.println("Ingrese nombre de usuario: ");
+                                    teclado.nextLine();
+                                    String nom = teclado.nextLine();
+
+                                    boolean rta = pokeMarket.contieneUsuario(nom);
+                                    if (rta) //si se encuentra el nombre ingresado
+                                    {
+                                        Usuario usu = pokeMarket.getMapaUsuarios().get(nom);
+
+                                        String m = "Buscando datos del usuario" + nom + "...";
+                                        for (int i = 0; i < m.length(); i++) {
+                                            System.out.print(m.charAt(i));
+                                            try {
+                                                Thread.sleep(100); // Pausa de 100 milisegundos
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                        System.out.println();
+
+                                        menuAdminMovimientosUsuario();
+                                        int o = teclado.nextInt();
+                                        char cont = 's';
+                                        do {
+
+                                            switch (o) {
+                                                case 1: //VER VENTAS
+                                                {
+                                                    System.out.println(usu.mostrarHistorialVentas());
+                                                    break;
+                                                }
+                                                case 2: //VER COMPRAS
+                                                {
+                                                    System.out.println(usu.mostrarHistorialCompras());
+                                                    break;
+                                                }
+                                                case 3: //VER INTERCAMBIOS probarrrrr
+                                                {
+                                                    System.out.println(usu.mostrarHistorialIntercambios());
+                                                    break;
+                                                }
+                                                default: {
+                                                    System.out.println("Opción inválida");
+                                                    break;
+                                                }
+                                            }
+
+                                            System.out.println("\nDesea seguir viendo los movimientos del usuario? (s/n) \n");
+                                            String aux = teclado.nextLine();
+                                            cont = aux.charAt(0);
+
+                                        } while (cont == 's');
+
+                                    } else //si no se encuentra el nombre ingresado
+                                    {
+                                        System.out.println("El nombre ingresado no existe en el sistema, intente con otro nombre");
+                                    }
+
+                                    break;
+                                }
+                                default: {
+                                    System.out.println("Opción inválida");
+                                    break;
+                                }
+                            }
+
+                            System.out.println("\nDesea seguir navegando en menu administrador? (s/n)");
+                            teclado.nextLine();
+                            String aux = teclado.nextLine();
+                            s = aux.charAt(0);
+
+                        } while (s == 's');
 
                     } else //verificar si se accede a las FUNCIONES del USUARIO
                     {
@@ -258,6 +316,7 @@ public class Main {
                         }
                     }
                     break;
+                }
                 case 3:
                     continuar = 'n';
                     break;
@@ -267,7 +326,6 @@ public class Main {
             }
         } while (continuar == 's');
         teclado.close();
-
     }
 
     public static void menuPrincipal() {

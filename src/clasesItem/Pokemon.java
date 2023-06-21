@@ -13,6 +13,9 @@ import java.util.Objects;
 
 public class Pokemon implements Serializable, I_toJSON {
 
+    private static final long serialVersionUID = -4325708085462147315L;
+
+
     private String nombre; //chek
     private int ps; //puntos de salud //chek
     private String evolucionA; //evolvesTo //chek

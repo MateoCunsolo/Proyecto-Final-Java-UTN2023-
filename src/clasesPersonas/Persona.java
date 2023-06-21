@@ -43,7 +43,7 @@ public abstract class Persona implements Serializable
         return Objects.hash(nombre, contrasenia);
     }
 
-    public boolean compararContrasenias(String passoword)
+  public boolean compararContrasenias(String passoword)
     {
         boolean rta = false;
         if(this.contrasenia.equals(passoword))

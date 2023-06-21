@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.util.Vector;
 
 public class ContenedorV <T> implements IFuncionalidades<T>, Serializable {
+    private static final long serialVersionUID = -2561961538353586188L;
+
     private Vector<T> miVector; //(aplica  items, historia de compras y de ventas)
 
     public ContenedorV() {
@@ -67,7 +69,6 @@ public class ContenedorV <T> implements IFuncionalidades<T>, Serializable {
             throw new IndexOutOfBoundsException("Índice fuera de rango");
         }
     }
-    private static final long serialVersionUID = -2561961538353586188L;
 
 
 }
