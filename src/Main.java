@@ -67,7 +67,7 @@ public class Main {
                     teclado.nextLine();
                     String nombre = teclado.nextLine();
 
-                    System.out.println("Ingrese contraseña: ");
+                    System.out.println("Ingrese contraseña: "); //4 letras minusculas y 4 numeros
                     String contra = teclado.nextLine();
 
                     Administrador admin = new Administrador("pokeMarket2023", "charizard150");
@@ -154,12 +154,12 @@ public class Main {
                                         do {
 
                                             switch (o) {
-                                                case 1: //VER VENTAS
+                                                case 1: //VER VENTAS probarrrrr
                                                 {
                                                     System.out.println(usu.mostrarHistorialVentas());
                                                     break;
                                                 }
-                                                case 2: //VER COMPRAS
+                                                case 2: //VER COMPRAS probarrrrr
                                                 {
                                                     System.out.println(usu.mostrarHistorialCompras());
                                                     break;
