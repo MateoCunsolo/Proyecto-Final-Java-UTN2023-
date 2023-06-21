@@ -18,7 +18,7 @@ public class ContenedorLHS <T extends Item> implements IFuncionalidades<T>, Seri
 
     @Override
     public int contar() {
-        return 0;
+        return miLHSet.size();
     }
 
     /**
@@ -58,6 +58,6 @@ public class ContenedorLHS <T extends Item> implements IFuncionalidades<T>, Seri
 
     @Override
     public String toString() {
-        return "\n\n" + miLHSet;
+        return " "+ miLHSet;
     }
 }

@@ -9,6 +9,7 @@ import java.util.Objects;
 
 public class Carta extends Item implements Serializable, I_toJSON {
 
+    private static final long serialVersionUID = 5815387080044055750L;
     private String numero; //chek
     private Pokemon pokemon; //chek
     private String rareza; //chek
@@ -81,7 +82,7 @@ public class Carta extends Item implements Serializable, I_toJSON {
                                  "\t\t| numero = " + numero +              " \n"+
                                  "\t\t| Pokemon = " + pokemon +            " \n"+
                                  "\t\t| rareza = " + rareza +              " \n"+
-                                 "\t\t| artista = " + artista +            " \n\n\n";
+                                 "\t\t| artista = " + artista +            " \n\n";
     }
 
     @Override
