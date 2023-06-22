@@ -255,7 +255,11 @@ public class Usuario extends Persona implements Serializable {
         carrito.setFecha(null);
 
     }
-
+    public String mostrarHistorialIntercambio()
+    {
+        String mensaje = historialIntercambio.listar();
+        return mensaje;
+    }
 
 
 }

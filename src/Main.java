@@ -188,7 +188,6 @@ public class Main {
                                     break;
                                 }
                             }
-
                             System.out.println("\nDesea seguir navegando en menu administrador? (s/n)");
                             teclado.nextLine();
                             String aux = teclado.nextLine();
@@ -243,14 +242,14 @@ public class Main {
                                                             System.out.println("Indique el nuevo nombre");
                                                             teclado.nextLine();
                                                             nombreNuevo = teclado.nextLine();
-                                                            mensaje = pokeMarket.editarNombre(actual, nombreNuevo);
+                                                            mensaje = pokeMarket.editarNombre(nombreNuevo,actual);
                                                             System.out.println(mensaje);
                                                             op = false;
                                                         } else if (op2 == 2) {
                                                             System.out.println("Indique el nuevo email");
                                                             teclado.nextLine();
                                                             emailNuevo = teclado.nextLine();
-                                                            mensaje = pokeMarket.editarEmail(actual, emailNuevo);
+                                                            mensaje = pokeMarket.editarEmail(emailNuevo,actual);
                                                             System.out.println(mensaje);
                                                             op = false;
                                                         } else {
@@ -298,7 +297,7 @@ public class Main {
                                                             opc = false;
                                                         } else if (opc2 == 3) {
                                                             String msj3 = " ";
-                                                            msj3 = pokeMarket.mostrarHistorialIntercambio(actual);
+                                                            msj3 = actual.mostrarHistorialIntercambio();
                                                             System.out.println(msj3);
                                                             opc = false;
                                                         }
