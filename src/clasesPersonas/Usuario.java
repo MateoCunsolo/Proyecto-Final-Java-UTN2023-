@@ -315,7 +315,7 @@ public class Usuario extends Persona implements Serializable {
         itemsPublicados.eliminar(item);
     }
 
-    public Carrito crearVenta (Carrito carrito)
+    public Carrito crearVenta (Carrito carrito, Usuario usuario)
     {
           /*Vendedor
             Sube el saldo
@@ -332,7 +332,9 @@ public class Usuario extends Persona implements Serializable {
                 {
                     venta.agregarItem(item);
                     carrito.eliminarUnItem(item);
-                    eliminarItemDePublicados(item); //elimino el item de mis publicados
+                    usuario.eliminarItemDePublicados(item);
+                    System.out.println("ITEM QUE SE VA: "+item.toString());//elimino el item de mis publicados
+                    System.out.println("INVENTARIO DE PUBLICADOS ACTUALIZADO\n"+usuario.itemsPublicados.toString());
                     venta.setTotalCobrar(venta.getTotalCobrar() + item.getPrecio()); //COCHINADA
                 }
             }

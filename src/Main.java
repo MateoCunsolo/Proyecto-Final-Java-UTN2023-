@@ -369,7 +369,7 @@ public class Main {
                                                     e.printStackTrace();
                                                 }
                                             }
-                                            System.out.println(pokeMarket.verItemsPublicados());
+                                            //System.out.println(pokeMarket.verItemsPublicados());
                                             System.out.println("********************************************************");
                                             System.out.println("               OPCIONES DEL MARKET                      ");
                                             System.out.println("********************************************************");

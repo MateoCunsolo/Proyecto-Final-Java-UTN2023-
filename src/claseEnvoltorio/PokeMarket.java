@@ -371,7 +371,7 @@ public String editarEmail(String nuevoEmail,Usuario usuario) //los pido al momen
                         encontrado = usuario.encontrarItemsPublicado(carrito.getItem(0).getId());
                         if (encontrado) //encue
                         {
-                            carrito = usuario.crearVenta(carrito);
+                            carrito = usuario.crearVenta(carrito,usuario);
 
                         }
                     }
@@ -387,7 +387,7 @@ public String editarEmail(String nuevoEmail,Usuario usuario) //los pido al momen
     }
 
 
-    public void eliminarItemDelCarrito(Usuario actual, String id)
+    public void  eliminarItemDelCarrito(Usuario actual, String id)
     {
         Item item = actual.getCarrito().buscarItemEnCarritoXid(id);
         if(mapaUsuarios.containsKey(item.getNombreDuenio()))
