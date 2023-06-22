@@ -341,7 +341,7 @@ public class Main {
                                                             opc = false;
                                                         } else if (opc2 == 3) {
                                                             String msj3 = " ";
-                                                            msj3 = pokeMarket.mostrarHistorialIntercambio(actual);
+                                                            msj3 = actual.mostrarHistorialIntercambios();
                                                             System.out.println(msj3);
                                                             opc = false;
                                                         }
@@ -484,6 +484,8 @@ public class Main {
                     break;}
             }
         } while (continuar == 's');
+
+        pokeMarket.guardarCambios(); //se graban en el archivo Usuarios todos los cambios realizados
         teclado.close();
     }
 

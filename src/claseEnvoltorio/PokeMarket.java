@@ -140,11 +140,10 @@ public class PokeMarket implements Serializable {
             if (actual.compararContrasenias(password)) {
                 rta = actual;
             } else {
-                System.out.println("1");
                 throw new UsuarioContraseniaInvalidoException("Usuario y/o contrasenia invalida");
             }
         } else {
-            System.out.println("2");
+
             throw new UsuarioContraseniaInvalidoException("Usuario y/o contrasenia invalida");
         }
         return rta;
@@ -223,25 +222,14 @@ public class PokeMarket implements Serializable {
         return mensaje;
     }
 
-
-    public String mostrarHistorialIntercambio(Usuario usuario)
-    {
-        String mensaje = " ";
-        if(usuario!=null)
-        {
-            mensaje = usuario.getHistorialIntercambio().toString();
-        }
-        else
-        {
-            mensaje = "No fue posible realizar la accion";
-        }
-        return mensaje;
-    }
-
-
     public void cargaInicioAdministrador()
     {
-        administrador = ControladoraArchivos.leerAdministrador(); //aaaaaaaa
+        administrador = ControladoraArchivos.leerAdministrador();
+    }
+
+    public void guardarCambios()
+    {
+        ControladoraArchivos.grabarUsuarios(mapaUsuarios);
     }
 
 }
