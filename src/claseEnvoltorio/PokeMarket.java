@@ -345,12 +345,13 @@ public String editarEmail(String nuevoEmail,Usuario usuario) //los pido al momen
             if(actual.getSaldo() >= carrito.getTotalAPagar()) //si el saldo alcanza
             {
                 // DESCUENTO MI SALDO, CON EL VALOR TOTAL DE MI CARRITO
-                carrito.calcularTotal();
+                carrito.setTotalAPagar(carrito.calcularTotal());
                 double saldoApagar = carrito.getTotalAPagar();
                 double saldoNuevo = actual.getSaldo() - saldoApagar;
                 actual.setSaldo(saldoNuevo);
 
                 // AGREGO CARRITO AL HISOTRAL DE COMPRAS
+                System.out.println(carrito.toString());
                 actual.agregarAlHistorialCompras(carrito);
 
                 //paso carrito para agregar al inventario de actual

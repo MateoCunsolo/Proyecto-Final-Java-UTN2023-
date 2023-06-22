@@ -52,6 +52,11 @@ public class ContenedorV <T> implements IFuncionalidades<T>, Serializable {
                 '}';
     }
 
+    public boolean contiene(T o)
+    {
+        return miVector.contains(o);
+    }
+
     public int tamanio()
     {
         return miVector.size();
