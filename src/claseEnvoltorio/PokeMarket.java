@@ -140,11 +140,10 @@ public class PokeMarket implements Serializable {
             if (actual.compararContrasenias(password)) {
                 rta = actual;
             } else {
-                System.out.println("1");
                 throw new UsuarioContraseniaInvalidoException("Usuario y/o contrasenia invalida");
             }
         } else {
-            System.out.println("2");
+
             throw new UsuarioContraseniaInvalidoException("Usuario y/o contrasenia invalida");
         }
         return rta;
@@ -216,12 +215,12 @@ public class PokeMarket implements Serializable {
         return mensaje;
     }
 
-    public String editarEmail(String nuevoEmail, Usuario usuario) //los pido al momento que quiere cambiar los datos
+public String editarEmail(String nuevoEmail,Usuario usuario) //los pido al momento que quiere cambiar los datos
     {
         String mensaje = " ";
         if(nuevoEmail!=null)
         {
-            if(!mapaUsuarios.containsValue(nuevoEmail)) //si en el mapa no esta ese email
+            if(!contieneEmail(nuevoEmail)) //si en el mapa no esta ese email
             {
                 usuario.setEmail(nuevoEmail);
                 mensaje = "Email actualizado correctamente.";
@@ -238,10 +237,14 @@ public class PokeMarket implements Serializable {
         return mensaje;
     }
 
-
-    public void cargaInicioAdministrador()
+  public void cargaInicioAdministrador()
     {
-        administrador = ControladoraArchivos.leerAdministrador(); //aaaaaaaa
+        administrador = ControladoraArchivos.leerAdministrador();
+    }
+
+    public void guardarCambios()
+    {
+        ControladoraArchivos.grabarUsuarios(mapaUsuarios);
     }
 
 }
