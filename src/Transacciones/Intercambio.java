@@ -66,4 +66,6 @@ public class Intercambio extends Transaccion implements Serializable
     public int hashCode() {
         return Objects.hash(getEntrada(), getSalida());
     }
+
+
 }

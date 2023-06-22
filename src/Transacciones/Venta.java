@@ -37,7 +37,6 @@ public class Venta  extends Transaccion implements ITransaccionable, Serializabl
     private ContenedorLHS<Item> getProductos() {
         return productos;
     }
-
     @Override
     public LocalDateTime getFecha() {
         return super.getFecha();
@@ -84,4 +83,10 @@ public class Venta  extends Transaccion implements ITransaccionable, Serializabl
     public int hashCode() {
         return Objects.hash(totalCobrar, productos);
     }
+
+    public void agregarItem(Item item)
+    {
+        productos.agregar(item);
+    }
+
 }

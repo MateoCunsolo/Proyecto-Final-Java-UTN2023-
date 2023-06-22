@@ -3,6 +3,7 @@ package clasesPersonas;
 import Archivos.ControladoraArchivos;
 import ClasesGenericas.ContenedorLHS;
 import ClasesGenericas.ContenedorV;
+import Excepciones.CarritoVacioException;
 import Excepciones.ItemNoEncontradoException;
 import Transacciones.Carrito;
 import Transacciones.Intercambio;
@@ -146,8 +147,16 @@ public class Usuario extends Persona implements Serializable {
 
     }
 
-    public boolean agregarCarta(Item item) {
+    public boolean agregarItemAlInventario(Item item) {
         return this.inventario.agregar(item);
+    }
+
+    public void agregarItemsAlInventario(Carrito carro)
+    {
+        for(int i = 0; i < carro.tamanioCarrito(); i++)
+        {
+            agregarItemAlInventario(carro.getItem(i));
+        }
     }
 
     public String mostrarInventario()
@@ -164,9 +173,12 @@ public class Usuario extends Persona implements Serializable {
         this.carrito.agregarAlCarrito(item);
     }
 
+
+
     public Item buscarEnInventario(String id)
     {
         LinkedHashSet<Item> LHSaux = inventario.getMiLHSet();
+
         Item buscado = null;
         int flag = 1;
         Iterator iterator = LHSaux.iterator();
@@ -182,12 +194,12 @@ public class Usuario extends Persona implements Serializable {
 
     public Item buscarEnItemsPublicadosPropios(String id) throws ItemNoEncontradoException
     {
-        LinkedHashSet<Item> LHSaux = itemsPublicados.getMiLHSet();
         Item buscado = new Item();
         int flag = 1;
 
+        LinkedHashSet<Item> LHSaux = itemsPublicados.getMiLHSet();
         Iterator iterator = LHSaux.iterator();
-        while (iterator.hasNext() && flag != 0)
+        while (iterator.hasNext() && flag == 1)
         {
             buscado = (Item) iterator.next();
             if(buscado.getId().equals(id))
@@ -200,6 +212,25 @@ public class Usuario extends Persona implements Serializable {
             throw new ItemNoEncontradoException("Id de item no encontrado dentro de publicados");
         }
         return buscado;
+    }
+
+    public boolean encontrarItemsPublicado(String id)
+    {
+        Item buscado = new Item();
+        boolean flag = false;
+
+        LinkedHashSet<Item> LHSaux = itemsPublicados.getMiLHSet();
+        Iterator iterator = LHSaux.iterator();
+        while (iterator.hasNext())
+        {
+            buscado = (Item) iterator.next();
+            if(buscado.getId().equals(id))
+            {
+                flag = true;
+            }
+        }
+
+        return flag;
     }
 
     public String verInventario()
@@ -243,25 +274,7 @@ public class Usuario extends Persona implements Serializable {
         return carrito.toString();
     }
 
-    public void confirmarCarrito()
-    {
-        // agrego carrito al historial de compra ( 1 )
-        historialCompras.agregar(carrito);
 
-        // !!!!! comprobar saldo mayor a lo que se quiere gastar ( 2 )
-        setSaldo(getSaldo() - getCarrito().getTotalAPagar());
-
-        for(int i = 0; i < carrito.getCantidadItems(); i++)
-        {
-            inventario.agregar(carrito.ultimo());
-            carrito.eliminarUnItem(carrito.ultimo());
-        }
-
-        carrito.setCantidadItems(0);
-        carrito.setTotalAPagar(0);
-        carrito.setFecha(null);
-
-    }
     public String mostrarHistorialIntercambio()
     {
         String mensaje = historialIntercambio.listar();
@@ -283,10 +296,44 @@ public class Usuario extends Persona implements Serializable {
         historialIntercambio.agregar(inter);
     }
 
+    public void agregarAlHistorialCompras(Carrito carro)
+    {
+        historialCompras.agregar(carro);
+    }
+
     public void eliminarItemDePublicados(Item item)
     {
         itemsPublicados.eliminar(item);
     }
+
+    public Carrito crearVenta (Carrito carrito)
+    {
+          /*Vendedor
+            Sube el saldo
+            Se guarda el historial de la venta (ya incluye el nombre de quien me compra)
+            Se saca el artículo de la publicación
+            */
+
+        Venta venta = new Venta();
+        if(!carrito.vacio()) {
+            for (int i = 0; i < carrito.tamanioCarrito(); i++) //recorro todo el carrito
+            {
+                Item item = carrito.getItem(i); //get me retorna el item de lA posicion i
+                if (getNombre().equals(item.getNombreDuenio()))//si el item tiene mi nombre
+                {
+                    venta.agregarItem(item);
+                    carrito.eliminarUnItem(item);
+                    eliminarItemDePublicados(item); //elimino el item de mis publicados
+                    venta.setTotalCobrar(venta.getTotalCobrar() + item.getPrecio()); //COCHINADA
+                }
+            }
+            setSaldo(getSaldo() + venta.getTotalCobrar()); //sube el saldo
+            historialVentas.agregar(venta); //se guarda el historial de la venta
+        }
+        return carrito;
+    }
+
+
 
 }
 

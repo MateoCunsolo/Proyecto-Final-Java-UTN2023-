@@ -4,9 +4,9 @@ public class CarritoVacioException extends Exception
 {
     private String mensaje;
 
-    public CarritoVacioException(String elMensaje)
+    public CarritoVacioException()
     {
-        mensaje = elMensaje;
+        mensaje = "El carrito se encuentra vacio.";
     }
 
     public String getMensaje() {

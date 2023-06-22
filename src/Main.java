@@ -1,7 +1,5 @@
 import Archivos.ControladoraArchivos;
-import Excepciones.ItemNoEncontradoException;
-import Excepciones.UsuarioContraseniaInvalidoException;
-import Excepciones.UsuarioNoEncontradoException;
+import Excepciones.*;
 import Transacciones.Intercambio;
 import claseEnvoltorio.PokeMarket;
 import clasesItem.*;
@@ -22,7 +20,7 @@ public class Main {
         //cargaArchivoConCartas(pokeMarket);
 
         pokeMarket.leerUsuariosArchivo(); //pasamos usuarios al treeMap de la clase Evoltorio
-        //System.out.println(pokeMarket.mostrarMapaUsuarios());
+        System.out.println(pokeMarket.mostrarMapaUsuarios());
         Scanner teclado = new Scanner(System.in);
         char continuar = 's';
 
@@ -37,10 +35,11 @@ public class Main {
                     boolean valido = true;
                     String nombre = " ";
 
+                    teclado.nextLine();
+
                     do {
 
-                        System.out.println("\nIngrese un nombre de usuario: ");
-                        teclado.nextLine();
+                        System.out.printf("\nIngrese un nombre de usuario: ");
                         nombre = teclado.nextLine();
                         valido = pokeMarket.contieneUsuario(nombre);
                         if (valido) {
@@ -255,9 +254,9 @@ public class Main {
                                 System.out.println("| 3- PUBLICAR ITEM");
                                 System.out.println("| 4- CERRAR SESION");
                                 System.out.printf("| Ingrese opcion: ");
-                                opcion = teclado.nextInt();
+                                int opp = teclado.nextInt();
                                 String id = "";
-                                switch (opcion) {
+                                switch (opp) {
                                     case 1: //son las opciones de ver perfil
                                     {
                                         System.out.println(pokeMarket.verPerfil(actual)); //para ver info de perfil
@@ -438,7 +437,16 @@ public class Main {
                                                                 break;
                                                             }
                                                             case 5: {
-                                                                actual.confirmarCarrito();
+                                                                try {
+                                                                    pokeMarket.confirmarCarrito(actual);
+                                                                }catch (CarritoVacioException h)
+                                                                {
+                                                                    System.out.println(h.getMensaje());
+                                                                }
+                                                                catch(ValorInvalidoException e)
+                                                                {
+                                                                    System.out.println(e.getMessage());
+                                                                }
                                                                 break;
                                                             }
                                                         }
@@ -448,51 +456,53 @@ public class Main {
                                                 }
                                                 case 2: //intercambio
                                                 {
+                                                    System.out.println("USUARIO ANTES DEL INTERCAMBIO" +actual.toString());
                                                     //si o si los productos tienene que estar publicados en ambos usuarios
                                                     System.out.println("Ingrese el id del item que desea");
                                                     teclado.nextLine();
                                                     String idEntrada = teclado.nextLine();
 
 
+
                                                     System.out.println("Ingrese el id del item que ofrecera");
                                                     System.out.println("Recuerde : Debe estar publicado, no en el inventario ");
-                                                    teclado.nextLine();
                                                     String idSalida = teclado.nextLine();
-                                                    //
+
                                                     //confirmamos que el id de salida se encuentre en los items publicados del usuario
                                                     try
                                                     {
                                                         Item entrado = pokeMarket.buscarItemPublicadoXid(idEntrada);
+                                                        System.out.println("ITEM QUE SE QUIERE ADQUIRIR" +entrado.toString());
                                                         Item salido = actual.buscarEnItemsPublicadosPropios(idSalida);
+                                                        System.out.println("ITEM QUE SE VA " +salido.toString());
+
+                                                        String aux = "Intercambiando cartas ...";
+                                                        for (int j = 0; j < aux.length(); j++) {
+                                                            System.out.print(aux.charAt(j));
+                                                            try {
+                                                                Thread.sleep(100); // Pausa de 100 milisegundos
+                                                            } catch (InterruptedException e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
 
                                                         Intercambio intercambio = new Intercambio(entrado,salido);
 
-                                                        //PASAR TODO A UNA FUNCION DENTRO DE USUARIO
-                                                        if(entrado instanceof Carta && salido instanceof Carta)
-                                                        {
-                                                            if(((Carta) entrado).compararRareza(((Carta) salido).getRareza()))
-                                                            {
-                                                                ///USUARIO
-                                                                //SE AGREGA EL ITEM AL INVENTARIO
-                                                                actual.agregarCarta(entrado);
-                                                                //AGREGAMOS AL HISTORIAL DE INTERCAMBIO
-                                                                actual.agregarAlHistorialIntercambios(intercambio);
+                                                        pokeMarket.intercambiarCartas(intercambio, actual);
+                                                        System.out.println("Intercambio realizado con exito! :)");
 
-                                                                //SACO EL ITEM DE PUBLICADOS DEL "VENDEDOR"
-                                                                Usuario intercambiador = pokeMarket.encontrarUsuarioXidItem(idEntrada);
-                                                                intercambiador.eliminarItemDePublicados(entrado);
+                                                        System.out.println("USUARIO DESPUES DEL INTERCAMBIO" +actual.toString());
 
 
-                                                            }
-                                                            else
-                                                            {
-                                                                ///EXCEPCION  DE DIFERENTE RAREZA
-                                                            }
-                                                        }
+
+
 
                                                     }catch (ItemNoEncontradoException d)
                                                     {
                                                         System.out.println(d.getMensaje());
+                                                    }catch (DiferenteRarezaException k)
+                                                    {
+                                                        System.out.println(k.getMessage());
                                                     }
 
 
@@ -523,20 +533,12 @@ public class Main {
                                         }
                                         break;
                                     }
-                                    case 4: {
-                                        System.out.println("" + actual.verInventario());
-                                        System.out.printf("«« Apreta enter para volver al menu del perfil »»");
-                                        teclado.nextLine();
-                                        String enter = teclado.nextLine();
-                                        break;
-                                    }
-                                    case 5: {
-                                        int a;
-                                        //cerrarSesion
+                                    case 4:
+                                    {
                                         break;
                                     }
                                 }
-                            } while (opcionUsuario1 != 5);
+                            } while (opcionUsuario1 != 4);
                         } catch (UsuarioContraseniaInvalidoException e) {
                             System.out.println("----------------------------------------");
                             System.out.println("««  " + e.getMessage() + "  »»");
