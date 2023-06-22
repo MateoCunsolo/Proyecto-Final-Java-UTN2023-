@@ -3,6 +3,7 @@ package clasesPersonas;
 import Archivos.ControladoraArchivos;
 import ClasesGenericas.ContenedorLHS;
 import ClasesGenericas.ContenedorV;
+import Excepciones.ItemNoEncontradoException;
 import Transacciones.Carrito;
 import Transacciones.Intercambio;
 import Transacciones.Venta;
@@ -179,18 +180,24 @@ public class Usuario extends Persona implements Serializable {
         return buscado;
     }
 
-    public Item buscarEnItemsPublicadosPropios(String id) {
+    public Item buscarEnItemsPublicadosPropios(String id) throws ItemNoEncontradoException
+    {
         LinkedHashSet<Item> LHSaux = itemsPublicados.getMiLHSet();
-        Item buscado = new Carta();
+        Item buscado = new Item();
         int flag = 1;
 
         Iterator iterator = LHSaux.iterator();
-        while (iterator.hasNext() && flag != 0) {
+        while (iterator.hasNext() && flag != 0)
+        {
             buscado = (Item) iterator.next();
             if(buscado.getId().equals(id))
             {
                 flag = 0;
             }
+        }
+        if(flag==1)
+        {
+            throw new ItemNoEncontradoException("Id de item no encontrado dentro de publicados");
         }
         return buscado;
     }
@@ -261,6 +268,25 @@ public class Usuario extends Persona implements Serializable {
         return mensaje;
     }
 
+    public boolean compararEmail(String email)
+    {
+        boolean rta = false;
+        if(this.email.equals(email))
+        {
+            rta = true;
+        }
+        return rta;
+    }
+
+    public void agregarAlHistorialIntercambios(Intercambio inter)
+    {
+        historialIntercambio.agregar(inter);
+    }
+
+    public void eliminarItemDePublicados(Item item)
+    {
+        itemsPublicados.eliminar(item);
+    }
 
 }
 

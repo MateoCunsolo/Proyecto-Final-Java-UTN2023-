@@ -1,6 +1,8 @@
 import Archivos.ControladoraArchivos;
+import Excepciones.ItemNoEncontradoException;
 import Excepciones.UsuarioContraseniaInvalidoException;
 import Excepciones.UsuarioNoEncontradoException;
+import Transacciones.Intercambio;
 import claseEnvoltorio.PokeMarket;
 import clasesItem.*;
 import clasesPersonas.Administrador;
@@ -40,7 +42,6 @@ public class Main {
                         System.out.println("\nIngrese un nombre de usuario: ");
                         teclado.nextLine();
                         nombre = teclado.nextLine();
-
                         valido = pokeMarket.contieneUsuario(nombre);
                         if (valido) {
                             System.out.println("El nombre ingresado ya existe, intente con otro!");
@@ -257,10 +258,12 @@ public class Main {
                                 opcion = teclado.nextInt();
                                 String id = "";
                                 switch (opcion) {
-                                    case 1: {
+                                    case 1: //son las opciones de ver perfil
+                                    {
                                         System.out.println(pokeMarket.verPerfil(actual)); //para ver info de perfil
                                         opcion = 0;
-                                        while (opcion != 6) {
+                                        while (opcion != 6)
+                                        {
                                             System.out.println("1-EDITAR DATOS DE PERFIL");
                                             System.out.println("2-ELIMINAR CUENTA");
                                             System.out.println("3-VER INVENTARIO");
@@ -270,7 +273,8 @@ public class Main {
                                             System.out.printf("Ingrese opcion: ");
                                             opcion = teclado.nextInt();
                                             switch (opcion) {
-                                                case 1: {
+                                                case 1:
+                                                {
                                                     boolean op = true;
                                                     while (op) {
                                                         String nombreNuevo = " ";
@@ -281,21 +285,26 @@ public class Main {
                                                         System.out.println("2-Modificar email");
                                                         System.out.println("3-Volver al menu anterior");
                                                         op2 = teclado.nextInt();
-                                                        if (op2 == 1) {
+                                                        if (op2 == 1)
+                                                        {
                                                             System.out.println("Indique el nuevo nombre");
                                                             teclado.nextLine();
                                                             nombreNuevo = teclado.nextLine();
                                                             mensaje = pokeMarket.editarNombre(nombreNuevo,actual);
                                                             System.out.println(mensaje);
                                                             op = false;
-                                                        } else if (op2 == 2) {
+                                                        }
+                                                        else if (op2 == 2)
+                                                        {
                                                             System.out.println("Indique el nuevo email");
                                                             teclado.nextLine();
                                                             emailNuevo = teclado.nextLine();
                                                             mensaje = pokeMarket.editarEmail(emailNuevo,actual);
                                                             System.out.println(mensaje);
                                                             op = false;
-                                                        } else {
+                                                        }
+                                                        else
+                                                        {
                                                             op = false;
                                                         }
                                                     }
@@ -351,7 +360,7 @@ public class Main {
                                         }
                                         break;
                                     }
-                                    case 2:
+                                    case 2: //opciones de ver market
                                     {
                                         do {
                                             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -377,8 +386,10 @@ public class Main {
                                             System.out.printf("| Ingrese opcion: ");
                                             opcionUsuario2 = teclado.nextInt();
 
-                                            switch (opcionUsuario2) {
-                                                case 1: {
+                                            switch (opcionUsuario2)
+                                            {
+                                                case 1: //comprar
+                                                {
                                                     do {
                                                         System.out.println("\t\t**********************");
                                                         System.out.println("\t\t    CARRO DE ITEMS    ");
@@ -396,8 +407,15 @@ public class Main {
                                                                 System.out.printf("Ingrese ID del Item: ");
                                                                 teclado.nextLine();
                                                                 id = teclado.nextLine();
-                                                                Item item = pokeMarket.buscarItemPublicadoXid(id);
-                                                                actual.agregarItemAlCarrito(item);
+                                                                try
+                                                                {
+                                                                    Item item = pokeMarket.buscarItemPublicadoXid(id);
+                                                                    actual.agregarItemAlCarrito(item);
+
+                                                                }catch (ItemNoEncontradoException f)
+                                                                {
+                                                                    System.out.println(f.getMensaje());
+                                                                }
                                                                 break;
                                                             }
                                                             case 2: {
@@ -426,11 +444,61 @@ public class Main {
 
                                                     break;
                                                 }
-                                                case 2: {
+                                                case 2: //intercambio
+                                                {
+                                                    //si o si los productos tienene que estar publicados en ambos usuarios
+                                                    System.out.println("Ingrese el id del item que desea");
+                                                    teclado.nextLine();
+                                                    String idEntrada = teclado.nextLine();
+
+
+                                                    System.out.println("Ingrese el id del item que ofrecera");
+                                                    System.out.println("Recuerde : Debe estar publicado, no en el inventario ");
+                                                    teclado.nextLine();
+                                                    String idSalida = teclado.nextLine();
+                                                    //
+                                                    //confirmamos que el id de salida se encuentre en los items publicados del usuario
+                                                    try
+                                                    {
+                                                        Item entrado = pokeMarket.buscarItemPublicadoXid(idEntrada);
+                                                        Item salido = actual.buscarEnItemsPublicadosPropios(idSalida);
+
+                                                        Intercambio intercambio = new Intercambio(entrado,salido);
+
+                                                        //PASAR TODO A UNA FUNCION DENTRO DE USUARIO
+                                                        if(entrado instanceof Carta && salido instanceof Carta)
+                                                        {
+                                                            if(((Carta) entrado).compararRareza(((Carta) salido).getRareza()))
+                                                            {
+                                                                ///USUARIO
+                                                                //SE AGREGA EL ITEM AL INVENTARIO
+                                                                actual.agregarCarta(entrado);
+                                                                //AGREGAMOS AL HISTORIAL DE INTERCAMBIO
+                                                                actual.agregarAlHistorialIntercambios(intercambio);
+
+                                                                //SACO EL ITEM DE PUBLICADOS DEL "VENDEDOR"
+                                                                Usuario intercambiador = pokeMarket.encontrarUsuarioXidItem(idEntrada);
+                                                                intercambiador.eliminarItemDePublicados(entrado);
+
+
+                                                            }
+                                                            else
+                                                            {
+                                                                ///EXCEPCION  DE DIFERENTE RAREZA
+                                                            }
+                                                        }
+
+                                                    }catch (ItemNoEncontradoException d)
+                                                    {
+                                                        System.out.println(d.getMensaje());
+                                                    }
+
+
                                                     //INTERCAMBIO
                                                     break;
                                                 }
-                                                case 3: {
+                                                case 3: //volver al perfil
+                                                {
                                                     int a;
                                                     break;
                                                 }

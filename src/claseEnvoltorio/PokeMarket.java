@@ -2,6 +2,7 @@ package claseEnvoltorio;
 
 
 import Archivos.ControladoraArchivos;
+import Excepciones.ItemNoEncontradoException;
 import Excepciones.UsuarioContraseniaInvalidoException;
 import clasesItem.Carta;
 import clasesItem.Item;
@@ -98,7 +99,7 @@ public class PokeMarket implements Serializable {
                 }
             }
             ControladoraArchivos.grabarUsuarios(mapaUsuarios);
-        }
+    }
 
     public boolean compararAdmin(Administrador o)
     {
@@ -150,7 +151,8 @@ public class PokeMarket implements Serializable {
         return rta;
     }
 
-    public Item buscarItemPublicadoXid(String id) {
+    public Item buscarItemPublicadoXid(String id) throws ItemNoEncontradoException
+    {
         int flag = 1;
         Item buscado = new Item();
 
@@ -165,6 +167,25 @@ public class PokeMarket implements Serializable {
             }
         }
         return buscado;
+    }
+
+    public Usuario encontrarUsuarioXidItem(String id) throws ItemNoEncontradoException
+    {
+        int flag = 1;
+        Item buscado = new Item();
+        Usuario usuario = new Usuario();
+
+        Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
+
+        while (iterator.hasNext() && flag != 0) {
+            Map.Entry<String, Usuario> entrada = iterator.next();
+            usuario = entrada.getValue();
+            buscado = usuario.buscarEnItemsPublicadosPropios(id);
+            if (buscado.getId().equals(id)) {
+                flag = 0;
+            }
+        }
+        return usuario;
     }
 
     public String verPerfil(Usuario usuario) //muestra solo el usuario, el meil y el saldo disponible que tiene
@@ -200,14 +221,14 @@ public class PokeMarket implements Serializable {
         String mensaje = " ";
         if(nuevoNombre!=null)
         {
-            if(!mapaUsuarios.containsKey(nuevoNombre)) //si en el mapa no hay alguien con ese nombre(xq uysamos lel nombre como key), permite el cambio
+            if(!mapaUsuarios.containsKey(nuevoNombre)) //si en el mapa no hay alguien con ese nombre(xq uysamos el nombre como key), permite el cambio
             {
                 usuario.setNombre(nuevoNombre);
                 mensaje = "Nombre actualizado correctamente.";
             }
             else
             {
-                mensaje = "El nombre indicado ya se encuntra utilizado";
+                mensaje = "El nombre indicado ya se encuentra utilizado";
             }
         }
         else {
@@ -216,12 +237,12 @@ public class PokeMarket implements Serializable {
         return mensaje;
     }
 
-    public String editarEmail(String nuevoEmail, Usuario usuario) //los pido al momento que quiere cambiar los datos
+    public String editarEmail(String nuevoEmail,Usuario usuario) //los pido al momento que quiere cambiar los datos
     {
         String mensaje = " ";
         if(nuevoEmail!=null)
         {
-            if(!mapaUsuarios.containsValue(nuevoEmail)) //si en el mapa no esta ese email
+            if(!contieneEmail(nuevoEmail)) //si en el mapa no esta ese email
             {
                 usuario.setEmail(nuevoEmail);
                 mensaje = "Email actualizado correctamente.";
@@ -238,10 +259,27 @@ public class PokeMarket implements Serializable {
         return mensaje;
     }
 
+    public boolean contieneEmail(String nuevoEmail)
+    {
+        boolean aux = false;
+
+        Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, Usuario> entrada = iterator.next();
+            Usuario usuario = entrada.getValue();
+            if(usuario.compararEmail(nuevoEmail)) //retorno que ese email ya existe
+            {
+                aux = true;
+            }
+        }
+        return aux;
+    }
 
     public void cargaInicioAdministrador()
     {
         administrador = ControladoraArchivos.leerAdministrador(); //aaaaaaaa
     }
+
+
 
 }
