@@ -140,7 +140,7 @@ public class Usuario extends Persona implements Serializable {
 
             Carrito carro = historialCompras.get(i);
             sb.append("Compra N°" + contV + ":").append("\n")
-                    .append(carro.listar())
+                    .append(carro.toString())
                     .append("\n");
             contV++;
         }
@@ -171,7 +171,12 @@ public class Usuario extends Persona implements Serializable {
     }
 
     public void agregarItemAlCarrito(Item item) {
-        this.carrito.agregarAlCarrito(item);
+
+        if(!item.getId().equals(""))
+        {
+            this.carrito.agregarAlCarrito(item);
+
+        }
     }
 
 
@@ -260,8 +265,7 @@ public class Usuario extends Persona implements Serializable {
     public void eliminarItemDelCarrito(String id) {
         Item item = carrito.buscarItemEnCarritoXid(id);
         carrito.eliminarUnItem(item);
-        carrito.setTotalAPagar(carrito.getTotalAPagar() - item.getPrecio());
-        carrito.setCantidadItems(carrito.getCantidadItems() - 1);
+
     }
 
     public void publicarItem(Item item) {
@@ -275,6 +279,8 @@ public class Usuario extends Persona implements Serializable {
 
     public void eliminarCarritoTotal() {
         carrito.eliminarCarrito();
+        carrito = new Carrito();
+
     }
 
     public String mostrarCarrito() {
@@ -315,13 +321,13 @@ public class Usuario extends Persona implements Serializable {
         itemsPublicados.eliminar(item);
     }
 
-    public Carrito crearVenta (Carrito carrito)
+    /*public Carrito crearVenta (Carrito carrito, String nuevoDuenio)
     {
           /*Vendedor
             Sube el saldo
             Se guarda el historial de la venta (ya incluye el nombre de quien me compra)
             Se saca el artículo de la publicación
-            */
+
 
         Venta venta = new Venta();
         if(!carrito.vacio()) {
@@ -330,6 +336,7 @@ public class Usuario extends Persona implements Serializable {
                 Item item = carrito.getItem(i); //get me retorna el item de lA posicion i
                 if (getNombre().equals(item.getNombreDuenio()))//si el item tiene mi nombre
                 {
+                    item.setNombreDuenio(nuevoDuenio);
                     venta.agregarItem(item);
                     carrito.eliminarUnItem(item);
                     eliminarItemDePublicados(item); //elimino el item de mis publicados
@@ -340,7 +347,33 @@ public class Usuario extends Persona implements Serializable {
             historialVentas.agregar(venta); //se guarda el historial de la venta
         }
         return carrito;
+    }*/
+
+    public Carrito crearVenta(Carrito carrito, String nuevoDuenio) {
+    /* Vendedor
+       Sube el saldo
+       Se guarda el historial de la venta (ya incluye el nombre de quien me compra)
+       Se saca el artículo de la publicación
+    */
+
+        Venta venta = new Venta();
+        if (!carrito.vacio()) {
+            for (int i = 0; i < carrito.tamanioCarrito(); i++) {
+                Item item = carrito.getItem(i);
+                if (item.getNombreDuenio().equals(getNombre())) {
+                    item.setNombreDuenio(nuevoDuenio);
+                    venta.agregarItem(item);
+                    carrito.eliminarUnItem(item);
+                    eliminarItemDePublicados(item);
+                    venta.setTotalCobrar(venta.getTotalCobrar() + item.getPrecio());
+                }
+            }
+            setSaldo(getSaldo() + venta.getTotalCobrar());
+            historialVentas.agregar(venta);
+        }
+        return carrito;
     }
+
 
 
 
