@@ -122,7 +122,7 @@ public class PokeMarket implements Serializable {
         System.out.println(mapaUsuarios.toString());
     }
 
-    public String  verItemsPublicados() {
+    public String verItemsPublicados() {
         String itemsPublicados = "";
         Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -344,20 +344,25 @@ public String editarEmail(String nuevoEmail,Usuario usuario) //los pido al momen
         {
             if(actual.getSaldo() >= carrito.getTotalAPagar()) //si el saldo alcanza
             {
-                // DESCUENTO MI SALDO, CON EL VALOR TOTAL DE MI CARRITO
-                carrito.setTotalAPagar(carrito.calcularTotal());
+                // DESCUENTO MI SALDO, CON EL VALOR TOTAL DE MI CARRITOV OK
                 double saldoApagar = carrito.getTotalAPagar();
                 double saldoNuevo = actual.getSaldo() - saldoApagar;
                 actual.setSaldo(saldoNuevo);
 
-                // AGREGO CARRITO AL HISOTRAL DE COMPRAS
-                System.out.println(carrito.toString());
-                actual.agregarAlHistorialCompras(carrito);
+                // AGREGO CARRITO AL HISOTRAL DE COMPRAS CHEKEAR
+                //System.out.println(carrito.toString());
+                actual.agregarAlHistorialCompras(carrito); //TODO NOOOOOOOOOOOOOOO FUNCAAA NADAAA
 
-                //paso carrito para agregar al inventario de actual
-                actual.agregarItemsAlInventario(carrito);
+                //hacemos copia del carrito para poder agregarlo al inventario (*) OK
+                Carrito aux = new Carrito();
+                for(int i = 0; i < carrito.tamanioCarrito(); i ++)
+                {
+                    Item itemsito = carrito.getItem(i);
+                    itemsito.setNombreDuenio(actual.getNombre());
+                    aux.agregarAlCarrito(itemsito);
+                }
 
-                while (!carrito.vacio()) //mientras que el carrito tenga elementos
+                //while (!carrito.vacio()) //mientras que el carrito tenga elementos
                 {
                     boolean encontrado = false;
 
@@ -369,13 +374,20 @@ public String editarEmail(String nuevoEmail,Usuario usuario) //los pido al momen
                         Usuario usuario = entrada.getValue();
 
                         encontrado = usuario.encontrarItemsPublicado(carrito.getItem(0).getId());
-                        if (encontrado) //encue
+                        if (encontrado) //encuentro al dueño(usuario) el item que esta en el carro
                         {
-                            carrito = usuario.crearVenta(carrito);
+                            carrito = usuario.crearVenta(carrito,actual.getNombre());
 
+                        }else
+                        {
+                            carrito.eliminarUnItem(carrito.getItem(0));
                         }
                     }
                 }
+
+                //paso carrito para agregar al inventario de actual (*)
+                actual.agregarItemsAlInventario(aux); //OK
+
             }else
             {
                 throw new ValorInvalidoException("El saldo es insuficiente para efectuar la compra :(");
@@ -387,24 +399,32 @@ public String editarEmail(String nuevoEmail,Usuario usuario) //los pido al momen
     }
 
 
-    public void eliminarItemDelCarrito(Usuario actual, String id)
+    public void eliminarItemDelCarrito(Usuario actual, String id) throws CarritoVacioException
     {
-        Item item = actual.getCarrito().buscarItemEnCarritoXid(id);
-        if(mapaUsuarios.containsKey(item.getNombreDuenio()))
+        if(!actual.getCarrito().vacio()) //si el carrito tiene items
         {
-            Usuario aux = mapaUsuarios.get(item.getNombreDuenio());
-            aux.publicarItem(item);
+            Item item = actual.getCarrito().buscarItemEnCarritoXid(id);
+            if (mapaUsuarios.containsKey(item.getNombreDuenio())) {
+                Usuario aux = mapaUsuarios.get(item.getNombreDuenio());
+                aux.publicarItem(item);
+
+            }
+            actual.eliminarItemDelCarrito(id);
+        }else
+        {
+            throw new CarritoVacioException();
         }
-        actual.eliminarItemDelCarrito(id);
     }
 
-    public void eliminarCarritoTotal(Usuario actual)
+    public void eliminarCarritoTotal(Usuario actual) throws CarritoVacioException
     {
-        for(int i = 0; i < actual.getCarrito().getCantidadItems(); i ++)
+        int total = actual.getCarrito().tamanioCarrito();
+        for(int i = 0; i < total; i ++)
         {
             Item item = actual.getCarrito().getItem(i);
             eliminarItemDelCarrito(actual, item.getId());
         }
+        actual.eliminarCarritoTotal();
     }
 
 }

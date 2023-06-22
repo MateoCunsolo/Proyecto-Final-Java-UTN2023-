@@ -19,16 +19,16 @@ public class Carrito implements ITransaccionable, Serializable
 
     public Carrito() {
         cantidadItems = 0;
-        totalAPagar = 0;
+        totalAPagar = calcularTotal();
         fecha = null;
         productos = new ContenedorV<>();
     }
 
-    public Carrito(int cantidadItems, double totalAPagar, LocalDateTime fecha, ContenedorV<Item> productos) {
+    public Carrito(int cantidadItems, LocalDateTime fecha) {
         this.cantidadItems = cantidadItems;
-        this.totalAPagar = totalAPagar;
+        this.totalAPagar = calcularTotal();
         this.fecha = fecha;
-        this.productos = productos;
+        this.productos = new ContenedorV<>();
     }
 
     public int getCantidadItems() {
@@ -57,9 +57,13 @@ public class Carrito implements ITransaccionable, Serializable
 
     public void eliminarCarrito() {
          productos.eliminarCompleto();
+
     }
 
     public boolean eliminarUnItem(Item item) {
+        cantidadItems--;
+        totalAPagar = calcularTotal();
+
        return  productos.eliminar(item);
     }
 
@@ -104,9 +108,11 @@ public class Carrito implements ITransaccionable, Serializable
     public double calcularTotal()
     {
         double resultado = 0;
-        for(int i = 0; i < productos.tamanio(); i++)
-        {
-            resultado = resultado + productos.get(i).getPrecio();
+        if(this.productos != null)
+        if(!this.productos.vacio()) {
+            for (int i = 0; i < this.productos.tamanio(); i++) {
+                resultado = resultado + this.productos.get(i).getPrecio();
+            }
         }
         return resultado;
     }
@@ -120,32 +126,14 @@ public class Carrito implements ITransaccionable, Serializable
     @Override
     public String toString() {
         return "Carrito{" +
-                "cantidadItems=" + cantidadItems +
-                ", totalAPagar=" + totalAPagar +
-                ", fecha=" + fecha +
-                ", productos=" + productos +
+                "Cantidad de Items=" + cantidadItems +
+                ", Total A Pagar=" + totalAPagar +
+                ", Fecha =" + fecha +
+                ", Productos=" + productos +
                 '}';
     }
 
-    public String listar()
-    {
-        StringBuilder sb = new StringBuilder();
 
-        sb.append("Fecha: ").append(getFecha()).append("\n")
-                .append("Total pagado: ").append(getTotalAPagar()).append("\n")
-                .append("Productos:\n");
-
-        // Iterar sobre los productos y agregar información relevante
-        for (int i = 0; i < productos.tamanio(); i++) { //recorre los productos comprados
-
-            Item item = productos.get(i);
-
-            sb.append(item.toString())
-                    .append("\n");
-        }
-
-        return sb.toString();
-    }
 
     public int tamanioCarrito()
     {
