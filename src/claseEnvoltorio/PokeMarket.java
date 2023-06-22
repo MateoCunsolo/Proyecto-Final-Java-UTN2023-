@@ -238,4 +238,10 @@ public class PokeMarket implements Serializable {
         return mensaje;
     }
 
+
+    public void cargaInicioAdministrador()
+    {
+        administrador = ControladoraArchivos.leerAdministrador(); //aaaaaaaa
+    }
+
 }

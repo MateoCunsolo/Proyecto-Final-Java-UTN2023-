@@ -30,16 +30,16 @@ public class Main {
 
             switch (opcion) {
 
-                case 1: //REGISTRARSE
+                case 1: //REGISTRARSE ok
                 {
-                    Usuario nuevoUsuario = new Usuario();
                     boolean valido = true;
+                    String nombre = " ";
 
                     do {
 
-                        System.out.println("Ingrese un nombre de usuario: ");
+                        System.out.println("\nIngrese un nombre de usuario: ");
                         teclado.nextLine();
-                        String nombre = teclado.nextLine();
+                        nombre = teclado.nextLine();
 
                         valido = pokeMarket.contieneUsuario(nombre);
                         if (valido) {
@@ -48,15 +48,55 @@ public class Main {
 
                     } while (valido);
 
-                    System.out.println("Ingrese una contraseña: ");
 
+                    int intentosMaximos = 3;
+                    int intentos = 0;
+
+                    for (int i = 1; i <= intentosMaximos; i++) {
+                        System.out.printf("\nIntento %d: Ingrese una contraseña de 8 caracteres con 4 letras minúsculas y 4 números: ", i);
+                        String contrasenia = teclado.nextLine();
+
+                        if (validarContrasenia(contrasenia)) {
+                            System.out.println("Contraseña válida. \n");
+
+                            //se pide el mail
+                            System.out.printf("Ingrese su email: ");
+                            String email = teclado.nextLine();
+
+                            String aux = "Registrando usuario ...";
+                            for (int j = 0; j < aux.length(); j++) {
+                                System.out.print(aux.charAt(j));
+                                try {
+                                    Thread.sleep(100); // Pausa de 100 milisegundos
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            Usuario usuarioNuevo = new Usuario(nombre, contrasenia, email); //creamos usuario nuevo
+                            pokeMarket.agregarUsuario(usuarioNuevo); //se agrega al treemap
+
+                            System.out.println("¡Registro existoso, bienvenid@! :) ");
+
+                            i = 4; //se corta el bucle for
+
+                        } else //si la contraseña no es valida y se llega al n° de intentos maximos, se termina el bucle y se vuelve al menu
+                        {
+                            System.out.println("La contraseña no cumple con los requisitos.");
+                            intentos++;
+
+                            if (intentos == intentosMaximos) {
+                                System.out.println("Ha alcanzado el número máximo de intentos. Registro fallido.");
+                            }
+                        }
+                    }
 
                     break;
                 }
                 case 2: //INICIAR SESION
                 {
                     //ControladoraArchivos.grabarAdministrador("pokeMarket2023","charizard150");
-                    pokeMarket.setAdministrador(ControladoraArchivos.leerAdministrador()); //aaaaaaaa
+                    pokeMarket.cargaInicioAdministrador();
 
                     System.out.printf("Ingrese nombre: ");
                     teclado.nextLine();
@@ -66,6 +106,7 @@ public class Main {
                     String contra = teclado.nextLine();
 
                     Administrador admin = new Administrador(nombre,contra);
+
                     if (pokeMarket.compararAdmin(admin)) //si el nombre y dato ingresado coinciden, se ACCEDE MODO ADMINISTRADOR
                     {
                         String mensaje = "Accediendo a funciones de administrador ...";
@@ -149,12 +190,12 @@ public class Main {
                                         do {
 
                                             switch (o) {
-                                                case 1: //VER VENTAS
+                                                case 1: //VER VENTAS probarrrrr
                                                 {
                                                     System.out.println(usu.mostrarHistorialVentas());
                                                     break;
                                                 }
-                                                case 2: //VER COMPRAS
+                                                case 2: //VER COMPRAS probarrrrr
                                                 {
                                                     System.out.println(usu.mostrarHistorialCompras());
                                                     break;
@@ -196,7 +237,9 @@ public class Main {
 
                         } while (s == 's');
 
-                    } else //verificar si se accede a las FUNCIONES del USUARIO
+                    }
+
+                    else //verificar si se accede a las FUNCIONES del USUARIO
                     {
                         try {
                             int opcionUsuario1 = 0;
@@ -444,6 +487,22 @@ public class Main {
         teclado.close();
     }
 
+    public static boolean validarContrasenia(String contrasenia) {
+        boolean rta = contrasenia.length() == 8;
+        int letrasMinusculas = 0;
+        int numeros = 0;
+
+        if (rta) {
+            for (char c : contrasenia.toCharArray()) {
+                if (Character.isLowerCase(c)) {
+                    letrasMinusculas++;
+                } else if (Character.isDigit(c)) {
+                    numeros++;
+                }
+            }
+        }
+        return rta && letrasMinusculas == 4 && numeros == 4; //si alguna no se cumple retorna false
+    }
     public static void menuPrincipal() {
         System.out.println(" _________________________________________");
         System.out.println("|                 <<MENU>>                |");
