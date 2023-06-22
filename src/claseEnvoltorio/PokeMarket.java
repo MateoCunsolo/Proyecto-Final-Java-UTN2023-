@@ -8,7 +8,7 @@ import clasesItem.Item;
 import clasesPersonas.Administrador;
 import clasesPersonas.Usuario;
 import org.json.JSONObject;
-
+import java.util.Scanner;
 import java.io.Serializable;
 import java.util.*;
 
@@ -68,6 +68,7 @@ public class PokeMarket implements Serializable {
     }
 
     public String mostrarMapaUsuarios() {
+
         String mensaje = "";
         Iterator<Map.Entry<String,Usuario>> i = mapaUsuarios.entrySet().iterator();
 
@@ -81,10 +82,11 @@ public class PokeMarket implements Serializable {
 
 
     /**
-     * Reparte cartas entre los usuarios existentes en el TreeMap y las graba en el archivo "Usuarios.dat"
+     * Reparte cartas en los diferentes inventarios de los usuarios existentes en el TreeMap y las graba en el archivo "Usuarios.dat"
      * @param cartas: ArrayList de tipo Item que contenga la informacion de las cartas.
      */
     public void repartirCartas(ArrayList<Item> cartas) {
+
             Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry<String, Usuario> entrada = iterator.next();
@@ -119,11 +121,15 @@ public class PokeMarket implements Serializable {
     }
 
     public void verItemsPublicados() {
+        Scanner teclado = new Scanner(System.in);
+        String siguiente = "s";
         Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
-        while (iterator.hasNext()) {
+        while (iterator.hasNext() && siguiente.equals("s")) {
             Map.Entry<String, Usuario> entrada = iterator.next();
             Usuario usuario = entrada.getValue();
             System.out.println(usuario.mostrarItemsPublicados());
+            System.out.println("Moverse a la siguiente pagina ? (s/n): ");
+            siguiente = teclado.nextLine();
         }
     }
 
@@ -134,10 +140,12 @@ public class PokeMarket implements Serializable {
             if (actual.compararContrasenias(password)) {
                 rta = actual;
             } else {
-                throw new UsuarioContraseniaInvalidoException();
+                System.out.println("1");
+                throw new UsuarioContraseniaInvalidoException("Usuario y/o contrasenia invalida");
             }
         } else {
-            throw new UsuarioContraseniaInvalidoException();
+            System.out.println("2");
+            throw new UsuarioContraseniaInvalidoException("Usuario y/o contrasenia invalida");
         }
         return rta;
     }
@@ -174,20 +182,6 @@ public class PokeMarket implements Serializable {
         return mensaje;
     }
 
-    public String editarDatosCompletos(Usuario usuario,String nuevoCorreo, String nuevoNombre) //los pido al momento que quiere cambiar los datos
-    {
-        String mensaje = " ";
-       if(nuevoCorreo!= null && nuevoNombre!=null && usuario!=null) {
-           usuario.setEmail(nuevoCorreo);
-           usuario.setNombre(nuevoNombre);
-           mensaje = "Datos actualizados correctamente.";
-       }
-       else {
-           mensaje = "No fue posible realizar los cambios indicados";
-       }
-        return mensaje;
-    }
-
     public String editarNombre(Usuario usuario, String nuevoNombre) //los pido al momento que quiere cambiar los datos
     {
         String mensaje = " ";
@@ -219,11 +213,8 @@ public class PokeMarket implements Serializable {
         String mensaje = " ";
         if(usuario!=null)
         {
-            usuario.setNombre(" ");
-            usuario.setSaldo(0);
-            usuario.setCarrito(null);
-            usuario.setEmail(" ");
-            mensaje= "Cuenta eliminada correctamente";
+           mapaUsuarios.remove(usuario.getNombre());
+           mensaje= "Cuenta eliminada correctamente";
         }
         else
         {
@@ -232,20 +223,6 @@ public class PokeMarket implements Serializable {
         return mensaje;
     }
 
-    public String verInventario(Usuario usuario)
-    {
-        String mensaje = " ";
-
-        if(usuario!=null)
-        {
-            mensaje = usuario.mostrarInventario();
-        }
-        else
-        {
-            mensaje = "No fue posible realizar la accion";
-        }
-        return mensaje;
-    }
 
     public String mostrarHistorialIntercambio(Usuario usuario)
     {
@@ -260,7 +237,5 @@ public class PokeMarket implements Serializable {
         }
         return mensaje;
     }
-
-
 
 }

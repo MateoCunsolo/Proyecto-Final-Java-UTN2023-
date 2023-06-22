@@ -77,11 +77,11 @@ public class Carta extends Item implements Serializable, I_toJSON {
 
     @Override
     public String toString() {
-        return super.toString() +"\t\t-------------Tipo Carta---------------\n"+
-                                 "\t\t| numero = " + numero +              " \n"+
-                                 "\t\t| Pokemon = " + pokemon +            " \n"+
-                                 "\t\t| rareza = " + rareza +              " \n"+
-                                 "\t\t| artista = " + artista +            " \n\n\n";
+        return super.toString() +"\t\t\t\t-------------Tipo Carta---------------\n"+
+                                 "\t\t\t\t| numero = " + numero +              " \n"+
+                                 "\t\t\t\t| Pokemon = " + pokemon +            " \n"+
+                                 "\t\t\t\t| rareza = " + rareza +              " \n"+
+                                 "\t\t\t\t| artista = " + artista+"\n";
     }
 
     @Override

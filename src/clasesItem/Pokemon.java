@@ -13,6 +13,9 @@ import java.util.Objects;
 
 public class Pokemon implements Serializable, I_toJSON {
 
+    private static final long serialVersionUID = -4325708085462147315L;
+
+
     private String nombre; //chek
     private int ps; //puntos de salud //chek
     private String evolucionA; //evolvesTo //chek
@@ -106,12 +109,12 @@ public class Pokemon implements Serializable, I_toJSON {
     @Override
     public String toString() {
         return nombre + "\n" +
-                "\t\t|\t\t\tsalud = " + ps + "\n" +
-                "\t\t|\t\t\tevolucionA = " + evolucionA + "\n" +
-                "\t\t|\t\t\tevolucionaDe = " + evolucionaDe + "\n" +
-                "\t\t|\t\t\tenergia = " + tipo + "\n" +
-                "\t\t|\t\t\tdebilidad = " + debilidad + "\n" +
-                "\t\t|\t\t\tataques =" + hsAtaques;
+                "\t\t\t\t|\t\t\tsalud = " + ps + "\n" +
+                "\t\t\t\t|\t\t\tevolucionA = " + evolucionA + "\n" +
+                "\t\t\t\t|\t\t\tevolucionaDe = " + evolucionaDe + "\n" +
+                "\t\t\t\t|\t\t\tenergia = " + tipo + "\n" +
+                "\t\t\t\t|\t\t\tdebilidad = " + debilidad + "\n" +
+                "\t\t\t\t|\t\t\tataques =" + hsAtaques;
     }
 
     public void agregarAtaque(Ataque a) {

@@ -95,17 +95,15 @@ public class Usuario extends Persona implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString() + "Usuario{" +
-                "email='" + email + '\'' +
-                ", saldo=" + saldo +
-                ", carrito=" + carrito +
-                ", historialCompras=" + historialCompras +
-                ", historialVentas=" + historialVentas +
-                ", historialIntercambio=" + historialIntercambio +
-                ", itemsPublicados=" + itemsPublicados +
-                ", inventario=" + inventario +
-                ", ctteSaldo=" + ctteSaldo +
-                '}';
+        return super.toString() +
+                "\t|---» email='" + email +
+                "\n\t|---» saldo=" + saldo +
+                "\n\t|---» carrito=" + carrito +
+                "\n\t|---» historialCompras=" + historialCompras +
+                "\n\t|---» historialVentas=" + historialVentas +
+                "\n\t|---» historialIntercambio=" + historialIntercambio +
+                "\n\t|---» itemsPublicados=" + itemsPublicados +
+                "\n\t|---» inventario=" + inventario;
     }
 
 
@@ -151,7 +149,8 @@ public class Usuario extends Persona implements Serializable {
         return this.inventario.agregar(item);
     }
 
-    public String mostrarInventario() {
+    public String mostrarInventario()
+    {
         String msj = inventario.listar();
         return msj;
     }
@@ -162,6 +161,22 @@ public class Usuario extends Persona implements Serializable {
 
     public void agregarItemAlCarrito(Item item) {
         this.carrito.agregarAlCarrito(item);
+    }
+
+    public Item buscarEnInventario(String id)
+    {
+        LinkedHashSet<Item> LHSaux = inventario.getMiLHSet();
+        Item buscado = null;
+        int flag = 1;
+        Iterator iterator = LHSaux.iterator();
+        while (iterator.hasNext() && flag != 0) {
+            buscado = (Item) iterator.next();
+            if(buscado.getId().equals(id))
+            {
+                flag = 0;
+            }
+        }
+        return buscado;
     }
 
     public Item buscarEnItemsPublicadosPropios(String id) {
@@ -180,12 +195,36 @@ public class Usuario extends Persona implements Serializable {
         return buscado;
     }
 
+    public String verInventario()
+    {
+        return inventario.toString();
+    }
+
+    public String mostrarHistorialIntercambios()
+    {
+        StringBuilder sb = new StringBuilder();
+        int contV = 1;
+
+        sb.append("------------HISTORIAL DE INTERCAMBIOS-------------\n");
+
+        for (int i = 0; i < historialIntercambio.tamanio(); i++) {
+
+            Intercambio intercambio = historialIntercambio.get(i);
+            sb.append("\n| ** INTERCAMBIO N°"+ contV + " **\n").append("\n")
+                    .append(intercambio.toString())
+                    .append("\n");
+            contV++;
+        }
+        return sb.toString();
+    }
+
     public void eliminarItemDelCarrito(String id) {
         Item item = carrito.buscarItemEnCarritoXid(id);
         carrito.eliminarUnItem(item);
     }
 
     public void publicarItem(Item item) {
+       inventario.eliminar(item);
         itemsPublicados.agregar(item);
     }
 

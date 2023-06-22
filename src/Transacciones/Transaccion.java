@@ -17,8 +17,6 @@ public abstract class Transaccion implements Serializable
 
     @Override
     public String toString() {
-        return "Transaccion{" +
-                "fecha=" + fecha +
-                '}';
+        return  "| Fecha: = " + fecha +"\n";
     }
 }
