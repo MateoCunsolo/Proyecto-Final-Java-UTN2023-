@@ -12,6 +12,7 @@ import clasesItem.Carta;
 import clasesItem.Item;
 import org.json.JSONObject;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -260,6 +261,7 @@ public class Usuario extends Persona implements Serializable {
         Item item = carrito.buscarItemEnCarritoXid(id);
         carrito.eliminarUnItem(item);
         carrito.setTotalAPagar(carrito.getTotalAPagar() - item.getPrecio());
+        carrito.setCantidadItems(carrito.getCantidadItems() - 1);
     }
 
     public void publicarItem(Item item) {
@@ -276,8 +278,9 @@ public class Usuario extends Persona implements Serializable {
     }
 
     public String mostrarCarrito() {
-        carrito.calcularTotal();
-        return carrito.toString();
+        this.carrito.setTotalAPagar(carrito.calcularTotal());
+        this.carrito.setFecha(LocalDateTime.now());
+        return this.carrito.toString();
     }
 
 

@@ -122,8 +122,7 @@ public class PokeMarket implements Serializable {
         System.out.println(mapaUsuarios.toString());
     }
 
-    public void verItemsPublicados() {
-        Scanner teclado = new Scanner(System.in);
+    public String  verItemsPublicados() {
         String itemsPublicados = "";
         Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -131,6 +130,7 @@ public class PokeMarket implements Serializable {
             Usuario usuario = entrada.getValue();
             itemsPublicados = itemsPublicados.concat(usuario.mostrarItemsPublicados());
         }
+        return itemsPublicados;
     }
 
     public Usuario iniciarSesion(String nombre, String password) throws UsuarioContraseniaInvalidoException {
@@ -395,6 +395,15 @@ public String editarEmail(String nuevoEmail,Usuario usuario) //los pido al momen
             aux.publicarItem(item);
         }
         actual.eliminarItemDelCarrito(id);
+    }
+
+    public void eliminarCarritoTotal(Usuario actual)
+    {
+        for(int i = 0; i < actual.getCarrito().getCantidadItems(); i ++)
+        {
+            Item item = actual.getCarrito().getItem(i);
+            eliminarItemDelCarrito(actual, item.getId());
+        }
     }
 
 }

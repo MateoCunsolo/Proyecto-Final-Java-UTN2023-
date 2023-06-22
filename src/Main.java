@@ -369,7 +369,7 @@ public class Main {
                                                     e.printStackTrace();
                                                 }
                                             }
-                                            pokeMarket.verItemsPublicados();
+                                            System.out.println(pokeMarket.verItemsPublicados());
                                             System.out.println("********************************************************");
                                             System.out.println("               OPCIONES DEL MARKET                      ");
                                             System.out.println("********************************************************");
@@ -382,6 +382,7 @@ public class Main {
                                             switch (opcionUsuario2) {
                                                 case 1: //comprar
                                                 {
+                                                    teclado.nextLine();
                                                     do {
                                                         System.out.println("\t\t**********************");
                                                         System.out.println("\t\t    CARRO DE ITEMS    ");
@@ -411,13 +412,22 @@ public class Main {
                                                             case 2: {
                                                                 System.out.println("*****ELIMINAR ITEM DEL CARRITO********");
                                                                 System.out.printf("Ingrese ID del Item: ");
+                                                                teclado.nextLine();
                                                                 id = teclado.nextLine();
                                                                 pokeMarket.eliminarItemDelCarrito(actual,id);
                                                                 break;
                                                             }
                                                             case 3: {
-                                                                System.out.printf("Eliminando carrito . . .");
-                                                                actual.eliminarCarritoTotal();
+                                                                m = "Eliminando carrito ...";
+                                                                for (int i = 0; i < m.length(); i++) {
+                                                                    System.out.print(m.charAt(i));
+                                                                    try {
+                                                                        Thread.sleep(100); // Pausa de 100 milisegundos
+                                                                    } catch (InterruptedException e) {
+                                                                        e.printStackTrace();
+                                                                    }
+                                                                }
+                                                                pokeMarket.eliminarCarritoTotal(actual);
                                                                 break;
                                                             }
                                                             case 4: {
