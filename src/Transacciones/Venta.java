@@ -15,7 +15,6 @@ public class Venta  extends Transaccion implements ITransaccionable, Serializabl
     private ContenedorLHS<Item> productos;
 
     public Venta() {
-        super();
         totalCobrar = 0;
         productos = new ContenedorLHS<>();
     }

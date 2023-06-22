@@ -63,9 +63,6 @@ public class Carrito implements ITransaccionable, Serializable
        return  productos.eliminar(item);
     }
 
-    public void verCarrito()
-    {
-    }
     public void agregarAlCarrito(Item item)
     {
         if(productos.vacio())
@@ -104,6 +101,11 @@ public class Carrito implements ITransaccionable, Serializable
         return productos.get(productos.contar()-1);
     }
 
+
+    public boolean vacio()
+    {
+        return productos.vacio();
+    }
 
     @Override
     public String toString() {

@@ -9,6 +9,7 @@ import Transacciones.Venta;
 import clasesItem.Carta;
 import clasesItem.Item;
 import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -125,8 +126,7 @@ public class Usuario extends Persona implements Serializable {
         return sb.toString();
     }
 
-    public String mostrarHistorialCompras()
-    {
+    public String mostrarHistorialCompras() {
 
         StringBuilder sb = new StringBuilder();
         int contV = 1;
@@ -159,19 +159,19 @@ public class Usuario extends Persona implements Serializable {
     }
 
     public void agregarItemAlCarrito(Item item) {
-        this.carrito.agregarAlCarrito(item);
+        if (item != null) {
+            this.carrito.agregarAlCarrito(item);
+        }
     }
 
-    public Item buscarEnInventario(String id)
-    {
+    public Item buscarEnInventario(String id) {
         LinkedHashSet<Item> LHSaux = inventario.getMiLHSet();
         Item buscado = null;
         int flag = 1;
         Iterator iterator = LHSaux.iterator();
         while (iterator.hasNext() && flag != 0) {
             buscado = (Item) iterator.next();
-            if(buscado.getId().equals(id))
-            {
+            if (buscado.getId().equals(id)) {
                 flag = 0;
             }
         }
@@ -186,21 +186,18 @@ public class Usuario extends Persona implements Serializable {
         Iterator iterator = LHSaux.iterator();
         while (iterator.hasNext() && flag != 0) {
             buscado = (Item) iterator.next();
-            if(buscado.getId().equals(id))
-            {
+            if (buscado.getId().equals(id)) {
                 flag = 0;
             }
         }
         return buscado;
     }
 
-    public String verInventario()
-    {
+    public String verInventario() {
         return inventario.toString();
     }
 
-    public String mostrarHistorialIntercambios()
-    {
+    public String mostrarHistorialIntercambios() {
         StringBuilder sb = new StringBuilder();
         int contV = 1;
 
@@ -209,7 +206,7 @@ public class Usuario extends Persona implements Serializable {
         for (int i = 0; i < historialIntercambio.tamanio(); i++) {
 
             Intercambio intercambio = historialIntercambio.get(i);
-            sb.append("\n| ** INTERCAMBIO N°"+ contV + " **\n").append("\n")
+            sb.append("\n| ** INTERCAMBIO N°" + contV + " **\n").append("\n")
                     .append(intercambio.toString())
                     .append("\n");
             contV++;
@@ -219,11 +216,13 @@ public class Usuario extends Persona implements Serializable {
 
     public void eliminarItemDelCarrito(String id) {
         Item item = carrito.buscarItemEnCarritoXid(id);
-        carrito.eliminarUnItem(item);
+        if (item != null) {
+            carrito.eliminarUnItem(item);
+        }
     }
 
     public void publicarItem(Item item) {
-       inventario.eliminar(item);
+        inventario.eliminar(item);
         itemsPublicados.agregar(item);
     }
 
@@ -235,26 +234,38 @@ public class Usuario extends Persona implements Serializable {
         return carrito.toString();
     }
 
-    public void confirmarCarrito()
-    {
+    public void confirmarCarrito() {
         // agrego carrito al historial de compra ( 1 )
-        historialCompras.agregar(carrito);
-
-        // !!!!! comprobar saldo mayor a lo que se quiere gastar ( 2 )
-        setSaldo(getSaldo() - getCarrito().getTotalAPagar());
-
-        for(int i = 0; i < carrito.getCantidadItems(); i++)
+        if(!carrito.vacio() && getSaldo() > carrito.getTotalAPagar())
         {
-            inventario.agregar(carrito.ultimo());
-            carrito.eliminarUnItem(carrito.ultimo());
+            historialCompras.agregar(carrito);
+            setSaldo(getSaldo() - getCarrito().getTotalAPagar());
+
+            for (int i = 0; i < carrito.getCantidadItems(); i++) {
+
+                Item item = carrito.ultimo();
+                String nombreVendedor = item.getNombreDuenio();
+                TreeMap<String,Usuario> mapaUsuarios = ControladoraArchivos.leerUsuarios();
+                if(mapaUsuarios.containsKey(nombreVendedor))
+                {
+                    Usuario vendedor = mapaUsuarios.get(nombreVendedor);
+                    vendedor.itemsPublicados.eliminar(item);
+                    vendedor.historialVentas.agregar();
+                }
+                item.setNombreDuenio(getNombre());
+                inventario.agregar(item);
+                carrito.eliminarUnItem(item);
+            }
+
+            carrito.setCantidadItems(0);
+            carrito.setTotalAPagar(0);
+            carrito.setFecha(null);
         }
-
-        carrito.setCantidadItems(0);
-        carrito.setTotalAPagar(0);
-        carrito.setFecha(null);
-
+        else
+        {
+            throw new carritoVacio();
+        }
     }
-
 }
 
 
