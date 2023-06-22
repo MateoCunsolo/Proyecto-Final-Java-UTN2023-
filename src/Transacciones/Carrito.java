@@ -63,6 +63,16 @@ public class Carrito implements ITransaccionable, Serializable
        return  productos.eliminar(item);
     }
 
+    public void verCarrito()
+    {
+    }
+
+    public boolean vacio()
+    {
+        return productos.vacio();
+    }
+
+
     public void agregarAlCarrito(Item item)
     {
         if(productos.vacio())
@@ -72,7 +82,6 @@ public class Carrito implements ITransaccionable, Serializable
         if(productos.agregar(item))
         {
             setCantidadItems(getCantidadItems()+1);
-            setTotalAPagar(getTotalAPagar()+item.getPrecio());
         }
     }
 
@@ -93,7 +102,12 @@ public class Carrito implements ITransaccionable, Serializable
     @Override
     public double calcularTotal()
     {
-        return 0;
+        double resultado = 0;
+        for(int i = 0; i < productos.tamanio(); i++)
+        {
+            resultado = resultado + productos.get(i).getPrecio();
+        }
+        return resultado;
     }
 
     public Item ultimo()
@@ -101,11 +115,6 @@ public class Carrito implements ITransaccionable, Serializable
         return productos.get(productos.contar()-1);
     }
 
-
-    public boolean vacio()
-    {
-        return productos.vacio();
-    }
 
     @Override
     public String toString() {
@@ -135,5 +144,15 @@ public class Carrito implements ITransaccionable, Serializable
         }
 
         return sb.toString();
+    }
+
+    public int tamanioCarrito()
+    {
+        return productos.contar();
+    }
+
+    public Item getItem(int index)
+    {
+        return productos.get(index);
     }
 }

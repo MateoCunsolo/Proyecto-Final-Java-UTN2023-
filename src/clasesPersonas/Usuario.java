@@ -3,13 +3,14 @@ package clasesPersonas;
 import Archivos.ControladoraArchivos;
 import ClasesGenericas.ContenedorLHS;
 import ClasesGenericas.ContenedorV;
+import Excepciones.CarritoVacioException;
+import Excepciones.ItemNoEncontradoException;
 import Transacciones.Carrito;
 import Transacciones.Intercambio;
 import Transacciones.Venta;
 import clasesItem.Carta;
 import clasesItem.Item;
 import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -126,7 +127,8 @@ public class Usuario extends Persona implements Serializable {
         return sb.toString();
     }
 
-    public String mostrarHistorialCompras() {
+    public String mostrarHistorialCompras()
+    {
 
         StringBuilder sb = new StringBuilder();
         int contV = 1;
@@ -145,11 +147,20 @@ public class Usuario extends Persona implements Serializable {
 
     }
 
-    public boolean agregarCarta(Item item) {
+    public boolean agregarItemAlInventario(Item item) {
         return this.inventario.agregar(item);
     }
 
-    public String mostrarInventario() {
+    public void agregarItemsAlInventario(Carrito carro)
+    {
+        for(int i = 0; i < carro.tamanioCarrito(); i++)
+        {
+            agregarItemAlInventario(carro.getItem(i));
+        }
+    }
+
+    public String mostrarInventario()
+    {
         String msj = inventario.listar();
         return msj;
     }
@@ -159,45 +170,76 @@ public class Usuario extends Persona implements Serializable {
     }
 
     public void agregarItemAlCarrito(Item item) {
-        if (item != null) {
-            this.carrito.agregarAlCarrito(item);
-        }
+        this.carrito.agregarAlCarrito(item);
     }
 
-    public Item buscarEnInventario(String id) {
+
+
+    public Item buscarEnInventario(String id)
+    {
         LinkedHashSet<Item> LHSaux = inventario.getMiLHSet();
+
         Item buscado = null;
         int flag = 1;
         Iterator iterator = LHSaux.iterator();
         while (iterator.hasNext() && flag != 0) {
             buscado = (Item) iterator.next();
-            if (buscado.getId().equals(id)) {
+            if(buscado.getId().equals(id))
+            {
                 flag = 0;
             }
         }
         return buscado;
     }
 
-    public Item buscarEnItemsPublicadosPropios(String id) {
-        LinkedHashSet<Item> LHSaux = itemsPublicados.getMiLHSet();
-        Item buscado = new Carta();
+    public Item buscarEnItemsPublicadosPropios(String id) throws ItemNoEncontradoException
+    {
+        Item buscado = new Item();
         int flag = 1;
 
+        LinkedHashSet<Item> LHSaux = itemsPublicados.getMiLHSet();
         Iterator iterator = LHSaux.iterator();
-        while (iterator.hasNext() && flag != 0) {
+        while (iterator.hasNext() && flag == 1)
+        {
             buscado = (Item) iterator.next();
-            if (buscado.getId().equals(id)) {
+            if(buscado.getId().equals(id))
+            {
                 flag = 0;
             }
+        }
+        if(flag==1)
+        {
+            throw new ItemNoEncontradoException("Id de item no encontrado dentro de publicados");
         }
         return buscado;
     }
 
-    public String verInventario() {
+    public boolean encontrarItemsPublicado(String id)
+    {
+        Item buscado = new Item();
+        boolean flag = false;
+
+        LinkedHashSet<Item> LHSaux = itemsPublicados.getMiLHSet();
+        Iterator iterator = LHSaux.iterator();
+        while (iterator.hasNext())
+        {
+            buscado = (Item) iterator.next();
+            if(buscado.getId().equals(id))
+            {
+                flag = true;
+            }
+        }
+
+        return flag;
+    }
+
+    public String verInventario()
+    {
         return inventario.toString();
     }
 
-    public String mostrarHistorialIntercambios() {
+    public String mostrarHistorialIntercambios()
+    {
         StringBuilder sb = new StringBuilder();
         int contV = 1;
 
@@ -206,7 +248,7 @@ public class Usuario extends Persona implements Serializable {
         for (int i = 0; i < historialIntercambio.tamanio(); i++) {
 
             Intercambio intercambio = historialIntercambio.get(i);
-            sb.append("\n| ** INTERCAMBIO N°" + contV + " **\n").append("\n")
+            sb.append("\n| ** INTERCAMBIO N°"+ contV + " **\n").append("\n")
                     .append(intercambio.toString())
                     .append("\n");
             contV++;
@@ -216,13 +258,11 @@ public class Usuario extends Persona implements Serializable {
 
     public void eliminarItemDelCarrito(String id) {
         Item item = carrito.buscarItemEnCarritoXid(id);
-        if (item != null) {
-            carrito.eliminarUnItem(item);
-        }
+        carrito.eliminarUnItem(item);
     }
 
     public void publicarItem(Item item) {
-        inventario.eliminar(item);
+       inventario.eliminar(item);
         itemsPublicados.agregar(item);
     }
 
@@ -234,38 +274,67 @@ public class Usuario extends Persona implements Serializable {
         return carrito.toString();
     }
 
-    public void confirmarCarrito() {
-        // agrego carrito al historial de compra ( 1 )
-        if(!carrito.vacio() && getSaldo() > carrito.getTotalAPagar())
-        {
-            historialCompras.agregar(carrito);
-            setSaldo(getSaldo() - getCarrito().getTotalAPagar());
 
-            for (int i = 0; i < carrito.getCantidadItems(); i++) {
-
-                Item item = carrito.ultimo();
-                String nombreVendedor = item.getNombreDuenio();
-                TreeMap<String,Usuario> mapaUsuarios = ControladoraArchivos.leerUsuarios();
-                if(mapaUsuarios.containsKey(nombreVendedor))
-                {
-                    Usuario vendedor = mapaUsuarios.get(nombreVendedor);
-                    vendedor.itemsPublicados.eliminar(item);
-                    vendedor.historialVentas.agregar();
-                }
-                item.setNombreDuenio(getNombre());
-                inventario.agregar(item);
-                carrito.eliminarUnItem(item);
-            }
-
-            carrito.setCantidadItems(0);
-            carrito.setTotalAPagar(0);
-            carrito.setFecha(null);
-        }
-        else
-        {
-            throw new carritoVacio();
-        }
+    public String mostrarHistorialIntercambio()
+    {
+        String mensaje = historialIntercambio.listar();
+        return mensaje;
     }
+
+    public boolean compararEmail(String email)
+    {
+        boolean rta = false;
+        if(this.email.equals(email))
+        {
+            rta = true;
+        }
+        return rta;
+    }
+
+    public void agregarAlHistorialIntercambios(Intercambio inter)
+    {
+        historialIntercambio.agregar(inter);
+    }
+
+    public void agregarAlHistorialCompras(Carrito carro)
+    {
+        historialCompras.agregar(carro);
+    }
+
+    public void eliminarItemDePublicados(Item item)
+    {
+        itemsPublicados.eliminar(item);
+    }
+
+    public Carrito crearVenta (Carrito carrito)
+    {
+          /*Vendedor
+            Sube el saldo
+            Se guarda el historial de la venta (ya incluye el nombre de quien me compra)
+            Se saca el artículo de la publicación
+            */
+
+        Venta venta = new Venta();
+        if(!carrito.vacio()) {
+            for (int i = 0; i < carrito.tamanioCarrito(); i++) //recorro todo el carrito
+            {
+                Item item = carrito.getItem(i); //get me retorna el item de lA posicion i
+                if (getNombre().equals(item.getNombreDuenio()))//si el item tiene mi nombre
+                {
+                    venta.agregarItem(item);
+                    carrito.eliminarUnItem(item);
+                    eliminarItemDePublicados(item); //elimino el item de mis publicados
+                    venta.setTotalCobrar(venta.getTotalCobrar() + item.getPrecio()); //COCHINADA
+                }
+            }
+            setSaldo(getSaldo() + venta.getTotalCobrar()); //sube el saldo
+            historialVentas.agregar(venta); //se guarda el historial de la venta
+        }
+        return carrito;
+    }
+
+
+
 }
 
 
