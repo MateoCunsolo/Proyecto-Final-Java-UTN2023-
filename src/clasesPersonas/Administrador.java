@@ -87,8 +87,7 @@ public class Administrador extends Persona implements Serializable
 
                 Venta venta = historialVentas.get(i);
 
-                sb.append("Venta N°" +contV+ ":").append("\n")
-                        .append(venta.listar())
+                sb.append(venta.listar())
                         .append("\n");
                 contV++;
             }

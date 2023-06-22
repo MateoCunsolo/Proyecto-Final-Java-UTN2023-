@@ -13,6 +13,7 @@ public class Intercambio extends Transaccion implements Serializable
 
     public Intercambio()
     {
+        super();
         entrada = new Item();
         salida = new Item();
     }

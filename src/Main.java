@@ -184,10 +184,11 @@ public class Main {
                                         }
                                         System.out.println();
 
-                                        menuAdminMovimientosUsuario();
-                                        int o = teclado.nextInt();
                                         char cont = 's';
                                         do {
+                                        menuAdminMovimientosUsuario();
+                                        int o = teclado.nextInt();
+
 
                                             switch (o) {
                                                 case 1: //VER VENTAS probarrrrr
@@ -211,7 +212,8 @@ public class Main {
                                                 }
                                             }
 
-                                            System.out.println("\nDesea seguir viendo los movimientos del usuario? (s/n) \n");
+                                            System.out.println("\nDesea seguir viendo los movimientos del usuario? (s/n)");
+                                            teclado.nextLine();
                                             String aux = teclado.nextLine();
                                             cont = aux.charAt(0);
 
@@ -229,8 +231,8 @@ public class Main {
                                     break;
                                 }
                             }
-                            System.out.println("\nDesea seguir navegando en menu administrador? (s/n)");
                             teclado.nextLine();
+                            System.out.println("\nDesea seguir navegando en menu administrador? (s/n)");
                             String aux = teclado.nextLine();
                             s = aux.charAt(0);
 
