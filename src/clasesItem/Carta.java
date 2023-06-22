@@ -175,4 +175,16 @@ public class Carta extends Item implements Serializable, I_toJSON {
             setPrecio(1000);
         }
     }
+
+    public boolean compararRareza(String tipoRareza)
+    {
+        boolean rta = false;
+
+        if(rareza.equals(tipoRareza)) //si son iguales
+        {
+            rta = true;
+        }
+        return rta;
+    }
+
 }
