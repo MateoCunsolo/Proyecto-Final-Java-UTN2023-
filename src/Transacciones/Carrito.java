@@ -79,8 +79,9 @@ public class Carrito implements ITransaccionable, Serializable
         {
             fecha = LocalDateTime.now();
         }
-        if(productos.agregar(item))
+        if(!productos.contiene(item))
         {
+            productos.agregar(item);
             setCantidadItems(getCantidadItems()+1);
         }
     }
