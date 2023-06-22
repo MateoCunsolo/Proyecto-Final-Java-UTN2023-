@@ -28,6 +28,10 @@ public class ContenedorLHS <T extends Item> implements IFuncionalidades<T>, Seri
         return miLHSet;
     }
 
+    public boolean contiene(T o)
+    {
+     return miLHSet.contains(o);
+    }
 
     @Override
     public String listar()

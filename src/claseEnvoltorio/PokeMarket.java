@@ -124,14 +124,12 @@ public class PokeMarket implements Serializable {
 
     public void verItemsPublicados() {
         Scanner teclado = new Scanner(System.in);
-        String siguiente = "s";
+        String itemsPublicados = "";
         Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
-        while (iterator.hasNext() && siguiente.equals("s")) {
+        while (iterator.hasNext()) {
             Map.Entry<String, Usuario> entrada = iterator.next();
             Usuario usuario = entrada.getValue();
-            System.out.println(usuario.mostrarItemsPublicados());
-            System.out.println("Moverse a la siguiente pagina ? (s/n): ");
-            siguiente = teclado.nextLine();
+            itemsPublicados = itemsPublicados.concat(usuario.mostrarItemsPublicados());
         }
     }
 
@@ -385,6 +383,18 @@ public String editarEmail(String nuevoEmail,Usuario usuario) //los pido al momen
         {
             throw new CarritoVacioException();
         }
+    }
+
+
+    public void eliminarItemDelCarrito(Usuario actual, String id)
+    {
+        Item item = actual.getCarrito().buscarItemEnCarritoXid(id);
+        if(mapaUsuarios.containsKey(item.getNombreDuenio()))
+        {
+            Usuario aux = mapaUsuarios.get(item.getNombreDuenio());
+            aux.publicarItem(item);
+        }
+        actual.eliminarItemDelCarrito(id);
     }
 
 }

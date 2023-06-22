@@ -18,6 +18,7 @@ public class Main {
         PokeMarket pokeMarket = new PokeMarket();
         //crearArchivoConUsuarios(pokeMarket);
         //cargaArchivoConCartas(pokeMarket);
+        //ControladoraArchivos.grabarAdministrador("pokeMarket2023","charizard150");
 
         pokeMarket.leerUsuariosArchivo(); //pasamos usuarios al treeMap de la clase Evoltorio
         System.out.println(pokeMarket.mostrarMapaUsuarios());
@@ -95,7 +96,7 @@ public class Main {
                 }
                 case 2: //INICIAR SESION
                 {
-                    //ControladoraArchivos.grabarAdministrador("pokeMarket2023","charizard150");
+
                     pokeMarket.cargaInicioAdministrador();
 
                     System.out.printf("Ingrese nombre: ");
@@ -105,8 +106,7 @@ public class Main {
                     System.out.printf("Ingrese contraseña: ");
                     String contra = teclado.nextLine();
 
-                    Administrador admin = new Administrador(nombre,contra);
-
+                    Administrador admin = new Administrador(nombre, contra);
                     if (pokeMarket.compararAdmin(admin)) //si el nombre y dato ingresado coinciden, se ACCEDE MODO ADMINISTRADOR
                     {
                         String mensaje = "Accediendo a funciones de administrador ...";
@@ -237,12 +237,10 @@ public class Main {
                         } while (s == 's');
 
                     }
-
                     else //verificar si se accede a las FUNCIONES del USUARIO
                     {
                         try {
-                            int opcionUsuario1 = 0;
-                            int opcionUsuario2, opcionUsuario3, opcionUsuario4, opcionUsuario5 = 0;
+                            int opcionUsuario1, opcionUsuario2, opcionUsuario3, opcionUsuario4, opcionUsuario5 = 0;
                             Usuario actual = pokeMarket.iniciarSesion(nombre, contra);
                             do {
                                 System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -254,15 +252,15 @@ public class Main {
                                 System.out.println("| 3- PUBLICAR ITEM");
                                 System.out.println("| 4- CERRAR SESION");
                                 System.out.printf("| Ingrese opcion: ");
-                                int opp = teclado.nextInt();
+                                opcionUsuario1 = teclado.nextInt();
                                 String id = "";
-                                switch (opp) {
+
+                                switch (opcionUsuario1) {
                                     case 1: //son las opciones de ver perfil
                                     {
                                         System.out.println(pokeMarket.verPerfil(actual)); //para ver info de perfil
                                         opcion = 0;
-                                        while (opcion != 6)
-                                        {
+                                        while (opcion != 6) {
                                             System.out.println("1-EDITAR DATOS DE PERFIL");
                                             System.out.println("2-ELIMINAR CUENTA");
                                             System.out.println("3-VER INVENTARIO");
@@ -272,8 +270,7 @@ public class Main {
                                             System.out.printf("Ingrese opcion: ");
                                             opcion = teclado.nextInt();
                                             switch (opcion) {
-                                                case 1:
-                                                {
+                                                case 1: {
                                                     boolean op = true;
                                                     while (op) {
                                                         String nombreNuevo = " ";
@@ -284,26 +281,21 @@ public class Main {
                                                         System.out.println("2-Modificar email");
                                                         System.out.println("3-Volver al menu anterior");
                                                         op2 = teclado.nextInt();
-                                                        if (op2 == 1)
-                                                        {
+                                                        if (op2 == 1) {
                                                             System.out.println("Indique el nuevo nombre");
                                                             teclado.nextLine();
                                                             nombreNuevo = teclado.nextLine();
-                                                            mensaje = pokeMarket.editarNombre(nombreNuevo,actual);
+                                                            mensaje = pokeMarket.editarNombre(nombreNuevo, actual);
                                                             System.out.println(mensaje);
                                                             op = false;
-                                                        }
-                                                        else if (op2 == 2)
-                                                        {
+                                                        } else if (op2 == 2) {
                                                             System.out.println("Indique el nuevo email");
                                                             teclado.nextLine();
                                                             emailNuevo = teclado.nextLine();
-                                                            mensaje = pokeMarket.editarEmail(emailNuevo,actual);
+                                                            mensaje = pokeMarket.editarEmail(emailNuevo, actual);
                                                             System.out.println(mensaje);
                                                             op = false;
-                                                        }
-                                                        else
-                                                        {
+                                                        } else {
                                                             op = false;
                                                         }
                                                     }
@@ -387,8 +379,7 @@ public class Main {
                                             System.out.printf("| Ingrese opcion: ");
                                             opcionUsuario2 = teclado.nextInt();
 
-                                            switch (opcionUsuario2)
-                                            {
+                                            switch (opcionUsuario2) {
                                                 case 1: //comprar
                                                 {
                                                     do {
@@ -408,13 +399,11 @@ public class Main {
                                                                 System.out.printf("Ingrese ID del Item: ");
                                                                 teclado.nextLine();
                                                                 id = teclado.nextLine();
-                                                                try
-                                                                {
+                                                                try {
                                                                     Item item = pokeMarket.buscarItemPublicadoXid(id);
                                                                     actual.agregarItemAlCarrito(item);
 
-                                                                }catch (ItemNoEncontradoException f)
-                                                                {
+                                                                } catch (ItemNoEncontradoException f) {
                                                                     System.out.println(f.getMensaje());
                                                                 }
                                                                 break;
@@ -423,7 +412,7 @@ public class Main {
                                                                 System.out.println("*****ELIMINAR ITEM DEL CARRITO********");
                                                                 System.out.printf("Ingrese ID del Item: ");
                                                                 id = teclado.nextLine();
-                                                                actual.eliminarItemDelCarrito(id);
+                                                                pokeMarket.eliminarItemDelCarrito(actual,id);
                                                                 break;
                                                             }
                                                             case 3: {
@@ -439,12 +428,9 @@ public class Main {
                                                             case 5: {
                                                                 try {
                                                                     pokeMarket.confirmarCarrito(actual);
-                                                                }catch (CarritoVacioException h)
-                                                                {
+                                                                } catch (CarritoVacioException h) {
                                                                     System.out.println(h.getMensaje());
-                                                                }
-                                                                catch(ValorInvalidoException e)
-                                                                {
+                                                                } catch (ValorInvalidoException e) {
                                                                     System.out.println(e.getMessage());
                                                                 }
                                                                 break;
@@ -456,12 +442,11 @@ public class Main {
                                                 }
                                                 case 2: //intercambio
                                                 {
-                                                    System.out.println("USUARIO ANTES DEL INTERCAMBIO" +actual.toString());
+                                                    System.out.println("USUARIO ANTES DEL INTERCAMBIO" + actual.toString());
                                                     //si o si los productos tienene que estar publicados en ambos usuarios
                                                     System.out.println("Ingrese el id del item que desea");
                                                     teclado.nextLine();
                                                     String idEntrada = teclado.nextLine();
-
 
 
                                                     System.out.println("Ingrese el id del item que ofrecera");
@@ -469,12 +454,11 @@ public class Main {
                                                     String idSalida = teclado.nextLine();
 
                                                     //confirmamos que el id de salida se encuentre en los items publicados del usuario
-                                                    try
-                                                    {
+                                                    try {
                                                         Item entrado = pokeMarket.buscarItemPublicadoXid(idEntrada);
-                                                        System.out.println("ITEM QUE SE QUIERE ADQUIRIR" +entrado.toString());
+                                                        System.out.println("ITEM QUE SE QUIERE ADQUIRIR" + entrado.toString());
                                                         Item salido = actual.buscarEnItemsPublicadosPropios(idSalida);
-                                                        System.out.println("ITEM QUE SE VA " +salido.toString());
+                                                        System.out.println("ITEM QUE SE VA " + salido.toString());
 
                                                         String aux = "Intercambiando cartas ...";
                                                         for (int j = 0; j < aux.length(); j++) {
@@ -486,22 +470,17 @@ public class Main {
                                                             }
                                                         }
 
-                                                        Intercambio intercambio = new Intercambio(entrado,salido);
+                                                        Intercambio intercambio = new Intercambio(entrado, salido);
 
                                                         pokeMarket.intercambiarCartas(intercambio, actual);
                                                         System.out.println("Intercambio realizado con exito! :)");
 
-                                                        System.out.println("USUARIO DESPUES DEL INTERCAMBIO" +actual.toString());
+                                                        System.out.println("USUARIO DESPUES DEL INTERCAMBIO" + actual.toString());
 
 
-
-
-
-                                                    }catch (ItemNoEncontradoException d)
-                                                    {
+                                                    } catch (ItemNoEncontradoException d) {
                                                         System.out.println(d.getMensaje());
-                                                    }catch (DiferenteRarezaException k)
-                                                    {
+                                                    } catch (DiferenteRarezaException k) {
                                                         System.out.println(k.getMessage());
                                                     }
 
@@ -533,8 +512,7 @@ public class Main {
                                         }
                                         break;
                                     }
-                                    case 4:
-                                    {
+                                    case 4: {
                                         break;
                                     }
                                 }
@@ -547,12 +525,14 @@ public class Main {
                     }
                     break;
                 }
-                case 3:{
+                case 3: {
                     continuar = 'n';
-                    break;}
-                default:{
+                    break;
+                }
+                default: {
                     System.out.println("Opción inválida");
-                    break;}
+                    break;
+                }
             }
         } while (continuar == 's');
 
@@ -576,6 +556,7 @@ public class Main {
         }
         return rta && letrasMinusculas == 4 && numeros == 4; //si alguna no se cumple retorna false
     }
+
     public static void menuPrincipal() {
         System.out.println(" _________________________________________");
         System.out.println("|                 <<MENU>>                |");

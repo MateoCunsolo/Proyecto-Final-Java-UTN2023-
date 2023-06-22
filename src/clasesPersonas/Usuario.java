@@ -259,10 +259,15 @@ public class Usuario extends Persona implements Serializable {
     public void eliminarItemDelCarrito(String id) {
         Item item = carrito.buscarItemEnCarritoXid(id);
         carrito.eliminarUnItem(item);
+        carrito.setTotalAPagar(carrito.getTotalAPagar() - item.getPrecio());
     }
 
     public void publicarItem(Item item) {
-       inventario.eliminar(item);
+        if(!inventario.contiene(item))
+        {
+            inventario.eliminar(item);
+        }
+
         itemsPublicados.agregar(item);
     }
 
@@ -271,6 +276,7 @@ public class Usuario extends Persona implements Serializable {
     }
 
     public String mostrarCarrito() {
+        carrito.calcularTotal();
         return carrito.toString();
     }
 
