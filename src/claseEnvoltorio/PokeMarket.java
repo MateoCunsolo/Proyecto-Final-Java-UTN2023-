@@ -150,7 +150,6 @@ public class PokeMarket implements Serializable {
         return rta;
     }
 
-
     public Item buscarItemPublicadoXid(String id) {
         int flag = 1;
         Item buscado = new Item();
@@ -182,39 +181,13 @@ public class PokeMarket implements Serializable {
         return mensaje;
     }
 
-    public String editarNombre(Usuario usuario, String nuevoNombre) //los pido al momento que quiere cambiar los datos
-    {
-        String mensaje = " ";
-        if(nuevoNombre!=null && usuario!=null) {
-            usuario.setNombre(nuevoNombre);
-            mensaje = "Nombre actualizado correctamente.";
-        }
-        else {
-            mensaje = "No fue posible realizar los cambios indicados";
-        }
-        return mensaje;
-    }
-
-    public String editarEmail(Usuario usuario, String nuevoEmail) //los pido al momento que quiere cambiar los datos
-    {
-        String mensaje = " ";
-        if(nuevoEmail!=null && usuario!=null) {
-            usuario.setEmail(nuevoEmail);
-            mensaje = "Email actualizado correctamente.";
-        }
-        else {
-            mensaje = "No fue posible realizar los cambios indicados";
-        }
-        return mensaje;
-    }
-
     public String eliminarCuenta(Usuario usuario)
     {
         String mensaje = " ";
         if(usuario!=null)
         {
-           mapaUsuarios.remove(usuario.getNombre());
-           mensaje= "Cuenta eliminada correctamente";
+            mapaUsuarios.remove(usuario.getNombre());
+            mensaje= "Cuenta eliminada correctamente";
         }
         else
         {
@@ -222,18 +195,45 @@ public class PokeMarket implements Serializable {
         }
         return mensaje;
     }
-
-
-    public String mostrarHistorialIntercambio(Usuario usuario)
+    public String editarNombre(String nuevoNombre, Usuario usuario) //los pido al momento que quiere cambiar los datos
     {
         String mensaje = " ";
-        if(usuario!=null)
+        if(nuevoNombre!=null)
         {
-            mensaje = usuario.getHistorialIntercambio().toString();
+            if(!mapaUsuarios.containsKey(nuevoNombre)) //si en el mapa no hay alguien con ese nombre(xq uysamos lel nombre como key), permite el cambio
+            {
+                usuario.setNombre(nuevoNombre);
+                mensaje = "Nombre actualizado correctamente.";
+            }
+            else
+            {
+                mensaje = "El nombre indicado ya se encuntra utilizado";
+            }
+        }
+        else {
+            mensaje = "No fue posible realizar los cambios indicados";
+        }
+        return mensaje;
+    }
+
+    public String editarEmail(String nuevoEmail, Usuario usuario) //los pido al momento que quiere cambiar los datos
+    {
+        String mensaje = " ";
+        if(nuevoEmail!=null)
+        {
+            if(!mapaUsuarios.containsValue(nuevoEmail)) //si en el mapa no esta ese email
+            {
+                usuario.setEmail(nuevoEmail);
+                mensaje = "Email actualizado correctamente.";
+            }
+            else
+            {
+                mensaje = "El email indicado ya se encuentra utilizado";
+            }
         }
         else
         {
-            mensaje = "No fue posible realizar la accion";
+            mensaje = "No fue posible realizar los cambios indicados";
         }
         return mensaje;
     }
