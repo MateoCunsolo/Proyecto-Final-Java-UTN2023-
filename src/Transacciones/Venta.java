@@ -6,6 +6,8 @@ import clasesPersonas.Usuario;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
 
@@ -44,8 +46,14 @@ public class Venta  extends Transaccion implements ITransaccionable, Serializabl
 
     @Override
     public double calcularTotal() {
-        //funcion como calcular
-        return 0;
+        LinkedHashSet<Item> LHSaux = productos.getMiLHSet();
+        double resultado = 0;
+        Iterator iterator = LHSaux.iterator();
+        while (iterator.hasNext()) {
+            Item item = (Item) iterator.next();
+            resultado = resultado + item.getPrecio();
+        }
+        return resultado;
     }
 
     @Override
