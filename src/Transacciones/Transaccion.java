@@ -9,7 +9,7 @@ public abstract class Transaccion implements Serializable
 
 
     public Transaccion() {
-
+        this.fecha = LocalDateTime.now();
     }
 
     public LocalDateTime getFecha() {

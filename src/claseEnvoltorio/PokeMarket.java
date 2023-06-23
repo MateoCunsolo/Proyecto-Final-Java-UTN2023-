@@ -278,7 +278,8 @@ public class PokeMarket implements Serializable {
         Item entrado = intercambio.getEntrada();
         Item salido = intercambio.getSalida();
 
-        if (entrado instanceof Carta && salido instanceof Carta) {
+        if (entrado instanceof Carta && salido instanceof Carta)
+        {
             if (((Carta) entrado).compararRareza(((Carta) salido).getRareza())) {
                 //busco a mi intercambiador
                 Usuario intercambiador = mapaUsuarios.get(entrado.getNombreDuenio());

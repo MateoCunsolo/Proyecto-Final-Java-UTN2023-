@@ -186,11 +186,11 @@ public class Main {
                                         }
                                         System.out.println();
 
-                                        menuAdminMovimientosUsuario();
-                                        teclado.nextLine();
-                                        int o = teclado.nextInt();
                                         char cont = 's';
                                         do {
+                                        menuAdminMovimientosUsuario();
+                                        int o = teclado.nextInt();
+
 
                                             switch (o) {
                                                 case 1: //VER VENTAS probarrrrr
@@ -213,9 +213,8 @@ public class Main {
                                                     break;
                                                 }
                                             }
-
-                                            teclado.nextLine();
                                             System.out.println("\nDesea seguir viendo los movimientos del usuario? (s/n) \n");
+                                            teclado.nextLine();
                                             String aux = teclado.nextLine();
                                             cont = aux.charAt(0);
 
@@ -233,8 +232,8 @@ public class Main {
                                     break;
                                 }
                             }
-                            System.out.println("\nDesea seguir navegando en menu administrador? (s/n)");
                             teclado.nextLine();
+                            System.out.println("\nDesea seguir navegando en menu administrador? (s/n)");
                             String aux = teclado.nextLine();
                             s = aux.charAt(0);
 
@@ -475,6 +474,7 @@ public class Main {
                                                 case 2: //intercambio ok
                                                 {
                                                     System.out.println("USUARIO ANTES DEL INTERCAMBIO" + actual.toString());
+
                                                     //si o si los productos tienene que estar publicados en ambos usuarios
                                                     System.out.println("Ingrese el id del item que desea");
                                                     teclado.nextLine();
@@ -504,9 +504,9 @@ public class Main {
 
                                                         Intercambio intercambio = new Intercambio(entrado, salido);
                                                         pokeMarket.intercambiarCartas(intercambio, actual);
+
                                                         System.out.println("Intercambio realizado con exito! :)");
                                                         System.out.println("USUARIO DESPUES DEL INTERCAMBIO" + actual.toString());
-
 
                                                     } catch (ItemNoEncontradoException d) {
                                                         System.out.println(d.getMensaje());
@@ -565,7 +565,6 @@ public class Main {
                 }
             }
         } while (continuar == 's');
-
         //pokeMarket.guardarCambios(); //se graban en el archivo Usuarios todos los cambios realizados
         teclado.close();
     }
