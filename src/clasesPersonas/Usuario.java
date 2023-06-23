@@ -300,7 +300,6 @@ public class Usuario extends Persona implements Serializable {
      * @return true si el artículo se encuentra en los items publicados, false de lo contrario.
      */
     public boolean encontrarItemsPublicado(String id) {
-        System.out.printf("ESTOY ACA :) ITEMS PUBLIC");
         Item buscado = new Item();
         boolean flag = false;
 
@@ -400,6 +399,7 @@ public class Usuario extends Persona implements Serializable {
      * @param email El email a comparar.
      * @return true si el email coincide con el del usuario, false de lo contrario.
      */
+
     public boolean compararEmail(String email) {
         boolean rta = false;
         if (this.email.equals(email)) {

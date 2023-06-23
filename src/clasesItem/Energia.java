@@ -3,7 +3,7 @@ package clasesItem;
 import java.io.Serializable;
 
 /**
- * La clase Energia representa los diferentes tipos de energía utilizados en el juego de cartas.
+ * La clase Energia representa los diferentes tipos de energía que pueden ser utilizadas en las cartas.
  * Cada tipo de energía está definido como un elemento del enumerado Energia.
  */
 public enum Energia implements Serializable

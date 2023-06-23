@@ -15,6 +15,11 @@ import java.util.Scanner;
 import java.io.Serializable;
 import java.util.*;
 
+
+/**
+ * La clase PokeMarket representa un mercado virtual de Cartas de Pokémon.
+ * Esta clase es serializable, lo que permite guardar y cargar objetos de tipo PokeMarket en archivos.
+ */
 public class PokeMarket implements Serializable {
     private Administrador administrador;
     private TreeMap<String, Usuario> mapaUsuarios;
@@ -32,7 +37,7 @@ public class PokeMarket implements Serializable {
      * Constructor de la clase PokeMarket.
      * Crea una instancia de la clase Administrador y un TreeMap con los usuarios proporcionados.
      *
-     * @param administrador El administrador de la tienda.
+     * @param administrador El administrador del programa.
      */
     public PokeMarket(Administrador administrador) {
         this.administrador = administrador;
@@ -40,25 +45,25 @@ public class PokeMarket implements Serializable {
     }
 
     /**
-            * Devuelve el administrador de la tienda.
+            * Devuelve el administrador del programa.
             *
-            * @return El administrador de la tienda.
+            * @return El administrador del programa.
      */
     public Administrador getAdministrador() {
         return administrador;
     }
 
     /**
-     * Establece el administrador de la tienda.
+     * Establece el administrador del programa.
      *
-     * @param administrador El administrador de la tienda.
+     * @param administrador El administrador del programa
      */
     private void setAdministrador(Administrador administrador) { //!!!!
         this.administrador = administrador;
     }
 
     /**
-     * Devuelve el TreeMap que contiene a los usuarios de la tienda.
+     * Devuelve el TreeMap que contiene a los usuarios del programa
      *
      * @return El TreeMap de usuarios.
      */
@@ -77,7 +82,7 @@ public class PokeMarket implements Serializable {
                 '}';
     }
     /**
-     * Agrega un usuario al mapa de usuarios de la tienda.
+     * Agrega un usuario al mapa de usuarios del programa
      *
      * @param usuario El usuario a agregar.
      * @return true si se agrega correctamente, false de lo contrario.
@@ -97,13 +102,13 @@ public class PokeMarket implements Serializable {
         ControladoraArchivos.grabarUsuarios(mapaUsuarios);
     }
     /**
-     * Lee los usuarios desde el archivo "Usuarios.dat" y los carga en el mapa de usuarios de la tienda.
+     * Lee los usuarios desde el archivo "Usuarios.dat" y los carga en el mapa de usuarios del programa.
      */
     public void leerUsuariosArchivo() {
         this.mapaUsuarios = ControladoraArchivos.leerUsuarios();
     }
     /**
-     * Devuelve la cantidad de usuarios en la tienda.
+     * Devuelve la cantidad de usuarios del programa
      *
      * @return La cantidad de usuarios.
      */
@@ -351,7 +356,6 @@ public class PokeMarket implements Serializable {
         return mensaje;
     }
 
-
     /**
      * Verifica si un email está contenido en el mapa de Usuarios.
      *
@@ -396,18 +400,20 @@ public class PokeMarket implements Serializable {
      * @throws DiferenteRarezaException si las cartas tienen diferente rareza
      */
     public void intercambiarCartas(Intercambio intercambio, Usuario actual) throws ItemNoEncontradoException, DiferenteRarezaException {
+
         Item entrado = intercambio.getEntrada();
         Item salido = intercambio.getSalida();
 
-        if (entrado instanceof Carta && salido instanceof Carta)
+        if(entrado instanceof Carta && salido instanceof Carta)
         {
-            if (((Carta) entrado).compararRareza(((Carta) salido).getRareza())) {
+            if(((Carta) entrado).compararRareza(((Carta) salido).getRareza()))
+            {
                 //busco a mi intercambiador
                 Usuario intercambiador = mapaUsuarios.get(entrado.getNombreDuenio());
 
                 //(1) AGREGAMOS AL HISTORIAL DE INTERCAMBIO DE AMBOS
                 actual.agregarAlHistorialIntercambios(intercambio);
-                Intercambio aux = new Intercambio(salido,entrado);
+                Intercambio aux = new Intercambio(salido, entrado);
                 intercambiador.agregarAlHistorialIntercambios(aux);
 
                 ///USUARIO
@@ -430,7 +436,9 @@ public class PokeMarket implements Serializable {
                 //(4) le saco al actual el item de sus publicados
                 actual.eliminarItemDePublicados(salido);
 
-            } else {
+            }
+            else
+            {
                 throw new DiferenteRarezaException();
             }
         }
@@ -443,29 +451,15 @@ public class PokeMarket implements Serializable {
      * @throws CarritoVacioException   Si el carrito está vacío.
      * @throws ValorInvalidoException Si el saldo del usuario no es suficiente para pagar el carrito.
      */
+
     public void confirmarCarrito(Usuario actual) throws CarritoVacioException, ValorInvalidoException {
-
-        /*
-        En este caso, se ha implementado el método clone() en la clase Carta.Primero, se invoca al método clone () de la
-        clase base (Item) utilizando super.clone().Luego, se realiza una clonación profunda del objeto
-        Pokemon asociado, llamando al método clone() del objeto pokemon actual y asignando el objeto clonado al
-        nuevo objeto clonedCarta.
-
-                Es importante tener en cuenta que tanto la clase Carta como la clase Pokemon deben implementar la
-        interfaz Cloneable y definir su propio método clone () para que la clonación profunda funcione correctamente.
-
-                Al utilizar carta.clone(), obtendrás una copia independiente de la carta con sus respectivos objetos
-        Pokemon también clonados de forma independiente.
-
-        Recuerda que esta es solo una implementación básica y puede requerir ajustes adicionales según las necesidades
-        específicas de tu aplicación.
-        */
 
         Carrito carrito = actual.getCarrito();
 
         if (!carrito.vacio()) //si el carrito tiene elementos
         {
-            if (actual.getSaldo() >= carrito.getTotalAPagar()) //si el saldo alcanza
+            Carrito copiaCalcTotal = carrito.clone();
+            if (actual.getSaldo() >= copiaCalcTotal.calcularTotal()) //si el saldo alcanza
             {
                 // DESCUENTO MI SALDO, CON EL VALOR TOTAL DE MI CARRITOV OK
 

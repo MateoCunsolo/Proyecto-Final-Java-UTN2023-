@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * La clase Item representa un objeto genérico en el juego. Contiene información como el precio, el nombre del dueño,
+ * La clase Item representa un objeto genérico en el programa. Contiene información como el precio, el nombre del dueño,
  * la descripción y el ID del item.
  */
 public class Item implements Serializable, I_toJSON, Cloneable

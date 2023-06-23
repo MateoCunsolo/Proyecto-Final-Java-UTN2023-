@@ -11,6 +11,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * La clase Pokemon representa un Pokémon en el programa.
+ * Esta clase es serializable y clonable, y también implementa la interfaz I_toJSON.
+ * Permite almacenar información sobre un Pokémon y realizar operaciones como serialización,
+ * clonación y conversión a formato JSON.
+ */
 public class Pokemon implements Serializable, I_toJSON, Cloneable {
 
     private static final long serialVersionUID = -4325708085462147315L;

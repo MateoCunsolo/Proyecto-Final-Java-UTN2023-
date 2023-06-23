@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Esta clase representa un ataque en el juego.
+ * Esta clase representa un ataque del Pokemon de la carta.
  * Un ataque tiene un nombre, un daño asociado y una descripción.
  */
 public class Ataque implements Serializable, Cloneable

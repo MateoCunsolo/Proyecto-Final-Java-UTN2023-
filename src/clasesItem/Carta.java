@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.Objects;
 /**
- * La clase Carta representa una carta de juego y extiende la clase abstracta Item.
+ * La clase Carta representa una carta de Pokemon y extiende de la clase abstracta Item.
  * Contiene atributos como el número de la carta, el Pokémon asociado, la rareza y el artista.
  * Implementa las interfaces Serializable, I_toJSON y Cloneable.
  */
