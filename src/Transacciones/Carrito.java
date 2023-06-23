@@ -113,12 +113,12 @@ public class Carrito implements ITransaccionable, Serializable, Cloneable {
 
     @Override
     public String toString() {
-        return "Carrito{" +
-                "Cantidad de Items=" + cantidadItems +
-                ", Total A Pagar=" + totalAPagar +
-                ", Fecha =" + fecha +
-                ", Productos=" + productos +
-                '}';
+        return "***********************************************************************************\n"+
+                "CARRITO DE COMPRAS\n"+
+                "\tCantidad de Items = "+ cantidadItems +"\n"+
+                "\tTotal A Pagar = " + totalAPagar +"\n"+
+                "\tFecha = " + fecha +"\n"+
+                "\tProductos = \n" + productos;
     }
 
     @Override

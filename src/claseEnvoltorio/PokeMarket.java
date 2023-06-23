@@ -194,7 +194,7 @@ public class PokeMarket implements Serializable {
         if (usuario != null) {
             if (mapaUsuarios.containsKey(usuario.getNombre())) //si esta el usuario
             {
-                mensaje = "Información de perfil :" + "\nNombre Usuario : " + usuario.getNombre() + "\nEmail :" + usuario.getEmail() + "\nSaldo disponible :" + usuario.getSaldo();
+                mensaje = "Nombre Usuario : " + usuario.getNombre() + "\nEmail :" + usuario.getEmail() + "\nSaldo disponible :" + usuario.getSaldo();
             } else {
                 mensaje = "El fue posible encontrar el usuario indicado";
             }
@@ -379,6 +379,7 @@ public class PokeMarket implements Serializable {
                 throw new ValorInvalidoException("El saldo es insuficiente para efectuar la compra :(");
             }
         } else {
+            System.out.println("VACIO");
             throw new CarritoVacioException();
         }
     }

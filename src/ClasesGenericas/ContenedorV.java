@@ -47,9 +47,7 @@ public class ContenedorV <T> implements IFuncionalidades<T>, Serializable {
 
     @Override
     public String toString() {
-        return "ContenedorV{" +
-                "miVector=" + miVector +
-                '}';
+        return "\t"+miVector;
     }
 
     public boolean contiene(T o)
