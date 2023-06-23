@@ -15,15 +15,17 @@ public class Pokemon implements Serializable, I_toJSON, Cloneable {
 
     private static final long serialVersionUID = -4325708085462147315L;
 
+    private String nombre; // Nombre del Pokémon
+    private int ps; // Puntos de salud
+    private String evolucionA; // Evolución a la que puede llegar el Pokémon
+    private String evolucionaDe; // Pokémon del que puede evolucionar
+    private Energia tipo; // Tipo de energía del Pokémon
+    private Energia debilidad; // Debilidad del Pokémon
+    private HashSet<Ataque> hsAtaques; // Conjunto de ataques del Pokémon
 
-    private String nombre; //chek
-    private int ps; //puntos de salud //chek
-    private String evolucionA; //evolvesTo //chek
-    private String evolucionaDe; //chek
-    private Energia tipo; //chek
-    private Energia debilidad; //chek
-    private HashSet<Ataque> hsAtaques; //chek
-
+    /**
+     * Constructor sin argumentos que inicializa los atributos del Pokémon con valores predeterminados.
+     */
     public Pokemon() {
         nombre = "";
         ps = 0;
@@ -34,6 +36,14 @@ public class Pokemon implements Serializable, I_toJSON, Cloneable {
         hsAtaques = new HashSet<>();
     }
 
+    /**
+     * Constructor que inicializa los atributos del Pokémon con los valores proporcionados.
+     *
+     * @param nombre       El nombre del Pokémon.
+     * @param ps           Los puntos de salud del Pokémon.
+     * @param evolucionA   La evolución a la que puede llegar el Pokémon.
+     * @param evolucionaDe El Pokémon del que puede evolucionar el Pokémon actual.
+     */
     public Pokemon(String nombre, int ps, String evolucionA, String evolucionaDe) {
         this.nombre = nombre;
         this.ps = ps;
@@ -43,56 +53,112 @@ public class Pokemon implements Serializable, I_toJSON, Cloneable {
         debilidad = Energia.EMPTY;
         hsAtaques = new HashSet<>();
     }
+    // Métodos getters y setters para acceder y modificar los atributos del Pokémon
+
+    /**
+     * Retorna el nombre del Pokémon.
+     *
+     * @return El nombre del Pokémon.
+     */
 
     public String getNombre() {
         return nombre;
     }
-
+    /**
+     * Establece el nombre del Pokémon.
+     *
+     * @param nombre El nombre del Pokémon.
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    /**
+     * Retorna los puntos de salud del Pokémon.
+     *
+     * @return Los puntos de salud del Pokémon.
+     */
     public int getPs() {
         return ps;
     }
-
+    /**
+     * Establece los puntos de salud del Pokémon.
+     *
+     * @param ps Los puntos de salud del Pokémon.
+     */
     public void setPs(int ps) {
         this.ps = ps;
     }
-
+    /**
+     * Retorna la evolución a la que puede llegar el Pokémon.
+     *
+     * @return La evolución a la que puede llegar el Pokémon.
+     */
     public String getEvolucionA() {
         return evolucionA;
     }
-
+    /**
+     * Establece la evolución a la que puede llegar el Pokémon.
+     *
+     * @param evolucion La evolución a la que puede llegar el Pokémon.
+     */
     public void setEvolucionA(String evolucion) {
         this.evolucionA = evolucion;
     }
 
+    /**
+     * Establece la debilidad del Pokemon.
+     * @param debilidad La energía que representa la debilidad del Pokemon.
+     */
     public void setDebilidad(Energia debilidad) {
         this.debilidad = debilidad;
     }
 
+    /**
+     * Obtiene el tipo de energía del Pokemon.
+     * @return El tipo de energía del Pokemon.
+     */
     public Energia getTipo() {
         return tipo;
     }
 
+    /**
+     * Establece el tipo de energía del Pokemon.
+     * @param tipo La energía que representa el tipo del Pokemon.
+     */
     public void setTipo(Energia tipo) {
         this.tipo = tipo;
     }
 
+    /**
+     * Obtiene el nombre de la etapa de evolución anterior del Pokemon.
+     * @return El nombre de la etapa de evolución anterior del Pokemon.
+     */
     public String getEvolucionaDe() {
         return evolucionaDe;
     }
 
+    /**
+     * Establece el nombre de la etapa de evolución anterior del Pokemon.
+     * @param evolucionaDe El nombre de la etapa de evolución anterior del Pokemon.
+     */
     public void setEvolucionaDe(String evolucionaDe) {
         this.evolucionaDe = evolucionaDe;
     }
 
+    /**
+     * Obtiene la debilidad del Pokemon.
+     * @return La energía que representa la debilidad del Pokemon.
+     */
     public Energia getDebilidad() {
         return debilidad;
     }
 
 
+    /**
+     * Compara si un objeto es igual al Pokemon actual.
+     * @param o El objeto a comparar con el Pokemon actual.
+     * @return true si el objeto es igual al Pokemon actual, false en caso contrario.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -101,11 +167,19 @@ public class Pokemon implements Serializable, I_toJSON, Cloneable {
         return ps == pokemon.ps && nombre.equals(pokemon.nombre) && evolucionA.equals(pokemon.evolucionA) && evolucionaDe.equals(pokemon.evolucionaDe) && tipo == pokemon.tipo && debilidad == pokemon.debilidad && hsAtaques.equals(pokemon.hsAtaques);
     }
 
+    /**
+     * Calcula el valor hash del Pokemon.
+     * @return El valor hash del Pokemon.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(nombre, ps, evolucionA, evolucionaDe, tipo, debilidad, hsAtaques);
     }
 
+    /**
+     * Devuelve una representación en forma de cadena del Pokemon.
+     * @return La representación en forma de cadena del Pokemon.
+     */
     @Override
     public String toString() {
         return nombre + "\n" +
@@ -117,19 +191,34 @@ public class Pokemon implements Serializable, I_toJSON, Cloneable {
                 "\t\t\t\t|\t\t\tataques =" + hsAtaques;
     }
 
+    /**
+     * Agrega un ataque al conjunto de ataques del Pokemon.
+     * @param a El ataque a agregar al conjunto de ataques.
+     */
     public void agregarAtaque(Ataque a) {
         hsAtaques.add(a);
     }
-
+    /**
+     * Devuelve una cadena que contiene la lista de ataques del Pokemon.
+     * @return La lista de ataques del Pokemon.
+     */
     public String listarAtaques() {
         return hsAtaques.toString();
     }
-
+    /**
+     * Convierte el objeto Pokemon a un objeto JSON.
+     * @return El objeto JSON que representa al Pokemon.
+     * @throws JSONException Si ocurre un error al crear el objeto JSON.
+     */
     @Override
     public JSONObject toJson() throws JSONException {
         return null;
     }
-
+    /**
+     * Crea un objeto Pokemon a partir de un objeto JSON.
+     * @param cartaJson El objeto JSON que contiene la información del Pokemon.
+     * @throws JSONException Si ocurre un error al leer el objeto JSON.
+     */
     @Override
     public void fromJson(JSONObject cartaJson) throws JSONException {
 
@@ -273,7 +362,10 @@ public class Pokemon implements Serializable, I_toJSON, Cloneable {
         }
 
     }
-
+    /**
+     * Crea y devuelve una copia exacta del objeto Pokemon.
+     * @return La copia exacta del objeto Pokemon.
+     */
     @Override
     public Pokemon clone() {
         try {

@@ -10,6 +10,12 @@ import java.util.TreeMap;
 
 public class ControladoraArchivos
 {
+    /**
+     * El método `grabarAdministrador` se utiliza para grabar la información de un administrador en un archivo.
+     * @param nombre El nombre del administrador.
+     * @param contra La contraseña del administrador.
+     * @return Un mensaje indicando si la grabación fue exitosa o si se produjo un error.
+     */
     public static String grabarAdministrador(String nombre, String contra)
     {
         String mensaje1 = " ";
@@ -44,6 +50,11 @@ public class ControladoraArchivos
 
         return mensaje1 + "\n" + mensaje2;
     }
+
+    /**
+     * El método `leerAdministrador` se utiliza para leer la información de un administrador desde un archivo.
+     * @return Un objeto `Administrador` con los datos leídos del archivo.
+     */
 
     public static Administrador leerAdministrador()
     {
@@ -99,6 +110,12 @@ public class ControladoraArchivos
         }
         return admin;
     }
+
+    /**
+     * El método `grabarUsuarios` se utiliza para grabar la información de los usuarios en un archivo.
+     * @param mapaUsuarios Un TreeMap que contiene los usuarios a ser grabados.
+     * @return Un mensaje indicando si la grabación fue exitosa o si se produjo un error.
+     */
 
     public static String grabarUsuarios(TreeMap<String, Usuario> mapaUsuarios)
     {
