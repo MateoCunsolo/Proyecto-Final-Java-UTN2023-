@@ -12,7 +12,6 @@ public class Menu {
     }
 
     public void menuPrincipal() {
-        System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         System.out.println(" _________________________________________");
         System.out.println("|        << POKEMARKET 2023 UTN >>        |");
         System.out.println("| 1. REGISTRARSE                          |");
@@ -163,7 +162,6 @@ public class Menu {
         System.out.println("\t\t\t3- ELIMINAR CARRITO COMPLETO");
         System.out.println("\t\t\t4- MOSTRAR CARRITO");
         System.out.println("\t\t\t5- CONFIRMAR COMPRA-CARRITO");
-        System.out.println("\t\t\t6- VOLVER AL MARKET");
         System.out.printf("\t\tIngrese opcion: ");
     }
 

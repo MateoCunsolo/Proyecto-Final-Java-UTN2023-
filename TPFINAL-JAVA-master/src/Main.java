@@ -68,7 +68,7 @@ public class Main {
                             System.out.printf("Ingrese su email: ");
                             String email = teclado.nextLine();
 
-                            String aux = "Registrando usuario ...";
+                            String aux = "Registrando usuario ...\n";
                             for (int j = 0; j < aux.length(); j++) {
                                 System.out.print(aux.charAt(j));
                                 try {
@@ -81,7 +81,7 @@ public class Main {
                             Usuario usuarioNuevo = new Usuario(nombre, contrasenia, email); //creamos usuario nuevo
                             pokeMarket.agregarUsuario(usuarioNuevo); //se agrega al treemap
 
-                            System.out.println("¡Registro existoso, bienvenid@! :) ");
+                            System.out.println("¡Registro existoso, bienvenid@ "+usuarioNuevo.getNombre());
 
                             i = 4; //se corta el bucle for
 
@@ -484,14 +484,8 @@ public class Main {
 
                                                                 break;
                                                             }
-
-                                                            default:
-                                                            {
-                                                                opcionUsuario3 = 6;
-                                                                break;
-                                                            }
                                                         }
-                                                    } while (opcionUsuario3 != 6);
+                                                    } while (opcionUsuario3 != 5);
 
                                                     break;
                                                 }
