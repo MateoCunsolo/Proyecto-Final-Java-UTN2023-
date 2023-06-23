@@ -274,19 +274,21 @@ public class PokeMarket implements Serializable {
         ControladoraArchivos.grabarUsuarios(mapaUsuarios);
     }
 
-    public void intercambiarCartas(Intercambio intercambio, Usuario actual) throws ItemNoEncontradoException, DiferenteRarezaException {
+    public void intercambiarCartas(Intercambio intercambio, Usuario actual) throws ItemNoEncontradoException, DiferenteRarezaException
+    {
         Item entrado = intercambio.getEntrada();
         Item salido = intercambio.getSalida();
 
-        if (entrado instanceof Carta && salido instanceof Carta)
+        if(entrado instanceof Carta && salido instanceof Carta)
         {
-            if (((Carta) entrado).compararRareza(((Carta) salido).getRareza())) {
+            if(((Carta) entrado).compararRareza(((Carta) salido).getRareza()))
+            {
                 //busco a mi intercambiador
                 Usuario intercambiador = mapaUsuarios.get(entrado.getNombreDuenio());
 
                 //(1) AGREGAMOS AL HISTORIAL DE INTERCAMBIO DE AMBOS
                 actual.agregarAlHistorialIntercambios(intercambio);
-                Intercambio aux = new Intercambio(salido,entrado);
+                Intercambio aux = new Intercambio(salido, entrado);
                 intercambiador.agregarAlHistorialIntercambios(aux);
 
                 ///USUARIO
@@ -309,7 +311,9 @@ public class PokeMarket implements Serializable {
                 //(4) le saco al actual el item de sus publicados
                 actual.eliminarItemDePublicados(salido);
 
-            } else {
+            }
+            else
+            {
                 throw new DiferenteRarezaException();
             }
         }
@@ -317,29 +321,15 @@ public class PokeMarket implements Serializable {
 
 
 
+
     public void confirmarCarrito(Usuario actual) throws CarritoVacioException, ValorInvalidoException {
-
-        /*
-        En este caso, se ha implementado el método clone() en la clase Carta.Primero, se invoca al método clone () de la
-        clase base (Item) utilizando super.clone().Luego, se realiza una clonación profunda del objeto
-        Pokemon asociado, llamando al método clone() del objeto pokemon actual y asignando el objeto clonado al
-        nuevo objeto clonedCarta.
-
-                Es importante tener en cuenta que tanto la clase Carta como la clase Pokemon deben implementar la
-        interfaz Cloneable y definir su propio método clone () para que la clonación profunda funcione correctamente.
-
-                Al utilizar carta.clone(), obtendrás una copia independiente de la carta con sus respectivos objetos
-        Pokemon también clonados de forma independiente.
-
-        Recuerda que esta es solo una implementación básica y puede requerir ajustes adicionales según las necesidades
-        específicas de tu aplicación.
-        */
 
         Carrito carrito = actual.getCarrito();
 
         if (!carrito.vacio()) //si el carrito tiene elementos
         {
-            if (actual.getSaldo() >= carrito.getTotalAPagar()) //si el saldo alcanza
+            Carrito copiaCalcTotal = carrito.clone();
+            if (actual.getSaldo() >= copiaCalcTotal.calcularTotal()) //si el saldo alcanza
             {
                 // DESCUENTO MI SALDO, CON EL VALOR TOTAL DE MI CARRITOV OK
 

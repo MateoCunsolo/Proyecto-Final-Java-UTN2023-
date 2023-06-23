@@ -210,7 +210,6 @@ public class Usuario extends Persona implements Serializable {
     }
 
     public boolean encontrarItemsPublicado(String id) {
-        System.out.printf("ESTOY ACA :) ITEMS PUBLIC");
         Item buscado = new Item();
         boolean flag = false;
 
@@ -273,11 +272,6 @@ public class Usuario extends Persona implements Serializable {
         return this.carrito.toString();
     }
 
-
-    public String mostrarHistorialIntercambio() {
-        String mensaje = historialIntercambio.listar();
-        return mensaje;
-    }
 
     public boolean compararEmail(String email) {
         boolean rta = false;

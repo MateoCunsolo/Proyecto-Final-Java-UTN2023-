@@ -188,8 +188,8 @@ public class Main {
 
                                         char cont = 's';
                                         do {
-                                        menuAdminMovimientosUsuario();
-                                        int o = teclado.nextInt();
+                                            menuAdminMovimientosUsuario();
+                                            int o = teclado.nextInt();
 
 
                                             switch (o) {
@@ -239,8 +239,7 @@ public class Main {
 
                         } while (s == 's');
 
-                    }
-                    else //verificar si se accede a las FUNCIONES del USUARIO
+                    } else //verificar si se accede a las FUNCIONES del USUARIO
                     {
                         try {
                             int opcionUsuario1, opcionUsuario2, opcionUsuario3, opcionUsuario4, opcionUsuario5 = 0;
@@ -344,7 +343,7 @@ public class Main {
                                                         } else if (opc2 == 3) {
                                                             String msj3 = " ";
 
-                                                            msj3 = actual.mostrarHistorialIntercambio();
+                                                            msj3 = actual.mostrarHistorialIntercambios();
 
                                                             System.out.println(msj3);
                                                             opc = false;
@@ -422,8 +421,7 @@ public class Main {
 
                                                                 try {
                                                                     pokeMarket.eliminarItemDelCarrito(actual, id);
-                                                                }catch (CarritoVacioException l)
-                                                                {
+                                                                } catch (CarritoVacioException l) {
                                                                     System.out.println(l.getMensaje());
                                                                 }
                                                                 break;
@@ -442,8 +440,7 @@ public class Main {
 
                                                                 try {
                                                                     pokeMarket.eliminarCarritoTotal(actual);
-                                                                }catch (CarritoVacioException e)
-                                                                {
+                                                                } catch (CarritoVacioException e) {
                                                                     System.out.println(e.getMensaje());
                                                                 }
                                                                 break;
@@ -459,9 +456,17 @@ public class Main {
                                                                 try {
                                                                     pokeMarket.confirmarCarrito(actual);
                                                                 } catch (CarritoVacioException h) {
+                                                                    System.out.printf("\n\n\n\n\n\\n\n\n\n\n\n\n\n\n\n\n\n\n\nn\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                                                                     System.out.println(h.getMensaje());
                                                                 } catch (ValorInvalidoException e) {
+                                                                    System.out.printf("\n\n\n\n\n\n\n\\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nn\n\n\n\n\n\n\n");
                                                                     System.out.println(e.getMessage());
+                                                                }
+                                                                try {
+                                                                    Thread.sleep(5000);
+                                                                }catch (Exception e)
+                                                                {
+                                                                    System.out.printf("");
                                                                 }
 
                                                                 break;
@@ -474,7 +479,6 @@ public class Main {
                                                 case 2: //intercambio ok
                                                 {
                                                     System.out.println("USUARIO ANTES DEL INTERCAMBIO" + actual.toString());
-
                                                     //si o si los productos tienene que estar publicados en ambos usuarios
                                                     System.out.println("Ingrese el id del item que desea");
                                                     teclado.nextLine();
@@ -503,18 +507,18 @@ public class Main {
                                                         }
 
                                                         Intercambio intercambio = new Intercambio(entrado, salido);
-                                                        pokeMarket.intercambiarCartas(intercambio, actual);
 
+                                                        pokeMarket.intercambiarCartas(intercambio, actual);
                                                         System.out.println("Intercambio realizado con exito! :)");
+
                                                         System.out.println("USUARIO DESPUES DEL INTERCAMBIO" + actual.toString());
+
 
                                                     } catch (ItemNoEncontradoException d) {
                                                         System.out.println(d.getMensaje());
                                                     } catch (DiferenteRarezaException k) {
                                                         System.out.println(k.getMessage());
                                                     }
-
-
                                                     //INTERCAMBIO
                                                     break;
                                                 }
@@ -565,7 +569,7 @@ public class Main {
                 }
             }
         } while (continuar == 's');
-        //pokeMarket.guardarCambios(); //se graban en el archivo Usuarios todos los cambios realizados
+        pokeMarket.guardarCambios(); //se graban en el archivo Usuarios todos los cambios realizados
         teclado.close();
     }
 
