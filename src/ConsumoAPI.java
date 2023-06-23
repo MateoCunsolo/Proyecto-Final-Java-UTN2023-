@@ -2,9 +2,18 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
-
+/**
+ * La clase `ConsumoAPI` proporciona funcionalidad para realizar solicitudes GET a URL externas
+ * y obtener la información devuelta como una cadena de texto.
+ */
 public class ConsumoAPI
 {
+    /**
+     * Realiza una solicitud GET a una URL externa y devuelve la información obtenida como una cadena de texto.
+     *
+     * @param external_url La URL externa a la que se realizará la solicitud.
+     * @return La información obtenida de la URL externa como una cadena de texto.
+     */
     public static String getInfo(String external_url)
     {
         try
