@@ -123,7 +123,6 @@ public class Administrador extends Persona implements Serializable
             }
             cont++;
         }
-
         return sb.toString();
     }
 }
