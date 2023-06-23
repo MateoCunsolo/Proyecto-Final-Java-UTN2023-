@@ -79,6 +79,11 @@ public class Usuario extends Persona implements Serializable {
     public ContenedorV<Intercambio> getHistorialIntercambio() {
         return historialIntercambio;
     }
+
+    public void cambiarContrasenia(String contra)
+    {
+        setContrasenia(contra);
+    }
     /**
      * Obtiene el email del usuario.
      *

@@ -191,6 +191,8 @@ public class Carta extends Item implements Serializable, I_toJSON, Cloneable {
     @Override
     public void fromJson(JSONObject cartaJson) throws JSONException {
 
+
+
         //****** { CREACION DE LA CARTA } ******
 
         // ( 1 ) Pokemon

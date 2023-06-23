@@ -316,23 +316,19 @@ public class PokeMarket implements Serializable {
     }
 
     /**
-     * Edita el nombre de un Usuario.
-     *
-     * @param nuevoNombre el nuevo nombre del Usuario
+     * Edita la contrasenia de un Usuario.
+     * @param nuevaContra la nueva contraseña del Usuario
      * @param usuario el Usuario cuyo nombre se desea editar
      * @return un mensaje indicando el resultado de la operación
      */
-    public String editarNombre(String nuevoNombre, Usuario usuario) //los pido al momento que quiere cambiar los datos
+    public String editarContrasenia(String nuevaContra, Usuario usuario) //los pido al momento que quiere cambiar los datos
     {
         String mensaje = " ";
-        if (nuevoNombre != null) {
-            if (!mapaUsuarios.containsKey(nuevoNombre)) //si en el mapa no hay alguien con ese nombre(xq uysamos el nombre como key), permite el cambio
-            {
-                usuario.setNombre(nuevoNombre);
-                mensaje = "Nombre actualizado correctamente.";
-            } else {
-                mensaje = "El nombre indicado ya se encuentra utilizado";
-            }
+        if (nuevaContra != null) {
+
+            usuario.cambiarContrasenia(nuevaContra);
+            mensaje = "Contrasenia actualizado correctamente.";
+
         } else {
             mensaje = "No fue posible realizar los cambios indicados";
         }

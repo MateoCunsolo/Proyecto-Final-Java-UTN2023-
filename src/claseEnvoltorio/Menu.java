@@ -81,19 +81,18 @@ public class Menu {
         System.out.println("*******************************");
         System.out.println(" «« EDITAR DATOS PERSONALES »» ");
         System.out.println("*******************************");
-        System.out.println("\t1-Modificar nombre");
+        System.out.println("\t1-Modificar contraseña");
         System.out.println("\t2-Modificar email");
         System.out.println("\t3-Volver al menu anterior");
         System.out.printf("\n\tIngrese opcion: ");
     }
 
-    public void menuModificarNombre(String nombre)
+    public void menuModificarContrasenia()
     {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         System.out.println("****************************************************************************");
-        System.out.println(" «« NOMBRE ACTUAL [ "+nombre +" ] »»");
-        System.out.println("**************************************************************************\n");
-        System.out.printf("Indique el nuevo nombre: ");
+        System.out.printf(" «« ESCRIBA NUEVA CONTRASEÑA:");
+
     }
 
     public void menuModificarMail(String email)

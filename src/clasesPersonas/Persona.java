@@ -47,12 +47,19 @@ public abstract class Persona implements Serializable
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    protected void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
     /**
      * Compara si la persona actual es igual a un objeto dado.
      * Dos personas son iguales si tienen el mismo nombre y contraseña.
      * @param o El objeto a comparar.
      * @return true si la persona es igual al objeto dado, false en caso contrario.
      */
+
+
     @Override
     public boolean equals(Object o)
     {

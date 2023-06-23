@@ -275,13 +275,14 @@ public class Main {
                                                         menu.menuEditarDatosDePerfil();
                                                         op2 = teclado.nextInt();
 
-                                                        if (op2 == 1) //MODIFICAR NOMBRE
+                                                        if (op2 == 1) //MODIFICAR CONTRASEÑA
                                                         {
-                                                            menu.menuModificarNombre(actual.getNombre());
+                                                            menu.menuModificarContrasenia();
                                                             teclado.nextLine();
                                                             nombreNuevo = teclado.nextLine();
+                                                            System.out.println("**************************************************************************\n");
 
-                                                            System.out.println(pokeMarket.editarNombre(nombreNuevo, actual));
+                                                            System.out.println(pokeMarket.editarContrasenia(nombreNuevo, actual));
                                                             System.out.println("Presiona Enter para continuar...");
                                                             teclado.nextLine();
 
