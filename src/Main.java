@@ -189,7 +189,6 @@ public class Main {
                                         menuAdminMovimientosUsuario();
                                         int o = teclado.nextInt();
 
-
                                             switch (o) {
                                                 case 1: //VER VENTAS probarrrrr
                                                 {
@@ -329,6 +328,7 @@ public class Main {
                                                         System.out.println("2-Ver historial de venta");
                                                         System.out.println("3-Ver historial de intercambio");
                                                         System.out.println("4-Volver al menu anterior");
+                                                        System.out.printf("Ingrese la opcion que desea: ");
                                                         opc2 = teclado.nextInt();
                                                         if (opc2 == 1) {
                                                             String msj = " ";
@@ -342,9 +342,7 @@ public class Main {
                                                             opc = false;
                                                         } else if (opc2 == 3) {
                                                             String msj3 = " ";
-
-                                                            msj3 = actual.mostrarHistorialIntercambio();
-
+                                                            msj3 = actual.mostrarHistorialIntercambios();
                                                             System.out.println(msj3);
                                                             opc = false;
                                                         }
@@ -519,8 +517,6 @@ public class Main {
                                                         System.out.println(k.getMessage());
                                                     }
 
-
-                                                    //INTERCAMBIO
                                                     break;
                                                 }
                                                 case 3: //volver al perfil

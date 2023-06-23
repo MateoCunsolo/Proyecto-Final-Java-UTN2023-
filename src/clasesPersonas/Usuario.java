@@ -290,12 +290,6 @@ public class Usuario extends Persona implements Serializable {
     }
 
 
-    public String mostrarHistorialIntercambio()
-    {
-        String mensaje = historialIntercambio.listar();
-        return mensaje;
-    }
-
     public boolean compararEmail(String email)
     {
         boolean rta = false;
