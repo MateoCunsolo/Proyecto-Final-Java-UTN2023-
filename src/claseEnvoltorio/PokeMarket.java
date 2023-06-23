@@ -8,6 +8,8 @@ import clasesItem.Carta;
 import clasesItem.Item;
 import clasesPersonas.Administrador;
 import clasesPersonas.Usuario;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
@@ -19,6 +21,7 @@ import java.util.*;
 /**
  * La clase PokeMarket representa un mercado virtual de Cartas de Pokémon.
  * Esta clase es serializable, lo que permite guardar y cargar objetos de tipo PokeMarket en archivos.
+ * @author Cunsolo Mateo, Mouriño Magali, Oliva Giuliana
  */
 public class PokeMarket implements Serializable {
     private Administrador administrador;
@@ -62,14 +65,19 @@ public class PokeMarket implements Serializable {
         this.administrador = administrador;
     }
 
+
     /**
-     * Devuelve el TreeMap que contiene a los usuarios del programa
-     *
-     * @return El TreeMap de usuarios.
+     * Funcion que utiliza el administrador para eliminar un usuario del sistema usando su nombre
+     * @param nombre Del usuario a borrar
+     * @return true si se borro correctamente el usuario
+     * @throws UsuarioNoEncontradoException
      */
-    public TreeMap<String, Usuario> getMapaUsuarios() { //!!!!
-        return mapaUsuarios;
+    public boolean borrarUnUsuario(String nombre) throws UsuarioNoEncontradoException
+    {
+        return administrador.borrarUsuario(nombre, mapaUsuarios);
+
     }
+
 
     /**
      * Devuelve una representación en forma de cadena de la clase PokeMarket.
@@ -549,6 +557,69 @@ public class PokeMarket implements Serializable {
         }
         actual.eliminarCarritoTotal();
     }
+
+    /**
+     * Retorna el usuario del mapa que coincide con el nombre enviado
+     * @param nombre del usuario a retornar
+     * @return un Usuario
+     */
+    public Usuario retornarUsuarioXNombre(String nombre)
+    {
+        return mapaUsuarios.get(nombre);
+    }
+
+    /**
+     * Funcion que puede utilizar el administrador, la cual muestra todos los usuarios del sistema
+     * @return String con todos los datos de los usuarios del TreeMap
+     */
+    public String verUsuariosAdmin()
+    {
+        return administrador.verUsuarios(mapaUsuarios);
+
+    }
+
+    /**
+     * Funcion que puede utilizar el administrador, la cual muestra todos los historiales de venta del sistema
+     * @return el contenido los historiales de venta de todos los Usuarios
+     */
+    public String verTodosHistorialesVenta()
+    {
+        return administrador.verTodosHistorialVentas(mapaUsuarios);
+
+    }
+
+    /**
+     * Funcion que puede utilizar el administrador, la cual muestra todos los historiales de intercambios del sistema
+     * @return el contenido los historiales de intercambios de todos los Usuarios
+     */
+    public String verTodosHistorialesIntercambios()
+    {
+        return  administrador.verTodosHistorialIntercambios(mapaUsuarios);
+    }
+
+    /**
+     * Confirma si la contraseña enviada por parametro cumple con los requisitos de 8 caracteres en total: 4 letras minusculas y 4 numeros
+     * @param contrasenia
+     * @return true si cumple con TODOS los requisitos
+     */
+    public boolean validarContrasenia(String contrasenia) {
+        boolean rta = contrasenia.length() == 8;
+        int letrasMinusculas = 0;
+        int numeros = 0;
+
+        if (rta) {
+            for (char c : contrasenia.toCharArray()) {
+                if (Character.isLowerCase(c)) {
+                    letrasMinusculas++;
+                } else if (Character.isDigit(c)) {
+                    numeros++;
+                }
+            }
+        }
+        return rta && letrasMinusculas == 4 && numeros == 4; //si alguna no se cumple retorna false
+    }
+
+
 
 }
 

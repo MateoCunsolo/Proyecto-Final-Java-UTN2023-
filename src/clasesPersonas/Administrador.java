@@ -41,15 +41,14 @@ public class Administrador extends Persona implements Serializable
     /**
      * Borra un usuario del sistema.
      * @param nombre El nombre del usuario a borrar.
-     * @param pokeMarket El objeto PokeMarket que contiene el mapa de usuarios.
+     * @param usuarios (TreeMap) todos los usuarios del sistema.
      * @return true si el usuario se borró exitosamente, false de lo contrario.
      * @throws UsuarioNoEncontradoException Si el usuario no se encuentra en el sistema.
      */
 
-    public boolean borrarUsuario (String nombre, PokeMarket pokeMarket) throws UsuarioNoEncontradoException
+    public boolean borrarUsuario (String nombre,  TreeMap<String, Usuario> usuarios) throws UsuarioNoEncontradoException
     {
         boolean rta = false;
-        TreeMap<String, Usuario> usuarios = pokeMarket.getMapaUsuarios();
 
         if(usuarios.containsKey(nombre))
         {

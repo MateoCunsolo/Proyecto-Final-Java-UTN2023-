@@ -41,7 +41,7 @@ public class ContenedorV <T> implements IFuncionalidades<T>, Serializable {
      */
     @Override
     public String listar() {
-        return "";
+        return miVector.toString();
     }
     /**
      * Verifica si el contenedor está vacío.

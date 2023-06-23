@@ -405,7 +405,9 @@ public class Usuario extends Persona implements Serializable {
      * @return true si el email coincide con el del usuario, false de lo contrario.
      */
 
-    public boolean compararEmail(String email) {
+
+    public boolean compararEmail(String email)
+    {
         boolean rta = false;
         if (this.email.equals(email)) {
             rta = true;
@@ -439,6 +441,7 @@ public class Usuario extends Persona implements Serializable {
         return  itemsPublicados.eliminar(item);
     }
 
+
     /**
      * Crea una venta a partir del carrito de compras del usuario.
      * El vendedor incrementa su saldo, se guarda el historial de la venta (que incluye el nombre del comprador) y se saca el artículo de la publicación.
@@ -447,6 +450,7 @@ public class Usuario extends Persona implements Serializable {
      * @param usuario         El usuario vendedor.
      * @param nombreComprador El nombre del comprador.
      */
+
     public void crearVenta(Carrito carrito, Usuario usuario, String nombreComprador) {
     /* Vendedor
        Sube el saldo
