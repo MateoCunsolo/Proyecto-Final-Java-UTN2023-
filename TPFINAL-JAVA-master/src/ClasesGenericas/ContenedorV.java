@@ -78,7 +78,6 @@ public class ContenedorV <T> implements IFuncionalidades<T>, Serializable {
     public boolean agregar(T o) {
        return miVector.add(o);
     }
-
     /**
      * Devuelve una representación en forma de cadena de texto del contenedor.
      *
@@ -97,8 +96,6 @@ public class ContenedorV <T> implements IFuncionalidades<T>, Serializable {
         }
         return mensaje;
     }
-
-
     /**
      * Verifica si el contenedor contiene un elemento específico.
      *
@@ -109,8 +106,6 @@ public class ContenedorV <T> implements IFuncionalidades<T>, Serializable {
     {
         return miVector.contains(o);
     }
-
-
     /**
      * Devuelve el tamaño actual del contenedor.
      *
