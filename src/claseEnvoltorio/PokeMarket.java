@@ -15,44 +15,78 @@ import java.util.Scanner;
 import java.io.Serializable;
 import java.util.*;
 
+
+/**
+ * La clase PokeMarket representa un mercado virtual de Cartas de Pokémon.
+ * Esta clase es serializable, lo que permite guardar y cargar objetos de tipo PokeMarket en archivos.
+ */
 public class PokeMarket implements Serializable {
     private Administrador administrador;
     private TreeMap<String, Usuario> mapaUsuarios;
 
+    /**
+     * Constructor de la clase PokeMarket.
+     * Crea una instancia de la clase Administrador y un TreeMap vacío para almacenar usuarios.
+     */
     public PokeMarket() {
         administrador = new Administrador();
         mapaUsuarios = new TreeMap<>();
     }
 
+    /**
+     * Constructor de la clase PokeMarket.
+     * Crea una instancia de la clase Administrador y un TreeMap con los usuarios proporcionados.
+     *
+     * @param administrador El administrador del programa.
+     */
     public PokeMarket(Administrador administrador) {
         this.administrador = administrador;
         this.mapaUsuarios = new TreeMap<>();
     }
 
+    /**
+            * Devuelve el administrador del programa.
+            *
+            * @return El administrador del programa.
+     */
     public Administrador getAdministrador() {
         return administrador;
     }
 
     /**
-     * AAAAAAAAAAAAAAAAAA
+     * Establece el administrador del programa.
+     *
+     * @param administrador El administrador del programa
      */
     private void setAdministrador(Administrador administrador) { //!!!!
         this.administrador = administrador;
     }
 
     /**
-     * OJOOO AL PIOJOOO !!!!
+     * Devuelve el TreeMap que contiene a los usuarios del programa
+     *
+     * @return El TreeMap de usuarios.
      */
     public TreeMap<String, Usuario> getMapaUsuarios() { //!!!!
         return mapaUsuarios;
     }
 
+    /**
+     * Devuelve una representación en forma de cadena de la clase PokeMarket.
+     *
+     * @return La representación en forma de cadena de la clase.
+     */
     @Override
     public String toString() {
         return "PokeMarket{" + ", mapaUsuarios=" + mapaUsuarios +
                 '}';
     }
-
+    /**
+     * Agrega un usuario al mapa de usuarios del programa
+     *
+     * @param usuario El usuario a agregar.
+     * @return true si se agrega correctamente, false de lo contrario.
+     */
     public boolean agregarUsuario(Usuario usuario) {
         boolean rta = false; //por defecto no se pudo guardar
         if (usuario != null) {
@@ -61,19 +95,31 @@ public class PokeMarket implements Serializable {
         }
         return rta;
     }
-
+    /**
+     * Guarda los usuarios en un archivo llamado "Usuarios.dat".
+     */
     public void guardarUsuariosArchivo() {
         ControladoraArchivos.grabarUsuarios(mapaUsuarios);
     }
-
+    /**
+     * Lee los usuarios desde el archivo "Usuarios.dat" y los carga en el mapa de usuarios del programa.
+     */
     public void leerUsuariosArchivo() {
         this.mapaUsuarios = ControladoraArchivos.leerUsuarios();
     }
-
+    /**
+     * Devuelve la cantidad de usuarios del programa
+     *
+     * @return La cantidad de usuarios.
+     */
     public int cantidadUser() {
         return this.mapaUsuarios.size();
     }
-
+    /**
+     * Muestra la información de los usuarios en el mapa.
+     *
+     * @return La información de los usuarios en forma de cadena.
+     */
     public String mostrarMapaUsuarios() {
 
         String mensaje = "";
@@ -85,7 +131,6 @@ public class PokeMarket implements Serializable {
         }
         return mensaje;
     }
-
 
     /**
      * Reparte cartas en los diferentes inventarios de los usuarios existentes en el TreeMap y las graba en el archivo "Usuarios.dat"
@@ -107,10 +152,21 @@ public class PokeMarket implements Serializable {
         ControladoraArchivos.grabarUsuarios(mapaUsuarios);
     }
 
+    /**
+     * Compara si un objeto Administrador es igual al administrador actual.
+     *
+     * @param o el objeto Administrador a comparar
+     * @return true si los administradores son iguales, false en caso contrario
+     */
     public boolean compararAdmin(Administrador o) {
         return this.administrador.equals(o);
     }
-
+    /**
+     * Verifica si un usuario está contenido en el mapa de usuarios.
+     *
+     * @param nombreUsuario el nombre del usuario a verificar
+     * @return true si el usuario está contenido en el mapa, false en caso contrario
+     */
     public boolean contieneUsuario(String nombreUsuario) {
         boolean rta = false;
         if (mapaUsuarios.containsKey(nombreUsuario)) {
@@ -118,11 +174,17 @@ public class PokeMarket implements Serializable {
         }
         return rta;
     }
-
+    /**
+     * Muestra la lista de usuarios.
+     */
     public void mostrarusu() {
         System.out.println(mapaUsuarios.toString());
     }
-
+    /**
+     * Obtiene la lista de items publicados por todos los usuarios.
+     *
+     * @return una cadena con los items publicados
+     */
     public String verItemsPublicados() {
         String itemsPublicados = "";
         Iterator<Map.Entry<String, Usuario>> iterator = mapaUsuarios.entrySet().iterator();
@@ -133,7 +195,14 @@ public class PokeMarket implements Serializable {
         }
         return itemsPublicados;
     }
-
+    /**
+     * Inicia sesión de un usuario con el nombre y la contraseña proporcionados.
+     *
+     * @param nombre   el nombre del usuario
+     * @param password la contraseña del usuario
+     * @return el usuario que inició sesión
+     * @throws UsuarioContraseniaInvalidoException si el nombre de usuario o la contraseña son inválidos
+     */
     public Usuario iniciarSesion(String nombre, String password) throws UsuarioContraseniaInvalidoException {
         Usuario rta = new Usuario();
         if (mapaUsuarios.containsKey(nombre)) {
@@ -149,7 +218,13 @@ public class PokeMarket implements Serializable {
         }
         return rta;
     }
-
+    /**
+     * Busca un Item publicado por su ID.
+     *
+     * @param id el ID del Item a buscar
+     * @return el Item encontrado
+     * @throws ItemNoEncontradoException si el Item no se encuentra
+     */
     public Item buscarItemPublicadoXid(String id) throws ItemNoEncontradoException {
         Item buscado = new Item();
         boolean encontrado = false;
@@ -170,6 +245,13 @@ public class PokeMarket implements Serializable {
         return buscado;
     }
 
+    /**
+     * Encuentra un Usuario por el ID de un Item.
+     *
+     * @param id el ID del Item
+     * @return el Usuario que posee el Item
+     * @throws ItemNoEncontradoException si el Item no se encuentra
+     */
     public Usuario encontrarUsuarioXidItem(String id) throws ItemNoEncontradoException {
         int flag = 1;
         Item buscado = new Item();
@@ -188,6 +270,12 @@ public class PokeMarket implements Serializable {
         return usuario;
     }
 
+    /**
+     * Muestra el perfil de un Usuario.
+     *
+     * @param usuario el Usuario cuyo perfil se desea mostrar
+     * @return la información del perfil del Usuario
+     */
     public String verPerfil(Usuario usuario) //muestra solo el usuario, el meil y el saldo disponible que tiene
     {
         String mensaje = " ";
@@ -202,6 +290,12 @@ public class PokeMarket implements Serializable {
         return mensaje;
     }
 
+    /**
+     * Elimina la cuenta de un Usuario.
+     *
+     * @param usuario el Usuario cuya cuenta se desea eliminar
+     * @return un mensaje indicando el resultado de la operación
+     */
     public String eliminarCuenta(Usuario usuario) {
         String mensaje = " ";
         if (usuario != null) {
@@ -213,6 +307,13 @@ public class PokeMarket implements Serializable {
         return mensaje;
     }
 
+    /**
+     * Edita el nombre de un Usuario.
+     *
+     * @param nuevoNombre el nuevo nombre del Usuario
+     * @param usuario el Usuario cuyo nombre se desea editar
+     * @return un mensaje indicando el resultado de la operación
+     */
     public String editarNombre(String nuevoNombre, Usuario usuario) //los pido al momento que quiere cambiar los datos
     {
         String mensaje = " ";
@@ -230,7 +331,13 @@ public class PokeMarket implements Serializable {
         return mensaje;
     }
 
-
+    /**
+     * Edita el email de un Usuario.
+     *
+     * @param nuevoEmail el nuevo email del Usuario
+     * @param usuario el Usuario cuyo email se desea editar
+     * @return un mensaje indicando el resultado de la operación
+     */
     public String editarEmail(String nuevoEmail, Usuario usuario) //los pido al momento que quiere cambiar los datos
 
     {
@@ -249,7 +356,12 @@ public class PokeMarket implements Serializable {
         return mensaje;
     }
 
-
+    /**
+     * Verifica si un email está contenido en el mapa de Usuarios.
+     *
+     * @param nuevoEmail el email a verificar
+     * @return true si el email está contenido, false en caso contrario
+     */
     public boolean contieneEmail(String nuevoEmail) {
         boolean aux = false;
 
@@ -265,17 +377,30 @@ public class PokeMarket implements Serializable {
         return aux;
     }
 
-
+    /**
+     * Carga los datos del Administrador al inicio.
+     */
     public void cargaInicioAdministrador() {
         administrador = ControladoraArchivos.leerAdministrador();
     }
 
+    /**
+     * Guarda los cambios realizados en el mapa de Usuarios.
+     */
     public void guardarCambios() {
         ControladoraArchivos.grabarUsuarios(mapaUsuarios);
     }
 
-    public void intercambiarCartas(Intercambio intercambio, Usuario actual) throws ItemNoEncontradoException, DiferenteRarezaException
-    {
+    /**
+     * Realiza un intercambio de cartas entre dos Usuarios.
+     *
+     * @param intercambio el objeto de intercambio
+     * @param actual el Usuario actual
+     * @throws ItemNoEncontradoException si el Item no se encuentra
+     * @throws DiferenteRarezaException si las cartas tienen diferente rareza
+     */
+    public void intercambiarCartas(Intercambio intercambio, Usuario actual) throws ItemNoEncontradoException, DiferenteRarezaException {
+
         Item entrado = intercambio.getEntrada();
         Item salido = intercambio.getSalida();
 
@@ -319,8 +444,13 @@ public class PokeMarket implements Serializable {
         }
     }
 
-
-
+    /**
+     * Confirma y realiza la compra de los elementos del carrito del usuario actual.
+     *
+     * @param actual El usuario actual.
+     * @throws CarritoVacioException   Si el carrito está vacío.
+     * @throws ValorInvalidoException Si el saldo del usuario no es suficiente para pagar el carrito.
+     */
 
     public void confirmarCarrito(Usuario actual) throws CarritoVacioException, ValorInvalidoException {
 
@@ -383,8 +513,13 @@ public class PokeMarket implements Serializable {
             throw new CarritoVacioException();
         }
     }
-
-
+    /**
+     * Elimina un item específico del carrito del usuario actual.
+     *
+     * @param actual El usuario actual.
+     * @param id     El identificador del item a eliminar.
+     * @throws CarritoVacioException Si el carrito está vacío.
+     */
     public void eliminarItemDelCarrito(Usuario actual, String id) throws CarritoVacioException {
         if (!actual.getCarrito().vacio()) //si el carrito tiene items
         {
@@ -400,6 +535,12 @@ public class PokeMarket implements Serializable {
         }
     }
 
+    /**
+     * Elimina todos los items del carrito del usuario actual.
+     *
+     * @param actual El usuario actual.
+     * @throws CarritoVacioException Si el carrito está vacío.
+     */
     public void eliminarCarritoTotal(Usuario actual) throws CarritoVacioException {
         int total = actual.getCarrito().tamanioCarrito();
         for (int i = 0; i < total; i++) {
