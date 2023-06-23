@@ -7,6 +7,7 @@ public abstract class Transaccion implements Serializable
 {
     private LocalDateTime fecha;
 
+
     public Transaccion() {
         this.fecha = LocalDateTime.now();
     }

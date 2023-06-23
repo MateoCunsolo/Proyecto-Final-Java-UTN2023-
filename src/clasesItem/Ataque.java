@@ -7,9 +7,9 @@ import java.util.Objects;
  *
  *
  */
-public class Ataque implements Serializable
+public class Ataque implements Serializable, Cloneable
 {
-
+    private static final long serialVersionUID = -1746184358533812907L;
     private String nombreAtaque; //chek
     private String danio; //chek
     private String descripcion; //chek
@@ -71,5 +71,16 @@ public class Ataque implements Serializable
         return  "\n\t\t\t\t|\t\t\t\t( * )" + nombreAtaque +"\n"+
                 "\t\t\t\t|\t\t\t\t danio = " + danio + "\n"+
                 "\t\t\t\t|\t\t\t\t descripcion = " + descripcion+" ";
+    }
+
+    @Override
+    public Ataque clone() {
+        try {
+            return (Ataque) super.clone();
+        } catch (CloneNotSupportedException e) {
+            // Manejo de excepción en caso de que la clonación no sea compatible
+            e.printStackTrace();
+            return null;
+        }
     }
 }

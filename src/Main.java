@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -131,6 +132,7 @@ public class Main {
                                 case 1: //BORRAR USUARIO probarrrr
                                 {
                                     System.out.println("Ingrese nombre de usuario a borrar: ");
+                                    teclado.nextLine();
                                     String nom = teclado.nextLine();
 
                                     try {
@@ -211,8 +213,7 @@ public class Main {
                                                     break;
                                                 }
                                             }
-
-                                            System.out.println("\nDesea seguir viendo los movimientos del usuario? (s/n)");
+                                            System.out.println("\nDesea seguir viendo los movimientos del usuario? (s/n) \n");
                                             teclado.nextLine();
                                             String aux = teclado.nextLine();
                                             cont = aux.charAt(0);
@@ -462,11 +463,6 @@ public class Main {
                                                                 } catch (ValorInvalidoException e) {
                                                                     System.out.println(e.getMessage());
                                                                 }
-                                                                try {
-                                                                    Thread.sleep(5000); // Pausa de 1 segundo (1000 milisegundos)
-                                                                } catch (InterruptedException e) {
-                                                                    e.printStackTrace();
-                                                                }
 
                                                                 break;
                                                             }
@@ -478,6 +474,7 @@ public class Main {
                                                 case 2: //intercambio ok
                                                 {
                                                     System.out.println("USUARIO ANTES DEL INTERCAMBIO" + actual.toString());
+
                                                     //si o si los productos tienene que estar publicados en ambos usuarios
                                                     System.out.println("Ingrese el id del item que desea");
                                                     teclado.nextLine();
@@ -506,12 +503,10 @@ public class Main {
                                                         }
 
                                                         Intercambio intercambio = new Intercambio(entrado, salido);
-
                                                         pokeMarket.intercambiarCartas(intercambio, actual);
+
                                                         System.out.println("Intercambio realizado con exito! :)");
-
                                                         System.out.println("USUARIO DESPUES DEL INTERCAMBIO" + actual.toString());
-
 
                                                     } catch (ItemNoEncontradoException d) {
                                                         System.out.println(d.getMensaje());
@@ -570,7 +565,6 @@ public class Main {
                 }
             }
         } while (continuar == 's');
-
         //pokeMarket.guardarCambios(); //se graban en el archivo Usuarios todos los cambios realizados
         teclado.close();
     }

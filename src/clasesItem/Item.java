@@ -6,8 +6,9 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Item implements Serializable, I_toJSON
+public class Item implements Serializable, I_toJSON, Cloneable
 {
+    private static final long serialVersionUID = -2301449725724955484L;
     private double precio; //chek
     private String nombreDuenio; //es el nombre del usuario
     private String descrip; //chek
@@ -90,4 +91,16 @@ public class Item implements Serializable, I_toJSON
     {
 
     }
+
+    @Override
+    public Item clone() {
+        try {
+            return (Item) super.clone();
+        } catch (CloneNotSupportedException e) {
+            // Manejo de excepción en caso de que la clonación no sea compatible
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

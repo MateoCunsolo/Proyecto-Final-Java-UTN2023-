@@ -7,8 +7,7 @@ import clasesItem.Item;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Carrito implements ITransaccionable, Serializable
-{
+public class Carrito implements ITransaccionable, Serializable, Cloneable {
     private static final long serialVersionUID = -7604144828635493406L;
 
     private int cantidadItems;
@@ -56,70 +55,59 @@ public class Carrito implements ITransaccionable, Serializable
     }
 
     public void eliminarCarrito() {
-         productos.eliminarCompleto();
+        productos.eliminarCompleto();
 
     }
 
     public boolean eliminarUnItem(Item item) {
-        cantidadItems--;
+        cantidadItems = cantidadItems - 1 ;
         totalAPagar = calcularTotal();
-
-       return  productos.eliminar(item);
+        return productos.eliminar(item);
     }
 
-    public void verCarrito()
-    {
+    public void verCarrito() {
     }
 
-    public boolean vacio()
-    {
+    public boolean vacio() {
         return productos.vacio();
     }
 
 
-    public void agregarAlCarrito(Item item)
-    {
-        if(productos.vacio())
-        {
+    public void agregarAlCarrito(Item item) {
+        if (productos.vacio()) {
             fecha = LocalDateTime.now();
         }
-        if(!productos.contiene(item))
-        {
+        if (!productos.contiene(item)) {
             productos.agregar(item);
-            setCantidadItems(getCantidadItems()+1);
+            setCantidadItems(getCantidadItems() + 1);
         }
     }
 
-    public Item buscarItemEnCarritoXid(String id)
-    {
+    public Item buscarItemEnCarritoXid(String id) {
         Item respuesta = new Item();
-        for(int i =0; i<productos.contar(); i++)
-        {
+        for (int i = 0; i < productos.contar(); i++) {
             Item aux = productos.get(i);
-            if(aux.getId().equals(id))
-            {
+            if (aux.getId().equals(id)) {
                 respuesta = aux;
             }
         }
-        return  respuesta;
+        return respuesta;
     }
 
     @Override
-    public double calcularTotal()
-    {
+    public double calcularTotal() {
         double resultado = 0;
-        if(this.productos != null)
-        if(!this.productos.vacio()) {
-            for (int i = 0; i < this.productos.tamanio(); i++) {
-                resultado = resultado + this.productos.get(i).getPrecio();
+        if (this.productos != null)
+            if (!this.productos.vacio()) {
+                for (int i = 0; i < this.productos.tamanio(); i++) {
+                    resultado = resultado + this.productos.get(i).getPrecio();
+                }
             }
-        }
         return resultado;
     }
 
-    public Item ultimo()
-    {
-        return productos.get(productos.contar()-1);
+    public Item ultimo() {
+        return productos.get(productos.contar() - 1);
     }
 
 
@@ -133,15 +121,22 @@ public class Carrito implements ITransaccionable, Serializable
                 '}';
     }
 
+    @Override
+    public Carrito clone() {
+        Carrito clonedCarrito = new Carrito();
+        for (int i =0; i< productos.contar(); i++)
+        {
+            Item item = productos.get(i);
+            clonedCarrito.agregarAlCarrito(item.clone());
+        }
+        return clonedCarrito;
+    }
 
-
-    public int tamanioCarrito()
-    {
+    public int tamanioCarrito() {
         return productos.contar();
     }
 
-    public Item getItem(int index)
-    {
+    public Item getItem(int index) {
         return productos.get(index);
     }
 }

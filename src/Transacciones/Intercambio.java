@@ -18,7 +18,8 @@ public class Intercambio extends Transaccion implements Serializable
         salida = new Item();
     }
 
-    public Intercambio(Item entrada, Item salida) {
+    public Intercambio(Item entrada, Item salidam) {
+        super();
         this.entrada = entrada;
         this.salida = salida;
     }

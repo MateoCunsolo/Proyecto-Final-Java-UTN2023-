@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Carta extends Item implements Serializable, I_toJSON {
+public class Carta extends Item implements Serializable, I_toJSON, Cloneable {
 
     private static final long serialVersionUID =  8882570970347050606L;
     private String numero; //chek
@@ -186,6 +186,13 @@ public class Carta extends Item implements Serializable, I_toJSON {
             rta = true;
         }
         return rta;
+    }
+
+    @Override
+    public Carta clone(){
+        Carta clonedCarta = (Carta) super.clone();
+        clonedCarta.setPokemon(this.pokemon.clone());
+        return clonedCarta;
     }
 
 }
