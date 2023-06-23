@@ -205,6 +205,12 @@ public class Usuario extends Persona implements Serializable {
         return this.inventario.agregar(item);
     }
 
+
+    public boolean eliminarItemDelInventario(Item item)
+    {
+        return inventario.eliminar(item);
+    }
+
     /**
      * Agrega todos los artículos del carrito proporcionado al inventario del usuario.
      *
@@ -257,7 +263,7 @@ public class Usuario extends Persona implements Serializable {
     public Item buscarEnInventario(String id) {
         LinkedHashSet<Item> LHSaux = inventario.getMiLHSet();
 
-        Item buscado = null;
+        Item buscado = new Item();
         int flag = 1;
         Iterator iterator = LHSaux.iterator();
         while (iterator.hasNext() && flag != 0) {
@@ -278,7 +284,6 @@ public class Usuario extends Persona implements Serializable {
     public Item buscarEnItemsPublicadosPropios(String id) throws ItemNoEncontradoException {
         Item buscado = new Item();
         int flag = 1;
-
         LinkedHashSet<Item> LHSaux = itemsPublicados.getMiLHSet();
         Iterator iterator = LHSaux.iterator();
         while (iterator.hasNext() && flag == 1) {

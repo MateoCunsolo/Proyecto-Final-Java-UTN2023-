@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -22,7 +23,7 @@ public class Main {
         //ControladoraArchivos.grabarAdministrador("pokeMarket2023","charizard150");
 
         pokeMarket.leerUsuariosArchivo(); //pasamos usuarios al treeMap de la clase Evoltorio
-        System.out.println(pokeMarket.mostrarMapaUsuarios());
+
         Scanner teclado = new Scanner(System.in);
         char continuar = 's';
 
@@ -252,24 +253,32 @@ public class Main {
                                 System.out.println("| 1- VER PERFIL");
                                 System.out.println("| 2- VER MARKET");
                                 System.out.println("| 3- PUBLICAR ITEM");
-                                System.out.println("| 4- CERRAR SESION");
+                                System.out.println("| 4- DESPUBLICAR ITEM");
+                                System.out.println("| 5- CREAR ITEM NUEVO");
+                                System.out.println("| 6- CERRAR SESION");
                                 System.out.printf("| Ingrese opcion: ");
                                 opcionUsuario1 = teclado.nextInt();
                                 String id = "";
-
+                                int bandera = 0;
                                 switch (opcionUsuario1) {
                                     case 1: //son las opciones de ver perfil
                                     {
-                                        System.out.println(pokeMarket.verPerfil(actual)); //para ver info de perfil
+
                                         opcion = 0;
                                         while (opcion != 6) {
-                                            System.out.println("1-EDITAR DATOS DE PERFIL");
-                                            System.out.println("2-ELIMINAR CUENTA");
-                                            System.out.println("3-VER INVENTARIO");
-                                            System.out.println("4-VER CARRITO");
-                                            System.out.println("5-VER HISTORIAL DE COMPRA / VENTA O INTERCAMBIO");
-                                            System.out.println("6-VOLVER AL PERFIL");
-                                            System.out.printf("Ingrese opcion: ");
+                                            if(bandera == 0) {
+                                                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                                            }
+                                            System.out.println("*****************************************************");
+                                            System.out.println(pokeMarket.verPerfil(actual)); //para ver info de perfil
+                                            System.out.println("*****************************************************");
+                                            System.out.println("\t1-EDITAR DATOS DE PERFIL");
+                                            System.out.println("\t2-ELIMINAR CUENTA");
+                                            System.out.println("\t3-VER INVENTARIO");
+                                            System.out.println("\t4-VER CARRITO");
+                                            System.out.println("\t5-VER HISTORIAL DE COMPRA / VENTA O INTERCAMBIO");
+                                            System.out.println("\t6-VOLVER AL PERFIL");
+                                            System.out.printf("\n\tIngrese opcion: ");
                                             opcion = teclado.nextInt();
                                             switch (opcion) {
                                                 case 1: {
@@ -279,23 +288,40 @@ public class Main {
                                                         String emailNuevo = " ";
                                                         String mensaje = " ";
                                                         int op2 = 0;
-                                                        System.out.println("1-Modificar nombre");
-                                                        System.out.println("2-Modificar email");
-                                                        System.out.println("3-Volver al menu anterior");
+                                                        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                                                        System.out.println("*******************************");
+                                                        System.out.println(" «« EDITAR DATOS PERSONALES »» ");
+                                                        System.out.println("*******************************");
+                                                        System.out.println("\t1-Modificar nombre");
+                                                        System.out.println("\t2-Modificar email");
+                                                        System.out.println("\t3-Volver al menu anterior");
+                                                        System.out.printf("\n\tIngrese opcion: ");
                                                         op2 = teclado.nextInt();
                                                         if (op2 == 1) {
-                                                            System.out.println("Indique el nuevo nombre");
+                                                            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                                                            System.out.println("****************************************************************************");
+                                                            System.out.println(" «« NOMBRE ACTUAL [ "+actual.getNombre() +" ] »»");
+                                                            System.out.println("**************************************************************************\n");
+                                                            System.out.printf("Indique el nuevo nombre: ");
                                                             teclado.nextLine();
                                                             nombreNuevo = teclado.nextLine();
                                                             mensaje = pokeMarket.editarNombre(nombreNuevo, actual);
                                                             System.out.println(mensaje);
+                                                            System.out.println("Presiona Enter para continuar...");
+                                                            teclado.nextLine();
                                                             op = false;
                                                         } else if (op2 == 2) {
-                                                            System.out.println("Indique el nuevo email");
+                                                            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                                                            System.out.println("******************************************");
+                                                            System.out.println(" «« MAIL ACTUAL [ "+actual.getEmail() +" ] »»");
+                                                            System.out.println("******************************************\n");
+                                                            System.out.printf("Indique el nuevo email: ");
                                                             teclado.nextLine();
                                                             emailNuevo = teclado.nextLine();
                                                             mensaje = pokeMarket.editarEmail(emailNuevo, actual);
                                                             System.out.println(mensaje);
+                                                            System.out.println("Presiona Enter para continuar...");
+                                                            teclado.nextLine();
                                                             op = false;
                                                         } else {
                                                             op = false;
@@ -310,42 +336,81 @@ public class Main {
                                                     break;
                                                 }
                                                 case 3: {
+                                                    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                                                     String mensaje3 = " ";
+                                                    bandera = 1;
+                                                    System.out.println("****************************************************************************");
+                                                    System.out.println(" «« INVENTARIO DE "+actual.getNombre()+", ACTUALIZADO [ "+ LocalDate.now()+" ]");
+                                                    System.out.println("**************************************************************************\n");
                                                     mensaje3 = actual.mostrarInventario();
                                                     System.out.println(mensaje3);
+                                                    try {
+                                                       String m1 = "Volviendo al perfil en 20 segundos . . .\n\n\n";
+                                                        for (int i = 0; i < m1.length(); i++) {
+                                                            System.out.print(m1.charAt(i));
+                                                            try {
+                                                                Thread.sleep(100); // Pausa de 100 milisegundos
+                                                            } catch (InterruptedException e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
+                                                        Thread.sleep(12000);
+                                                    }catch (InterruptedException e)
+                                                    {
+                                                    }
                                                     break;
                                                 }
                                                 case 4: {
                                                     String mensaje4 = " ";
+                                                    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                                                     mensaje4 = actual.mostrarCarrito();
                                                     System.out.println(mensaje4);
+                                                    System.out.println("\nPresiona Enter para continuar ...");
+                                                    teclado.nextLine();
+                                                    teclado.nextLine();
                                                     break;
                                                 }
                                                 case 5: {
                                                     boolean opc = true;
                                                     while (opc) {
                                                         int opc2 = 0;
-                                                        System.out.println("1-Ver historial de compra");
-                                                        System.out.println("2-Ver historial de venta");
-                                                        System.out.println("3-Ver historial de intercambio");
-                                                        System.out.println("4-Volver al menu anterior");
+                                                        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                                                        System.out.println("*********************************************************************************************************************");
+                                                        System.out.println(" «« HISOTRIALES VENTAS-INTERCAMBIOS-COMPRAS DE "+actual.getNombre()+", ACTUALIZADOS [ "+ LocalDate.now()+" ]");
+                                                        System.out.println("*********************************************************************************************************************\n");
+                                                        System.out.println("\t 1-Ver historial de compra");
+                                                        System.out.println("\t 2-Ver historial de venta");
+                                                        System.out.println("\t 3-Ver historial de intercambio");
+                                                        System.out.println("\t 4-Volver al menu anterior");
+                                                        System.out.printf("\n\tIngrese opcion: ");
                                                         opc2 = teclado.nextInt();
+                                                        System.out.println("\n\n\n");
                                                         if (opc2 == 1) {
                                                             String msj = " ";
                                                             msj = actual.mostrarHistorialCompras();
                                                             System.out.println(msj);
+                                                            System.out.printf("\nPresiona Enter para volver al perfil ...");
+                                                            teclado.nextLine();
+                                                            teclado.nextLine();
                                                             opc = false;
                                                         } else if (opc2 == 2) {
                                                             String msj2 = " ";
                                                             msj2 = actual.mostrarHistorialVentas();
                                                             System.out.println(msj2);
+                                                            System.out.printf("\nPresiona Enter para volver al perfil ...");
+                                                            teclado.nextLine();
+                                                            teclado.nextLine();
                                                             opc = false;
                                                         } else if (opc2 == 3) {
                                                             String msj3 = " ";
-
                                                             msj3 = actual.mostrarHistorialIntercambios();
-
                                                             System.out.println(msj3);
+                                                            System.out.printf("\nPresiona Enter para volver al perfil ...");
+                                                            teclado.nextLine();
+                                                            teclado.nextLine();
+                                                            opc = false;
+                                                        }
+                                                        else {
                                                             opc = false;
                                                         }
                                                     }
@@ -437,7 +502,6 @@ public class Main {
                                                                         e.printStackTrace();
                                                                     }
                                                                 }
-
                                                                 try {
                                                                     pokeMarket.eliminarCarritoTotal(actual);
                                                                 } catch (CarritoVacioException e) {
@@ -455,12 +519,21 @@ public class Main {
                                                             {
                                                                 try {
                                                                     pokeMarket.confirmarCarrito(actual);
+                                                                    System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                                                                    System.out.println("****************************************************************");
+                                                                    System.out.println("          COMPRA CONFIRMADA - REVISA TU INVENTARIO !            ");
+                                                                    System.out.println("****************************************************************");
+
                                                                 } catch (CarritoVacioException h) {
-                                                                    System.out.printf("\n\n\n\n\n\\n\n\n\n\n\n\n\n\n\n\n\n\n\nn\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                                                                    System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                                                                    System.out.println("****************************************************************");
                                                                     System.out.println(h.getMensaje());
+                                                                    System.out.println("****************************************************************");
                                                                 } catch (ValorInvalidoException e) {
-                                                                    System.out.printf("\n\n\n\n\n\n\n\\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nn\n\n\n\n\n\n\n");
+                                                                    System.out.printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                                                                    System.out.println("****************************************************************");
                                                                     System.out.println(e.getMessage());
+                                                                    System.out.println("****************************************************************");
                                                                 }
                                                                 try {
                                                                     Thread.sleep(5000);
@@ -535,22 +608,51 @@ public class Main {
                                         } while (opcionUsuario2 != 3);
                                         break;
                                     }
-                                    case 3: {
+                                    case 3: // Publicar item
+                                    {
                                         System.out.printf("Ingrese ID del Item: ");
                                         teclado.nextLine();
                                         id = teclado.nextLine();
                                         Item item = actual.buscarEnInventario(id);
                                         if (item != null) {
                                             actual.publicarItem(item);
-                                            pokeMarket.guardarUsuariosArchivo();
+                                            actual.eliminarItemDelInventario(item);
                                         }
                                         break;
                                     }
-                                    case 4: {
+                                    case 4: //despublicar item
+                                    {
+                                        System.out.printf("Ingrese ID del Item: ");
+                                        teclado.nextLine();
+                                        id = teclado.nextLine();
+                                        try {
+                                            Item item = actual.buscarEnItemsPublicadosPropios(id);
+                                            if (item != null) {
+                                                actual.eliminarItemDePublicados(item);
+                                                actual.agregarItemAlCarrito(item);
+                                            }
+                                        }catch (ItemNoEncontradoException e)
+                                        {
+                                            System.out.printf(e.getMessage());
+                                        }
+                                        break;
+                                    }
+                                    case 5:
+                                    {
+                                        //etapa x si se quiere agrandar el proyecto.
+                                        break;
+                                    }
+                                    case 6:
+                                    {
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        opcionUsuario1 = 6;
                                         break;
                                     }
                                 }
-                            } while (opcionUsuario1 != 4);
+                            } while (opcionUsuario1 != 6);
                         } catch (UsuarioContraseniaInvalidoException e) {
                             System.out.println("----------------------------------------");
                             System.out.println("««  " + e.getMessage() + "  »»");
@@ -592,7 +694,7 @@ public class Main {
 
     public static void menuPrincipal() {
         System.out.println(" _________________________________________");
-        System.out.println("|                 <<MENU>>                |");
+        System.out.println("|        << POKEMARKET 2023 UTN >>        |");
         System.out.println("| 1. REGISTRARSE                          |");
         System.out.println("| 2. INICIAR SESION                       |");
         System.out.println("| 3. CERRAR APLICACION                    |");

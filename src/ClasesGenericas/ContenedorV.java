@@ -85,9 +85,7 @@ public class ContenedorV <T> implements IFuncionalidades<T>, Serializable {
      */
     @Override
     public String toString() {
-        return "ContenedorV{" +
-                "miVector=" + miVector +
-                '}';
+        return "\t"+miVector;
     }
     /**
      * Verifica si el contenedor contiene un elemento específico.

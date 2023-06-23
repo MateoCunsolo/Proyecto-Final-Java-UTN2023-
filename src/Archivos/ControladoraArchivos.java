@@ -187,17 +187,15 @@ public class ControladoraArchivos
         }
         catch (EOFException ex)
         {
-            System.out.println("FIN de ARCHIVO");
+            //System.out.println("FIN de ARCHIVO");
         }
         catch (ClassNotFoundException ex)
         {
-            System.out.printf("aca 1");
             System.out.println(ex.getMessage());
 
         }
         catch (IOException ex)
         {
-            System.out.printf("aca 2");
             System.out.println(ex.getMessage());
         }
         finally
@@ -218,7 +216,6 @@ public class ControladoraArchivos
             }
             catch (IOException ex)
             {
-                System.out.printf("aca 3");
                 System.out.println(ex.getMessage());
             }
         }
