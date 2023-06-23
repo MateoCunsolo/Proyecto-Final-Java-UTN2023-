@@ -14,23 +14,41 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * La clase Administrador representa a un administrador del sistema.
+ * Hereda de la clase Persona y es serializable.
+ */
 public class Administrador extends Persona implements Serializable
 {
+    /**
+     * Crea un objeto Administrador con el nombre y la contraseña especificados.
+     * @param nombre El nombre del administrador.
+     * @param contrasenia La contraseña del administrador.
+     */
     public Administrador(String nombre, String contrasenia)
     {
         super(nombre, contrasenia);
     }
 
+    /**
+     * Crea un objeto Administrador sin especificar nombre ni contraseña.
+     */
     public Administrador()
     {
         super();
     }
 
+    /**
+     * Borra un usuario del sistema.
+     * @param nombre El nombre del usuario a borrar.
+     * @param usuarios (TreeMap) todos los usuarios del sistema.
+     * @return true si el usuario se borró exitosamente, false de lo contrario.
+     * @throws UsuarioNoEncontradoException Si el usuario no se encuentra en el sistema.
+     */
 
-    public boolean borrarUsuario (String nombre, PokeMarket pokeMarket) throws UsuarioNoEncontradoException
+    public boolean borrarUsuario (String nombre,  TreeMap<String, Usuario> usuarios) throws UsuarioNoEncontradoException
     {
         boolean rta = false;
-        TreeMap<String, Usuario> usuarios = pokeMarket.getMapaUsuarios();
 
         if(usuarios.containsKey(nombre))
         {
@@ -45,7 +63,11 @@ public class Administrador extends Persona implements Serializable
 
         return rta;
     }
-
+    /**
+     * Genera una representación en forma de cadena de texto de todos los usuarios del sistema.
+     * @param usuarios El mapa de usuarios del sistema.
+     * @return Una cadena que contiene la información de todos los usuarios.
+     */
     public String verUsuarios(TreeMap<String, Usuario> usuarios) {
 
         StringBuilder sb = new StringBuilder();
@@ -66,7 +88,11 @@ public class Administrador extends Persona implements Serializable
         return sb.toString();
     }
 
-
+    /**
+     * Genera una representación en forma de cadena de texto de todo el historial de ventas de los usuarios del sistema.
+     * @param usuarios El mapa de usuarios del sistema.
+     * @return Una cadena que contiene el historial de ventas de todos los usuarios.
+     */
     public String verTodosHistorialVentas(TreeMap<String, Usuario> usuarios) {
 
         StringBuilder sb = new StringBuilder();
@@ -98,6 +124,11 @@ public class Administrador extends Persona implements Serializable
         return sb.toString();
     }
 
+    /**
+     * Genera una representación en forma de cadena de texto de todo el historial de intercambios de los usuarios del sistema.
+     * @param usuarios El mapa de usuarios del sistema.
+     * @return Una cadena que contiene el historial de intercambios de todos los usuarios.
+     */
     public String verTodosHistorialIntercambios(TreeMap<String, Usuario> usuarios) {
 
         StringBuilder sb = new StringBuilder();

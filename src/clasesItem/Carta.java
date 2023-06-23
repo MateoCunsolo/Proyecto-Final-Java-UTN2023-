@@ -6,16 +6,23 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.Objects;
-
+/**
+ * La clase Carta representa una carta de Pokemon y extiende de la clase abstracta Item.
+ * Contiene atributos como el número de la carta, el Pokémon asociado, la rareza y el artista.
+ * Implementa las interfaces Serializable, I_toJSON y Cloneable.
+ */
 public class Carta extends Item implements Serializable, I_toJSON, Cloneable {
 
-    private static final long serialVersionUID =  8882570970347050606L;
-    private String numero; //chek
-    private Pokemon pokemon; //chek
-    private String rareza; //chek
-    private String artista; //chek
+    private static final long serialVersionUID = 8882570970347050606L;
+    private String numero; // Número de la carta
+    private Pokemon pokemon; // Pokémon asociado a la carta
+    private String rareza; // Rareza de la carta
+    private String artista; // Artista de la carta
 
-
+    /**
+     * Constructor predeterminado de la clase Carta.
+     * Inicializa los atributos con valores vacíos o por defecto.
+     */
     public Carta() {
         numero = "";
         pokemon = new Pokemon();
@@ -23,6 +30,14 @@ public class Carta extends Item implements Serializable, I_toJSON, Cloneable {
         artista = "";
     }
 
+    /**
+     * Constructor de la clase Carta que recibe los valores iniciales de los atributos.
+     *
+     * @param numero  El número de la carta.
+     * @param pokemon El Pokémon asociado a la carta.
+     * @param rareza  La rareza de la carta.
+     * @param artista El artista de la carta.
+     */
     public Carta(String numero, Pokemon pokemon, String rareza, String artista) {
         this.numero = numero;
         this.pokemon = pokemon;
@@ -30,38 +45,91 @@ public class Carta extends Item implements Serializable, I_toJSON, Cloneable {
         this.artista = artista;
     }
 
+    /**
+     * Obtiene el número de la carta.
+     *
+     * @return El número de la carta.
+     */
     public String getNumero() {
         return numero;
     }
 
+    /**
+     * Establece el número de la carta.
+     *
+     * @param numero El número de la carta.
+     */
     public void setNumero(String numero) {
         this.numero = numero;
     }
+
+    /**
+     * Obtiene el Pokémon asociado a la carta.
+     *
+     * @return El Pokémon asociado a la carta.
+     */
 
     public Pokemon getPokemon() {
         return pokemon;
     }
 
+    /**
+     * Establece el Pokémon asociado a la carta.
+     *
+     * @param pokemon El Pokémon asociado a la carta.
+     */
+
     public void setPokemon(Pokemon pokemon) {
         this.pokemon = pokemon;
     }
+
+    /**
+     * Obtiene la rareza de la carta.
+     *
+     * @return La rareza de la carta.
+     */
 
     public String getRareza() {
         return rareza;
     }
 
+    /**
+     * Establece la rareza de la carta.
+     *
+     * @param rareza La rareza de la carta.
+     */
+
     public void setRareza(String rareza) {
         this.rareza = rareza;
     }
+
+    /**
+     * Obtiene el artista de la carta.
+     *
+     * @return El artista de la carta.
+     */
 
     public String getArtista() {
         return artista;
     }
 
+    /**
+     * Establece el artista de la carta.
+     *
+     * @param artista El artista de la carta.
+     */
     public void setArtista(String artista) {
         this.artista = artista;
     }
 
+    /**
+     * Compara si la carta es igual a otro objeto dado.
+     * Dos cartas se consideran iguales si tienen el mismo número de carta,
+     * el mismo Pokémon, la misma rareza y el mismo artista.
+     *
+     * @param o El objeto a comparar.
+     * @return true si las cartas son iguales, false en caso contrario.
+     */
 
     @Override
     public boolean equals(Object o) {
@@ -71,10 +139,25 @@ public class Carta extends Item implements Serializable, I_toJSON, Cloneable {
         return numero == carta.numero && pokemon.equals(carta.pokemon) && rareza.equals(carta.rareza) && artista.equals(carta.artista);
     }
 
+    /**
+     * Calcula el código hash de la carta.
+     * El código hash se calcula utilizando los valores del número de carta,
+     * el Pokémon, la rareza y el artista.
+     *
+     * @return El código hash de la carta.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(numero, pokemon, rareza, artista);
     }
+
+    /**
+     * Devuelve una representación en forma de cadena de la carta.
+     * La cadena contiene información sobre el número de carta, el Pokémon,
+     * la rareza y el artista de la carta.
+     *
+     * @return La representación en forma de cadena de la carta.
+     */
 
     @Override
     public String toString() {
@@ -85,11 +168,26 @@ public class Carta extends Item implements Serializable, I_toJSON, Cloneable {
                                  "\t\t\t\t| artista = " + artista+"\n";
     }
 
+    /**
+     * Convierte la carta a un objeto JSONObject.
+     * Actualmente, este método no está implementado y devuelve null.
+     *
+     * @return El objeto JSONObject de la carta.
+     * @throws JSONException Si ocurre algún error al crear el JSONObject.
+     */
     @Override
     public JSONObject toJson() throws JSONException {
         return null;
     }
 
+    /**
+     * Deserializa una carta a partir de un objeto JSONObject.
+     * El método utiliza la información del objeto JSON para inicializar los atributos
+     * de la carta, como el Pokémon asociado, la rareza, el artista, el número, etc.
+     *
+     * @param cartaJson El objeto JSONObject que contiene la información de la carta.
+     * @throws JSONException Si ocurre algún error al leer el JSONObject.
+     */
     @Override
     public void fromJson(JSONObject cartaJson) throws JSONException {
 
@@ -177,6 +275,13 @@ public class Carta extends Item implements Serializable, I_toJSON, Cloneable {
         }
     }
 
+    /**
+     * Compara la rareza de la carta con una rareza dada.
+     * Comprueba si la rareza de la carta es igual a la rareza especificada.
+     *
+     * @param tipoRareza La rareza a comparar.
+     * @return true si la rareza de la carta es igual a la rareza especificada, false en caso contrario.
+     */
     public boolean compararRareza(String tipoRareza)
     {
         boolean rta = false;
@@ -188,6 +293,12 @@ public class Carta extends Item implements Serializable, I_toJSON, Cloneable {
         return rta;
     }
 
+    /**
+     * Crea y devuelve una copia exacta de la carta actual.
+     * Realiza una copia profunda de la carta, incluyendo el clonado del objeto Pokémon asociado.
+     *
+     * @return La copia clonada de la carta.
+     */
     @Override
     public Carta clone(){
         Carta clonedCarta = (Carta) super.clone();

@@ -10,6 +10,13 @@ import java.util.TreeMap;
 
 public class ControladoraArchivos
 {
+    /**
+     * El método `grabarAdministrador` se utiliza para grabar la información de un administrador en un archivo.
+     * Se hace en un bloque try-catch ya que capturan una excepcion del tipo IOException
+     * @param nombre El nombre del administrador.
+     * @param contra La contraseña del administrador.
+     * @return Un mensaje indicando si la grabación fue exitosa o si se produjo un error.
+     */
     public static String grabarAdministrador(String nombre, String contra)
     {
         String mensaje1 = " ";
@@ -45,6 +52,11 @@ public class ControladoraArchivos
         return mensaje1 + "\n" + mensaje2;
     }
 
+    /**
+     * El método `leerAdministrador` se utiliza para leer la información de un administrador desde un archivo.
+     * @return Un objeto `Administrador` con los datos leídos del archivo.
+     */
+
     public static Administrador leerAdministrador()
     {
         FileInputStream fileInputStream = null;
@@ -64,7 +76,6 @@ public class ControladoraArchivos
                 nombre = dataInputStream.readUTF();
                 contra = dataInputStream.readUTF();
             }
-
 
         }
         catch (EOFException ex)
@@ -99,6 +110,12 @@ public class ControladoraArchivos
         }
         return admin;
     }
+
+    /**
+     * El método `grabarUsuarios` se utiliza para grabar la información de los usuarios en un archivo.
+     * @param mapaUsuarios Un TreeMap que contiene los usuarios a ser grabados.
+     * @return Un mensaje indicando si la grabación fue exitosa o si se produjo un error.
+     */
 
     public static String grabarUsuarios(TreeMap<String, Usuario> mapaUsuarios)
     {
@@ -139,6 +156,14 @@ public class ControladoraArchivos
         return mensaje1 + "\n" + mensaje2;
     }
 
+    /**
+     * Lee y carga los usuarios almacenados en un archivo binario en un TreeMap.
+     *
+     * @return TreeMap que contiene los usuarios leídos del archivo. La clave es el nombre del usuario y el valor es un objeto Usuario.
+     * @throws EOFException si se alcanza el final del archivo durante la lectura de objetos.
+     * @throws ClassNotFoundException si no se encuentra la clase Usuario al deserializar los objetos.
+     * @throws IOException si ocurre algún error de entrada/salida durante la lectura del archivo.
+     */
     public static TreeMap<String,Usuario> leerUsuarios()
     {
 
@@ -162,17 +187,15 @@ public class ControladoraArchivos
         }
         catch (EOFException ex)
         {
-            System.out.println("FIN de ARCHIVO");
+            //System.out.println("FIN de ARCHIVO");
         }
         catch (ClassNotFoundException ex)
         {
-            System.out.printf("aca 1");
             System.out.println(ex.getMessage());
 
         }
         catch (IOException ex)
         {
-            System.out.printf("aca 2");
             System.out.println(ex.getMessage());
         }
         finally
@@ -193,7 +216,6 @@ public class ControladoraArchivos
             }
             catch (IOException ex)
             {
-                System.out.printf("aca 3");
                 System.out.println(ex.getMessage());
             }
         }
