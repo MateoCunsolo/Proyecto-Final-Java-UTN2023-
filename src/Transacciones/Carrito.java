@@ -7,8 +7,7 @@ import clasesItem.Item;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Carrito implements ITransaccionable, Serializable
-{
+public class Carrito implements ITransaccionable, Serializable, Cloneable {
     private static final long serialVersionUID = -7604144828635493406L;
 
     private int cantidadItems;
@@ -19,16 +18,16 @@ public class Carrito implements ITransaccionable, Serializable
 
     public Carrito() {
         cantidadItems = 0;
-        totalAPagar = 0;
+        totalAPagar = calcularTotal();
         fecha = null;
         productos = new ContenedorV<>();
     }
 
-    public Carrito(int cantidadItems, double totalAPagar, LocalDateTime fecha, ContenedorV<Item> productos) {
+    public Carrito(int cantidadItems, LocalDateTime fecha) {
         this.cantidadItems = cantidadItems;
-        this.totalAPagar = totalAPagar;
+        this.totalAPagar = calcularTotal();
         this.fecha = fecha;
-        this.productos = productos;
+        this.productos = new ContenedorV<>();
     }
 
     public int getCantidadItems() {
@@ -56,104 +55,88 @@ public class Carrito implements ITransaccionable, Serializable
     }
 
     public void eliminarCarrito() {
-         productos.eliminarCompleto();
+        productos.eliminarCompleto();
+
     }
 
     public boolean eliminarUnItem(Item item) {
-       return  productos.eliminar(item);
+        cantidadItems = cantidadItems - 1 ;
+        totalAPagar = calcularTotal();
+        return productos.eliminar(item);
     }
 
-    public void verCarrito()
-    {
+    public void verCarrito() {
     }
 
-    public boolean vacio()
-    {
+    public boolean vacio() {
         return productos.vacio();
     }
 
 
-    public void agregarAlCarrito(Item item)
-    {
-        if(productos.vacio())
-        {
+    public void agregarAlCarrito(Item item) {
+        if (productos.vacio()) {
             fecha = LocalDateTime.now();
         }
-        if(!productos.contiene(item))
-        {
+        if (!productos.contiene(item)) {
             productos.agregar(item);
-            setCantidadItems(getCantidadItems()+1);
+            setCantidadItems(getCantidadItems() + 1);
         }
     }
 
-    public Item buscarItemEnCarritoXid(String id)
-    {
+    public Item buscarItemEnCarritoXid(String id) {
         Item respuesta = new Item();
-        for(int i =0; i<productos.contar(); i++)
-        {
+        for (int i = 0; i < productos.contar(); i++) {
             Item aux = productos.get(i);
-            if(aux.getId().equals(id))
-            {
+            if (aux.getId().equals(id)) {
                 respuesta = aux;
             }
         }
-        return  respuesta;
+        return respuesta;
     }
 
     @Override
-    public double calcularTotal()
-    {
+    public double calcularTotal() {
         double resultado = 0;
-        for(int i = 0; i < productos.tamanio(); i++)
-        {
-            resultado = resultado + productos.get(i).getPrecio();
-        }
+        if (this.productos != null)
+            if (!this.productos.vacio()) {
+                for (int i = 0; i < this.productos.tamanio(); i++) {
+                    resultado = resultado + this.productos.get(i).getPrecio();
+                }
+            }
         return resultado;
     }
 
-    public Item ultimo()
-    {
-        return productos.get(productos.contar()-1);
+    public Item ultimo() {
+        return productos.get(productos.contar() - 1);
     }
 
 
     @Override
     public String toString() {
         return "Carrito{" +
-                "cantidadItems=" + cantidadItems +
-                ", totalAPagar=" + totalAPagar +
-                ", fecha=" + fecha +
-                ", productos=" + productos +
+                "Cantidad de Items=" + cantidadItems +
+                ", Total A Pagar=" + totalAPagar +
+                ", Fecha =" + fecha +
+                ", Productos=" + productos +
                 '}';
     }
 
-    public String listar()
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("Fecha: ").append(getFecha()).append("\n")
-                .append("Total pagado: ").append(getTotalAPagar()).append("\n")
-                .append("Productos:\n");
-
-        // Iterar sobre los productos y agregar información relevante
-        for (int i = 0; i < productos.tamanio(); i++) { //recorre los productos comprados
-
+    @Override
+    public Carrito clone() {
+        Carrito clonedCarrito = new Carrito();
+        for (int i =0; i< productos.contar(); i++)
+        {
             Item item = productos.get(i);
-
-            sb.append(item.toString())
-                    .append("\n");
+            clonedCarrito.agregarAlCarrito(item.clone());
         }
-
-        return sb.toString();
+        return clonedCarrito;
     }
 
-    public int tamanioCarrito()
-    {
+    public int tamanioCarrito() {
         return productos.contar();
     }
 
-    public Item getItem(int index)
-    {
+    public Item getItem(int index) {
         return productos.get(index);
     }
 }

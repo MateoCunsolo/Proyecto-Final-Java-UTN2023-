@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -131,6 +132,7 @@ public class Main {
                                 case 1: //BORRAR USUARIO probarrrr
                                 {
                                     System.out.println("Ingrese nombre de usuario a borrar: ");
+                                    teclado.nextLine();
                                     String nom = teclado.nextLine();
 
                                     try {
@@ -185,6 +187,7 @@ public class Main {
                                         System.out.println();
 
                                         menuAdminMovimientosUsuario();
+                                        teclado.nextLine();
                                         int o = teclado.nextInt();
                                         char cont = 's';
                                         do {
@@ -211,6 +214,7 @@ public class Main {
                                                 }
                                             }
 
+                                            teclado.nextLine();
                                             System.out.println("\nDesea seguir viendo los movimientos del usuario? (s/n) \n");
                                             String aux = teclado.nextLine();
                                             cont = aux.charAt(0);
@@ -369,7 +373,7 @@ public class Main {
                                                     e.printStackTrace();
                                                 }
                                             }
-                                            //System.out.println(pokeMarket.verItemsPublicados());
+                                            System.out.println(pokeMarket.verItemsPublicados());
                                             System.out.println("********************************************************");
                                             System.out.println("               OPCIONES DEL MARKET                      ");
                                             System.out.println("********************************************************");
@@ -395,7 +399,8 @@ public class Main {
                                                         System.out.printf("\t\tIngrese opcion: ");
                                                         opcionUsuario3 = teclado.nextInt();
                                                         switch (opcionUsuario3) {
-                                                            case 1: {
+                                                            case 1: //AGREGAR AL CARRITO ok
+                                                            {
                                                                 System.out.println("*****AGREGAR ITEM AL CARRITO********");
                                                                 System.out.printf("Ingrese ID del Item: ");
                                                                 teclado.nextLine();
@@ -409,15 +414,23 @@ public class Main {
                                                                 }
                                                                 break;
                                                             }
-                                                            case 2: {
+                                                            case 2: //ELIMINAR UN ITEM ok
+                                                            {
                                                                 System.out.println("*****ELIMINAR ITEM DEL CARRITO********");
-                                                                System.out.printf("Ingrese ID del Item: ");
                                                                 teclado.nextLine();
+                                                                System.out.printf("Ingrese ID del Item: ");
                                                                 id = teclado.nextLine();
-                                                                pokeMarket.eliminarItemDelCarrito(actual,id);
+
+                                                                try {
+                                                                    pokeMarket.eliminarItemDelCarrito(actual, id);
+                                                                }catch (CarritoVacioException l)
+                                                                {
+                                                                    System.out.println(l.getMensaje());
+                                                                }
                                                                 break;
                                                             }
-                                                            case 3: {
+                                                            case 3: //ELIMINAR CARRITO COMPLETO ok
+                                                            {
                                                                 m = "Eliminando carrito ...";
                                                                 for (int i = 0; i < m.length(); i++) {
                                                                     System.out.print(m.charAt(i));
@@ -427,15 +440,23 @@ public class Main {
                                                                         e.printStackTrace();
                                                                     }
                                                                 }
-                                                                pokeMarket.eliminarCarritoTotal(actual);
+
+                                                                try {
+                                                                    pokeMarket.eliminarCarritoTotal(actual);
+                                                                }catch (CarritoVacioException e)
+                                                                {
+                                                                    System.out.println(e.getMensaje());
+                                                                }
                                                                 break;
                                                             }
-                                                            case 4: {
+                                                            case 4: //MOSTRAR CARRITO ok
+                                                            {
                                                                 System.out.println("*** CARRITO DE COMPRAS ***");
                                                                 System.out.println(actual.mostrarCarrito());
                                                                 break;
                                                             }
-                                                            case 5: {
+                                                            case 5: //CONFIRMAR CARRITO
+                                                            {
                                                                 try {
                                                                     pokeMarket.confirmarCarrito(actual);
                                                                 } catch (CarritoVacioException h) {
@@ -443,6 +464,7 @@ public class Main {
                                                                 } catch (ValorInvalidoException e) {
                                                                     System.out.println(e.getMessage());
                                                                 }
+
                                                                 break;
                                                             }
                                                         }
@@ -450,7 +472,7 @@ public class Main {
 
                                                     break;
                                                 }
-                                                case 2: //intercambio
+                                                case 2: //intercambio ok
                                                 {
                                                     System.out.println("USUARIO ANTES DEL INTERCAMBIO" + actual.toString());
                                                     //si o si los productos tienene que estar publicados en ambos usuarios
@@ -481,10 +503,8 @@ public class Main {
                                                         }
 
                                                         Intercambio intercambio = new Intercambio(entrado, salido);
-
                                                         pokeMarket.intercambiarCartas(intercambio, actual);
                                                         System.out.println("Intercambio realizado con exito! :)");
-
                                                         System.out.println("USUARIO DESPUES DEL INTERCAMBIO" + actual.toString());
 
 
@@ -546,7 +566,7 @@ public class Main {
             }
         } while (continuar == 's');
 
-        pokeMarket.guardarCambios(); //se graban en el archivo Usuarios todos los cambios realizados
+        //pokeMarket.guardarCambios(); //se graban en el archivo Usuarios todos los cambios realizados
         teclado.close();
     }
 

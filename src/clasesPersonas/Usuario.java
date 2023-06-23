@@ -11,6 +11,7 @@ import Transacciones.Venta;
 import clasesItem.Carta;
 import clasesItem.Item;
 import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Iterator;
@@ -128,8 +129,7 @@ public class Usuario extends Persona implements Serializable {
         return sb.toString();
     }
 
-    public String mostrarHistorialCompras()
-    {
+    public String mostrarHistorialCompras() {
 
         StringBuilder sb = new StringBuilder();
         int contV = 1;
@@ -140,7 +140,7 @@ public class Usuario extends Persona implements Serializable {
 
             Carrito carro = historialCompras.get(i);
             sb.append("Compra N°" + contV + ":").append("\n")
-                    .append(carro.listar())
+                    .append(carro.toString())
                     .append("\n");
             contV++;
         }
@@ -152,16 +152,13 @@ public class Usuario extends Persona implements Serializable {
         return this.inventario.agregar(item);
     }
 
-    public void agregarItemsAlInventario(Carrito carro)
-    {
-        for(int i = 0; i < carro.tamanioCarrito(); i++)
-        {
+    public void agregarItemsAlInventario(Carrito carro) {
+        for (int i = 0; i < carro.tamanioCarrito(); i++) {
             agregarItemAlInventario(carro.getItem(i));
         }
     }
 
-    public String mostrarInventario()
-    {
+    public String mostrarInventario() {
         String msj = inventario.listar();
         return msj;
     }
@@ -171,13 +168,15 @@ public class Usuario extends Persona implements Serializable {
     }
 
     public void agregarItemAlCarrito(Item item) {
-        this.carrito.agregarAlCarrito(item);
+
+        if (!item.getId().equals("")) {
+            this.carrito.agregarAlCarrito(item);
+
+        }
     }
 
 
-
-    public Item buscarEnInventario(String id)
-    {
+    public Item buscarEnInventario(String id) {
         LinkedHashSet<Item> LHSaux = inventario.getMiLHSet();
 
         Item buscado = null;
@@ -185,48 +184,41 @@ public class Usuario extends Persona implements Serializable {
         Iterator iterator = LHSaux.iterator();
         while (iterator.hasNext() && flag != 0) {
             buscado = (Item) iterator.next();
-            if(buscado.getId().equals(id))
-            {
+            if (buscado.getId().equals(id)) {
                 flag = 0;
             }
         }
         return buscado;
     }
 
-    public Item buscarEnItemsPublicadosPropios(String id) throws ItemNoEncontradoException
-    {
+    public Item buscarEnItemsPublicadosPropios(String id) throws ItemNoEncontradoException {
         Item buscado = new Item();
         int flag = 1;
 
         LinkedHashSet<Item> LHSaux = itemsPublicados.getMiLHSet();
         Iterator iterator = LHSaux.iterator();
-        while (iterator.hasNext() && flag == 1)
-        {
+        while (iterator.hasNext() && flag == 1) {
             buscado = (Item) iterator.next();
-            if(buscado.getId().equals(id))
-            {
+            if (buscado.getId().equals(id)) {
                 flag = 0;
             }
         }
-        if(flag==1)
-        {
+        if (flag == 1) {
             throw new ItemNoEncontradoException("Id de item no encontrado dentro de publicados");
         }
         return buscado;
     }
 
-    public boolean encontrarItemsPublicado(String id)
-    {
+    public boolean encontrarItemsPublicado(String id) {
+        System.out.printf("ESTOY ACA :) ITEMS PUBLIC");
         Item buscado = new Item();
         boolean flag = false;
 
         LinkedHashSet<Item> LHSaux = itemsPublicados.getMiLHSet();
         Iterator iterator = LHSaux.iterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             buscado = (Item) iterator.next();
-            if(buscado.getId().equals(id))
-            {
+            if (buscado.getId().equals(id)) {
                 flag = true;
             }
         }
@@ -234,13 +226,11 @@ public class Usuario extends Persona implements Serializable {
         return flag;
     }
 
-    public String verInventario()
-    {
+    public String verInventario() {
         return inventario.toString();
     }
 
-    public String mostrarHistorialIntercambios()
-    {
+    public String mostrarHistorialIntercambios() {
         StringBuilder sb = new StringBuilder();
         int contV = 1;
 
@@ -249,7 +239,7 @@ public class Usuario extends Persona implements Serializable {
         for (int i = 0; i < historialIntercambio.tamanio(); i++) {
 
             Intercambio intercambio = historialIntercambio.get(i);
-            sb.append("\n| ** INTERCAMBIO N°"+ contV + " **\n").append("\n")
+            sb.append("\n| ** INTERCAMBIO N°" + contV + " **\n").append("\n")
                     .append(intercambio.toString())
                     .append("\n");
             contV++;
@@ -260,13 +250,11 @@ public class Usuario extends Persona implements Serializable {
     public void eliminarItemDelCarrito(String id) {
         Item item = carrito.buscarItemEnCarritoXid(id);
         carrito.eliminarUnItem(item);
-        carrito.setTotalAPagar(carrito.getTotalAPagar() - item.getPrecio());
-        carrito.setCantidadItems(carrito.getCantidadItems() - 1);
+
     }
 
     public void publicarItem(Item item) {
-        if(!inventario.contiene(item))
-        {
+        if (!inventario.contiene(item)) {
             inventario.eliminar(item);
         }
 
@@ -275,6 +263,8 @@ public class Usuario extends Persona implements Serializable {
 
     public void eliminarCarritoTotal() {
         carrito.eliminarCarrito();
+        carrito = new Carrito();
+
     }
 
     public String mostrarCarrito() {
@@ -284,69 +274,102 @@ public class Usuario extends Persona implements Serializable {
     }
 
 
-    public String mostrarHistorialIntercambio()
-    {
+    public String mostrarHistorialIntercambio() {
         String mensaje = historialIntercambio.listar();
         return mensaje;
     }
 
-    public boolean compararEmail(String email)
-    {
+    public boolean compararEmail(String email) {
         boolean rta = false;
-        if(this.email.equals(email))
-        {
+        if (this.email.equals(email)) {
             rta = true;
         }
         return rta;
     }
 
-    public void agregarAlHistorialIntercambios(Intercambio inter)
-    {
+    public void agregarAlHistorialIntercambios(Intercambio inter) {
         historialIntercambio.agregar(inter);
     }
 
-    public void agregarAlHistorialCompras(Carrito carro)
-    {
+    public void agregarAlHistorialCompras(Carrito carro) {
         historialCompras.agregar(carro);
     }
 
-    public void eliminarItemDePublicados(Item item)
-    {
-        itemsPublicados.eliminar(item);
+    public boolean eliminarItemDePublicados(Item item) {
+        return  itemsPublicados.eliminar(item);
     }
 
-    public Carrito crearVenta (Carrito carrito, Usuario usuario)
-    {
-          /*Vendedor
-            Sube el saldo
-            Se guarda el historial de la venta (ya incluye el nombre de quien me compra)
-            Se saca el artículo de la publicación
-            */
+
+//    public void crearVenta(Carrito carrito, Usuario usuario, String nombreComprador) {
+//    /* Vendedor
+//       Sube el saldo
+//       Se guarda el historial de la venta (ya incluye el nombre de quien me compra)
+//       Se saca el artículo de la publicación
+//    */
+//
+//        Venta venta = new Venta();
+//        if (!carrito.vacio())
+//        {
+//            for (int i = 0; i < carrito.tamanioCarrito(); i++) {
+//
+//                Item item = carrito.getItem(i);
+//
+//                if (item.getNombreDuenio().equals(usuario.getNombre()))
+//                {
+//                    Item clonedItem = item.clone();
+//
+//                    usuario.eliminarItemDePublicados(item);
+//
+//                    clonedItem.setNombreDuenio(nombreComprador);
+//
+//                    venta.agregarItem(clonedItem);
+//
+//                    carrito.eliminarUnItem(item);
+//
+//                    venta.setTotalCobrar(venta.getTotalCobrar() + clonedItem.getPrecio());
+//                }
+//            }
+//            usuario.setSaldo(getSaldo() + venta.getTotalCobrar());
+//            usuario.historialVentas.agregar(venta);
+//        }
+//    }
+
+    public void crearVenta(Carrito carrito, Usuario usuario, String nombreComprador) {
+    /* Vendedor
+       Sube el saldo
+       Se guarda el historial de la venta (ya incluye el nombre de quien me compra)
+       Se saca el artículo de la publicación
+    */
+        Carrito copia = carrito.clone();
+
 
         Venta venta = new Venta();
-        if(!carrito.vacio()) {
-            for (int i = 0; i < carrito.tamanioCarrito(); i++) //recorro todo el carrito
+        if (!carrito.vacio())
+        {
+            for (int i = 0; i < carrito.tamanioCarrito(); i++)
             {
-                Item item = carrito.getItem(i); //get me retorna el item de lA posicion i
-                if (getNombre().equals(item.getNombreDuenio()))//si el item tiene mi nombre
+                Item item = carrito.getItem(i);
+                if (item.getNombreDuenio().equals(usuario.getNombre()))
                 {
-                    venta.agregarItem(item);
-                    carrito.eliminarUnItem(item);
+                    Item itemcopia = copia.getItem(i);
+                    itemcopia.setNombreDuenio(nombreComprador);
+                    venta.agregarItem(itemcopia);
                     usuario.eliminarItemDePublicados(item);
-                    System.out.println("ITEM QUE SE VA: "+item.toString());//elimino el item de mis publicados
-                    System.out.println("INVENTARIO DE PUBLICADOS ACTUALIZADO\n"+usuario.itemsPublicados.toString());
-                    venta.setTotalCobrar(venta.getTotalCobrar() + item.getPrecio()); //COCHINADA
+                    carrito.eliminarUnItem(item);
                 }
             }
-            setSaldo(getSaldo() + venta.getTotalCobrar()); //sube el saldo
-            historialVentas.agregar(venta); //se guarda el historial de la venta
-        }
-        return carrito;
-    }
+            venta.setTotalCobrar(venta.calcularTotal());
+            venta.setFecha(LocalDateTime.now());
+            usuario.setSaldo(getSaldo() + venta.getTotalCobrar());
+            usuario.historialVentas.agregar(venta);
 
+        }
+    }
 
 
 }
+
+
 
 
 

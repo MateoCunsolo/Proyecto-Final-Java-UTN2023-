@@ -7,6 +7,11 @@ public abstract class Transaccion implements Serializable
 {
     private LocalDateTime fecha;
 
+
+    public Transaccion() {
+
+    }
+
     public LocalDateTime getFecha() {
         return fecha;
     }

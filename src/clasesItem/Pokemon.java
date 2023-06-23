@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
-public class Pokemon implements Serializable, I_toJSON {
+public class Pokemon implements Serializable, I_toJSON, Cloneable {
 
     private static final long serialVersionUID = -4325708085462147315L;
 
@@ -272,6 +272,19 @@ public class Pokemon implements Serializable, I_toJSON {
             agregarAtaque(new Ataque());
         }
 
+    }
+
+    @Override
+    public Pokemon clone() {
+        try {
+            Pokemon clonedPokemon = (Pokemon) super.clone();
+            clonedPokemon.hsAtaques = new HashSet<>(this.hsAtaques); // Clonar el HashSet de ataques
+            return clonedPokemon;
+        } catch (CloneNotSupportedException e) {
+            // Manejo de excepción en caso de que la clonación no sea compatible
+            e.printStackTrace();
+            return null;
+        }
     }
 }
 
